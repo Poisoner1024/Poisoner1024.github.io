@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-	<html>
-	<head>
-	　<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	　<title>一步步在GitHub上创建博客主页(2)</title>
-	</head>
-	<body>
-	　{{content }}
-	</body>
-	</html>
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        {% include navigation.html %}
+        {{ content }}
+        {% include footer.html %}
+      </div>
+    </div>
+  </main>
+  {% include javascripts.html %}
+</body>
+</html>
