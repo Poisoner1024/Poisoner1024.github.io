@@ -10,8 +10,13 @@
         <title>如何修炼成为安全技术专家</title>
         <description>学习与打磨你自身的安全技术</description>
         <pubDate>Fri, 10 Feb 2017 00:00:00 +0800</pubDate>
+<<<<<<< HEAD
         <link>/posts/%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E6%88%90%E4%B8%BA%E5%AE%89%E5%85%A8%E4%B8%93%E5%AE%B6</link>
         <guid isPermaLink="true">/posts/%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E6%88%90%E4%B8%BA%E5%AE%89%E5%85%A8%E4%B8%93%E5%AE%B6</guid>
+=======
+        <link>/posts/how-to-be-a-security-expert</link>
+        <guid isPermaLink="true">/posts/how-to-be-a-security-expert</guid>
+>>>>>>> gh-pages
       </item>
     
       <item>
