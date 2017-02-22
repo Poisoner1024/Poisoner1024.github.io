@@ -1,6 +1,6 @@
 # Mandatory settings
 
-name: Chalk
+name: 毒师1024的处方
 paginate: 25
 paginate_path: "/posts/page/:num/"
 url: # add site url http://example.com/
