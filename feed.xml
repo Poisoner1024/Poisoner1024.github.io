@@ -7,24 +7,20 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>如何修炼成为安全技术专家</title>
-        <description>学习与打磨你自身的安全技术</description>
-        <pubDate>Fri, 10 Feb 2017 00:00:00 +0800</pubDate>
-<<<<<<< HEAD
-        <link>/posts/%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E6%88%90%E4%B8%BA%E5%AE%89%E5%85%A8%E4%B8%93%E5%AE%B6</link>
-        <guid isPermaLink="true">/posts/%E5%A6%82%E4%BD%95%E4%BF%AE%E7%82%BC%E6%88%90%E4%B8%BA%E5%AE%89%E5%85%A8%E4%B8%93%E5%AE%B6</guid>
-=======
-        <link>/posts/how-to-be-a-security-expert</link>
-        <guid isPermaLink="true">/posts/how-to-be-a-security-expert</guid>
->>>>>>> gh-pages
+
+        <title>大型网站技术架构</title>
+        <description>网站架构其实并不难，真正能解决问题的技术一定是简单的。</description>
+        <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/web-site-architecture</link>
+        <guid isPermaLink="true">/posts/web-site-architecture</guid>
       </item>
     
       <item>
-        <title>Big web site evolution history</title>
-        <description>Learn how the big web site evolve.</description>
+        <title>如何修炼成为安全技术专家</title>
+        <description>学习与打磨你自身的安全技术</description>
         <pubDate>Fri, 10 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/big-web-site-evolution</link>
-        <guid isPermaLink="true">/posts/big-web-site-evolution</guid>
+        <link>/posts/how-to-be-a-security-expert</link>
+        <guid isPermaLink="true">/posts/how-to-be-a-security-expert</guid>
       </item>
     
       <item>

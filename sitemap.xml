@@ -2,6 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>/tag/design/</loc>
+<<<<<<< HEAD
 <lastmod>2017-02-22T16:02:47+08:00</lastmod>
 </url>
 <url>
@@ -11,6 +12,17 @@
 <url>
 <loc>/tag/web/</loc>
 <lastmod>2017-02-22T16:02:47+08:00</lastmod>
+=======
+<lastmod>2017-02-23T18:36:15+08:00</lastmod>
+</url>
+<url>
+<loc>/tag/jekyll/</loc>
+<lastmod>2017-02-23T18:36:15+08:00</lastmod>
+</url>
+<url>
+<loc>/tag/web/</loc>
+<lastmod>2017-02-23T18:36:15+08:00</lastmod>
+>>>>>>> gh-pages
 </url>
 <url>
 <loc>/posts/chalk-sample-post-with-all-elements</loc>
@@ -25,12 +37,21 @@
 <lastmod>2016-10-17T00:00:00+08:00</lastmod>
 </url>
 <url>
+<<<<<<< HEAD
 <loc>/posts/big-web-site-evolution</loc>
 <lastmod>2017-02-10T00:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>/posts/how-to-be-a-security-expert</loc>
 <lastmod>2017-02-10T00:00:00+08:00</lastmod>
+=======
+<loc>/posts/how-to-be-a-security-expert</loc>
+<lastmod>2017-02-10T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>/posts/web-site-architecture</loc>
+<lastmod>2017-02-23T00:00:00+08:00</lastmod>
+>>>>>>> gh-pages
 </url>
 <url>
 <loc>/about</loc>
