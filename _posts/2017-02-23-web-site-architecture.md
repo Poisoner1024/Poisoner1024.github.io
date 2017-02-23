@@ -33,7 +33,8 @@ tags: [web, develop]
 随之网站业务的发展，一台服务器逐渐不能满足需求：
 * 越来越多的用户访问导致性能越来越差-并发处理能力差；
 * 越来越多的数据导致存储空间不足；
-这时就需要将应用和数据分离。
+
+* 这时就需要将应用和数据分离。
 {% endhighlight %}
 
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage2.png" path-detail="documentation/web-site-architecture/big-web-site-stage2.png" alt="应用服务和数据服务分离" %}
@@ -45,8 +46,9 @@ tags: [web, develop]
 用户持续增多：
 * 数据库压力太大导致访问延迟；
 * 网站性能差，用户体验收到影响；
-网站访问特点同样遵循二八定律：80%的业务访问集中在20%的数据上。
-数据缓存方案应运而生。
+
+* 网站访问特点同样遵循二八定律：80%的业务访问集中在20%的数据上。
+  数据缓存方案应运而生。
 {% endhighlight %}
 
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage3.png" path-detail="documentation/web-site-architecture/big-web-site-stage3.png" alt="使用缓存改善网站性能" %}
@@ -55,35 +57,93 @@ tags: [web, develop]
 
 #### 2.4 使用应用服务器集群改善网站的并发能力阶段的网站架构
 {% highlight markdown %}
-当使用缓存将数据访问压力得到有效化解后，单一应用服务器能够
-处理的请求连接有限：
-* 网站访问高峰期，应用服务器成为整个网站的瓶颈；
-使用集群是网站解决高并发、海量数据问题的常用手段。
+* 当使用缓存将数据访问压力得到有效化解后，单一应用服务器能够
+  处理的请求连接有限：网站访问高峰期，应用服务器成为整个网站的瓶颈；
+
+* 使用集群是网站解决高并发、海量数据问题的常用手段。
 {% endhighlight %}
 
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage4.png" path-detail="documentation/web-site-architecture/big-web-site-stage4.png" alt="使用应用服务器集群改善网站的并发能力" %}
 
 <p>当有一台服务器的处理能力、存储空间不足时，不要企图去更换更强大的服务器，对于大型网站而言，不管多么强大的服务器，都满足不了网站持续增长的业务需求。此时，应该考虑增加一台服务器分担原有服务器的访问以及存储压力。</p>
 <p>对网站架构而言，只要能通过增加一台服务器的方式改善负载压力，就可以以同样的方式持续增加服务器不断改善系统性能，从而式样系统的可伸缩性。应用服务器实现集群是网站可伸缩集群架构设计中较为简单成熟的一种方式。</p>
-<p>通过负载均衡调度服务器，可将来自用户浏览器的访问请求分发到应用服务器集群中的任何一台服务器上，如果有更多的用户，就在集群中加入更多的应用服务器，是应用服务器不在成为整个网站的瓶颈。</p>
+<p>通过负载均衡调度服务器，可将来自用户浏览器的访问请求分发到应用服务器集群中的任何一台服务器上，如果有更多的用户，就在集群中加入更多的应用服务器，使应用服务器不在成为整个网站的瓶颈。</p>
 
 #### 2.5 数据库读写分离阶段的网站架构
+{% highlight markdown %}
+使用缓存将网站的绝大部分数据读操作可以不通过数据库就能完成，但是：
+* 仍有一部分读操作需要访问数据库-缓存访问不命中、缓存过期；
+* 全部的写操作需要访问数据库；
+  
+* 用户达到一定规模后，数据库因为负载过高而成为网站瓶颈，
+  数据库读写分离功能该登场了。
+{% endhighlight %}
+
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage5.png" path-detail="documentation/web-site-architecture/big-web-site-stage5.png" alt="数据库读写分离" %}
 
+目前大部分的主流数据库都提供主从热备功能，通过配置两台数据库主从关系，可以将一台数据库服务器的数据更新同步到另外一台服务器上，网站利用这一功能，实现数据库读写分离，从而改善数据库负载压力。**为了便于应用程序访问读写分离后的数据库，通常在应用服务器端使用专门的数据访问模块，使数据库读写分离对应用透明。**
+
 #### 2.6 使用反向代理和CDN加速网站响应阶段的网站架构
+{% highlight markdown %}
+为了更好的用户体验，留着客户，网站需要加速访问速度，主要手段：
+* 使用CDN；
+* 使用反向代理；
+{% endhighlight %}
+
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage6.png" path-detail="documentation/web-site-architecture/big-web-site-stage6.png" alt="使用反向代理和CDN加速网站响应" %}
 
+CDN和反向代理的基本原理都是缓存，区别在于CDN部署在网络提供商的机房，用户在请求时，能从最近的机房获取到资源；反向代理部署在网站的中心机房，当用户请求到达中心机房后，首先访问的是机房的反向代理服务器，如果反向代理服务器中存储了用户请求的资源，那么优先返回该部分资源给用户。两者的目的都是尽早返回数据给用户，**一方面加快用户访问速度，另一方面也减轻后端服务器的负载压力。**
+
 #### 2.7 使用分布式文件系统和分布式数据库系统阶段的网站架构
+{% highlight markdown %}
+* 任何强大的单一服务器都满足不了大型网站持续增长的业务需求，
+  这时需要使用分布式数据库。
+{% endhighlight %}
+
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage7.png" path-detail="documentation/web-site-architecture/big-web-site-stage7.png" alt="使用分布式文件系统和分布式数据库系统" %}
 
+分布式数据库是网站数据库拆分的最后手段，只有在单表数据规模非常大的时候才使用。一般情况下，网站更常用的数据库拆分手段是业务分库，将不同业务的数据库部署在不同的物理服务器上。
+
 #### 2.8 使用NoSQL和搜索引擎阶段的网站架构
+{% highlight markdown %}
+* 随着网站业务越来越复杂，对数据存储和检索的需求也
+  越来越复杂，网站需要采用一些非关系数据库技术如：
+  NoSQL和非数据库查询技术如：搜索引擎。
+{% endhighlight %}
+
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage8.png" path-detail="documentation/web-site-architecture/big-web-site-stage8.png" alt="使用NoSQL和搜索引擎" %}
 
+NoSQL和搜索引擎都是源自互联网的技术手段，对可伸缩性的分布式特性具有更好的支持。应用服务器则通过一个统一数据访问模块访问各种数据，减轻应用程序管理诸多数据源的麻烦。
+
 #### 2.9 业务拆分阶段的网站架构
+{% highlight markdown %}
+* 大型网站为了应对日益复杂的业务场景，通过使用分而治之的手段
+  将整个网站业务分成不同的产品线，分归不通的业务团队负责。
+{% endhighlight %}
+
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage9.png" path-detail="documentation/web-site-architecture/big-web-site-stage9.png" alt="业务拆分" %}
 
+具体到技术上，也会根据产品线划分，将一个网站拆分成许多不同的应用，每个独立部署维护。应用之间可以通过一个超链接建立关系，也可以通过消息队列进行数据分发，当然最多的还是通过访问同一个数据存储系统来构成一个关联的完整系统。
+
 #### 2.10 分布式服务阶段的网站架构
+{% highlight markdown %}
+* 随着业务拆分越来越小，存储系统越来越庞大；
+* 应用系统的整体复杂程度呈指数级增加，部署维护越来越困难；
+* 由于所有的应用要和所有的数据库系统连接，在数万台服务器规
+  模的网站中，这些连接的数目是服务器规模的平方，导致数据库
+  连接资源不足，拒绝服务。
+
+* 既然每一个应用系统都需要执行许多相同的业务操作，比如用户管理，
+  商品管理等，那么可以将这些共用的业务提取出来，独立部署。
+* 由这些可复用的业务连接数据库，提供共用业务服务，而应用系统
+  只需要管理用户界面，通过分布式服务调用共用业务服务完成具体
+  业务操作。
+{% endhighlight %}
+
 {% include image.html path="documentation/web-site-architecture/big-web-site-stage10.png" path-detail="documentation/web-site-architecture/big-web-site-stage10.png" alt="分布式服务" %}
+大型网站的架构演化到这里，基本上大多数的技术问题都可以得到解决，诸如跨数据中心的实时数据同步和具体网站业务相关的问题也可以通过组合改进现有的技术架构来解决。
+
+这个世界没有那个网站从诞生起就是大型网站，也没有哪个网站从发布起就有庞大的用户，高并发的访问以及海量的用户，大型网站都是从小型网站发展而来的。大型网站架构技术的核心价值不是从无到有建立一个网站，而是能够伴随小型网站业务的逐步发展，慢慢演化成一个大型网站，在此过程中，不需要放弃什么，不需要推翻什么，不需要剧烈的革命，就慢慢的把一个有=只有一台服务器，几百个用户的小网站演化成一个几十万台服务器，数十亿用户的大型网站。
 
 ### 3. 大型网站架构技术一览
 
