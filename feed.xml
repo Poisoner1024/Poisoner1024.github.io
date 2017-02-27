@@ -8,6 +8,14 @@
     
       <item>
 
+        <title>在代码审查中我们究竟想发现什么？</title>
+        <description>Code Review是植根于工程师骨子里的一种态度</description>
+        <pubDate>Fri, 24 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-review</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-review</guid>
+      </item>
+    
+      <item>
         <title>大型网站技术架构</title>
         <description>网站架构其实并不难，真正能解决问题的技术一定是简单的。</description>
         <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
