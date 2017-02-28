@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 在代码审查中我们究竟想发现什么？- 测试篇</title>
+  <meta name="description" content="Code Review是植根于工程师骨子里的一种态度">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="在代码审查中我们究竟想发现什么？- 测试篇">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/what-to-look-for-in-a-code-review-tests">
+  <meta property="og:description" content="Code Review是植根于工程师骨子里的一种态度">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/what-to-look-for-in-a-code-review-tests">
+  <meta name="twitter:title" content="在代码审查中我们究竟想发现什么？- 测试篇">
+  <meta name="twitter:description" content="Code Review是植根于工程师骨子里的一种态度">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>在代码审查中我们究竟想发现什么？- 测试篇</h1>
+            <p>Code Review是植根于工程师骨子里的一种态度</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                February 27, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/develop">develop</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>这是关于<code class="highlighter-rouge">在代码审查中我们究竟想发现什么?</code>系列6篇文章中的第2篇。</p>
+
+<p>这读下面的内容之前，我们假定：</p>
+<ul>
+  <li>你的团队已经给代码写了自动化测试。</li>
+  <li>测试已经在日常的CI环境中跑了。</li>
+  <li>被review的代码已经通过了自动化编译、测试流程。</li>
+</ul>
+
+<h3 id="1-新代码被修改的代码有没有测试">1. 新代码/被修改的代码有没有测试？</h3>
+<p>新的代码，不管是bug fix还是新的功能点，都需要新的或者更新的测试来覆盖。甚至“非功能”原因的修改如性能问题也能够通过测试来证明。如果在code review过程里没有发现测试，座位一个reviewer的第一个问题就应该问“为什么没有？”。</p>
+
+<h3 id="2-测试是否至少覆盖有疑惑的或者复杂的代码">2. 测试是否至少覆盖有疑惑的或者复杂的代码？</h3>
+<p>在简单的“有没有测试”这个问题之外，我们需要问“重要的代码是否确实被至少一个测试所覆盖？”。</p>
+
+<p>测试覆盖率的检查应该是自动化完成的。但是除了仅仅检查具体的覆盖率百分比，我们可以使用工具来保证我们希望有测试的代码区域是被覆盖的。</p>
+
+<p>考虑下面这个例子：</p>
+<div align="center">
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/code-review-changes.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/code-review-changes.png" alt="Code Review Changes" />
+</a>
+
+</div>
+<p>你可以查看覆盖率报告中的新的代码行来保证它们被充分覆盖。</p>
+<div align="center">
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/code-review-coverage.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/code-review-coverage.png" alt="Code Review Changes" />
+</a>
+
+</div>
+<p>上面的例子中，reviewer可能会让代码作者新增测试去覆盖303行的case，覆盖率检查工具可以把304-306行标注为红色如果它们没有测试覆盖。</p>
+
+<p>100%的测试覆盖基本上对任何一个团队都是个不现实的目标，所以覆盖率检查工具呈现出来的数据可能并没有某些特殊区域被覆盖了来的有价值。</p>
+
+<p>尤其是，当你想检查是否所有的逻辑分支都被覆盖了，以及所有复杂代码区域都被覆盖了。</p>
+<div align="center">
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/code-review-logic-coverage.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/code-review-logic-coverage.png" alt="Code Review Changes" />
+</a>
+
+</div>
+<h3 id="3-我是否能够理解这些测试">3. 我是否能够理解这些测试？</h3>
+<p>测试提供了足够的覆盖率很重要，但是如果，人不能够理解测试，那么测试就有很多的使用局限，当有问题发生时，很难知道如何去fix它们。看下面的例子：</p>
+<div align="center">
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/hard-to-read-test.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/hard-to-read-test.png" alt="Code Review Changes" />
+</a>
+
+</div>
+<p>这是一个相当简单的测试，但是我完全不确定它在测什么。是在测‘save’方法吗？还是‘getMyLongIda’? 为什么同样的事情需要做两遍？
+在测试背后的意图像下面这样可能会很清晰：</p>
+
+<div align="center">
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/clearer-test.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/clearer-test.png" alt="Code Review Changes" />
+</a>
+
+</div>
+<p>你所采用的来澄清一个测试目的的具体的步骤依赖于你的编程语言，代码库，团队以及个人喜好。这个例子描述了通过选择清晰的名字，内联变量和甚至添加注释，作者可以让测试的可读性变得很好，而不是只有他/她自己能看懂。</p>
+<h3 id="4-测试是否满足需求">4. 测试是否满足需求？</h3>
+<p>这部分缺失需要人的经验。在代码review时，需求是是否被满足了需要写在一些正式的文档中，或者用户
+故事卡中，或者包含在一个用户报的bug中，被review的代码需要与初始需求相关连起来。</p>
+
+<p>Reviewer应该定位到原始需要，然后看:</p>
+<ol>
+  <li>测试（不管是单元测试，end-to-end测试，或者其他）是否满足需求。如：需求是“在密码字段中应该允许特殊字符‘#’，‘！’和‘&amp;’”，这里就应该有个用这些特殊字符在密码字段中的测试。如果这个测试使用的是其他不同的特殊字符，那么这些代码是不符合标准的。</li>
+  <li>测试是否覆盖所有提及的要求。在我们刚刚特殊字符的例子中，需求可能说“给用户一个错误信息如果使用了其他特使字符”。这里，reviewer需要检查当使用了一个不合法的字符，测试的结果是什么？</li>
+</ol>
+
+<h3 id="5-我是否能够想出当前已有的测试没有覆盖的cases">5. 我是否能够想出当前已有的测试没有覆盖的cases？</h3>
+<p>我们的需求经常不能够十分的具体。在这些情况下，reviewer首要考虑一些在原始bug/issue/story中没有覆盖到的边缘cases。
+新的功能点，如，“给予特定用户登录系统的能力”，reviewer可以考虑“当用户输入为null的用户名时会发生什么？”，或者“如果用户在系统中不存在会发生什么类型的错误？”。如果类似这样的代码出现被review的代码中，那么reviewer会对这些代码处理了这些情况的信心增加。如果测试中不包含这些异常的cases，那么reviewer必须去代码里面看这些cases有没有被处理。
+如果这些代码存在但是测试中没有这个异常的测试，这就由你的团队去决定你们的规则是什么？你是否需要代码作者加上这些测试？或者你是否对code review证明这边边缘cases被覆盖的结果表示满意？</p>
+
+<h3 id="6-有没有测试去记录代码的局限性">6. 有没有测试去记录代码的局限性？</h3>
+<p>作为一个reviewer，你经常要看被review的代码的局限性。这些局限有时是内在的，如：一次批量处理只能最多处理1000条记录。</p>
+
+<p>一种记录这些内在局限的方式是明确的测试它们。在上面的例子中，我们可以用一个测试去证明如果批量处理的大小大于1000会有一类异常。</p>
+
+<p>在自动化测试中不一定强制性的去表达这些局限，但是如果代码作者已经写了一个测试去展示它们实现的代码的局限，用一个测试区显示这些局限是内在的（并且记录了），不仅仅去忽视它们是十分提倡的。</p>
+<h3 id="7-测试是否是正确的类型等级">7. 测试是否是正确的类型/等级？</h3>
+<p>比如，作者是否在用一个开销很大的集成测试而在这里单元测试也许就足够了？他们写得性能mirco-benchmarks运行起来并不高效，或者是CI环境里面运行起来结果不恒定。</p>
+
+<p>理想情况下， 你的自动化测试将跑的尽可能的快，这意味着昂贵的end-to-end 测试并不需要用来检测所有类型的功能。一个执行数学功能的方法，或者布尔逻辑检测看了起来就是方法级单元测试的很好的候选者。</p>
+<h3 id="8-测试有没有安全方面的考虑">8. 测试有没有安全方面的考虑？</h3>
+<p>安全确实能从code review中大获裨益。后面将有整篇文章讲述这个话题， 但是在测试这个话题上。我们可以给需要一般的安全问题写测试。比如：我们正在写上面log-in代码，我们可能也想写个测试去展示在没有授权前我们不能进入网站被保护的区域（或者请求受保护的方法）</p>
+
+<h3 id="9-性能测试">9. 性能测试</h3>
+<p>性能是reviewer可能要来测试的领域。自动化的性能测试明显是另一种类型的测试，这些内容我们可以在后面的关于性能的那篇文章中详细讨论。</p>
+
+<h3 id="10-审查者同样可以写测试">10. 审查者同样可以写测试</h3>
+<p>不同的组织有不同的code review方法。有时非常清晰，作者为所有的代码改动需求负责，有时更加强调与reviewer合作来完成code review中的建议。</p>
+
+<p>不管你们采取哪种方式，作为一个reviewer去写一些额外的测试插入到代码中对你去理解在review的代码非常有价值。一些方法和code review工具让你去试验这些代码变得比其他方式都容易。在团队中这种方法把code review变得尽可能容易十分有意思。</p>
+
+<p>提供一些额外的测试代码作为review的一部分可能十分有价值，但是同样这不是必须的。</p>
+
+<h3 id="11-写在最后">11. 写在最后</h3>
+<p>Code review有很多的优点，不管你在你的组织里是如何做的。通过code review在代码集成到主代码库之前来发现一些潜在的问题是十分可能的，并且这是去fix的代价很少，因为上下文的逻辑还在开发者的大脑里记得。</p>
+
+<p>作为reviewer，你们应该检查原始的作者写了哪些内容到他们的代码里，这些代码在什么样的情况下可能出问题，以及边缘cases是怎么处理的。如果可能的话，用自动化测试去记录那些期待发生的行为（包括正常使用的cases和异常cases）。</p>
+
+<p>如果review检查了已经存在的测试并且验证了测试的正确性，那么作为团队的一员，你可以对你们code非常的有信心。更好的是，如果这些测试能在CI环境中regularly的运行的话，你可以看到你们的代码一直是运行正常的，它们提供了自动化的回归测试。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=在代码审查中我们究竟想发现什么？- 测试篇 - /posts/what-to-look-for-in-a-code-review-tests ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/what-to-look-for-in-a-code-review-tests', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/what-to-look-for-in-a-code-review-tests', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+
+</body>
+</html>
