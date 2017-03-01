@@ -52,8 +52,11 @@ Code Review是一个很大的课题，这篇文章的目的是概括性的描述
 * 是否存在会在产品中导致代码不能工作的明显错误？代码意外的指向测试环境的database，或者有一些在真实service中需要被清除而没有清理的硬编码stub?
 
 每一个开发者都有自己的建议在如果写出“好”的代码这个话题上，在此只是抛砖引玉，希望有机会能跟大家一起探讨。尽请关照接下来关系这个话题的更细一级的讨论。
-<br>
-PS: 原文来自[UPSOURCE BLOG](https://blog.jetbrains.com/upsource/2015/07/23/what-to-look-for-in-a-code-review/), 谢谢！👏🏻
+
+#### 关于作者
+Trisha Gee为一系列行业开发Java应用程序，包括金融、制造业、软件和非盈利组织，包括各种规模的公司。她在开发Java高性能系统上有丰富经验，并积极帮助开发者使他们拥有高生产率，她也涉足开源开发。Trisha是Sevilla Java用户组和Java Champion的带头人，她信任社区并分享自己的观点，帮助我们从错误中学习，并在成功的基础上继续发展。她是JetBrains技术推广人，也就是说她会不断分享所有有趣的发现。
+
+原文来自[UPSOURCE BLOG](https://blog.jetbrains.com/upsource/2015/07/23/what-to-look-for-in-a-code-review/), 谢谢！👏🏻
 
 
 
