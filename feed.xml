@@ -8,8 +8,16 @@
     
       <item>
 
+        <title>在代码审查中我们究竟想发现什么？- 安全篇</title>
+        <description>没有安全，没有用户</description>
+        <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-security</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-security</guid>
+      </item>
+    
+      <item>
         <title>在代码审查中我们究竟想发现什么？- 测试篇</title>
-        <description>Code Review是植根于工程师骨子里的一种态度</description>
+        <description>没有测试的代码无法提及质量的保证</description>
         <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
         <link>/posts/what-to-look-for-in-a-code-review-tests</link>
         <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-review-tests</guid>
@@ -17,14 +25,16 @@
     
       <item>
         <title>在代码审查中我们究竟想发现什么？- 性能篇</title>
-        <description>Code Review是植根于工程师骨子里的一种态度</description>
+
+        <description>性能是压死骆驼的草堆</description>
         <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
         <link>/posts/what-to-look-for-in-a-code-performance</link>
         <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-performance</guid>
       </item>
     
       <item>
-        <title>在代码审查中我们究竟想发现什么？</title>
+
+        <title>在代码审查中我们究竟想发现什么？- 开篇</title>
         <description>Code Review是植根于工程师骨子里的一种态度</description>
         <pubDate>Fri, 24 Feb 2017 00:00:00 +0800</pubDate>
         <link>/posts/what-to-look-for-in-a-code-review</link>
