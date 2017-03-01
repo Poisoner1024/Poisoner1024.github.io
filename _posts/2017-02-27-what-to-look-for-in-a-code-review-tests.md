@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "在代码审查中我们究竟想发现什么？- 测试篇"
-description: "Code Review是植根于工程师骨子里的一种态度"
+description: "没有测试的代码无法提及质量的保证"
 tags: [web, develop]
 ---
 这是关于`在代码审查中我们究竟想发现什么?`系列6篇文章中的第2篇。
