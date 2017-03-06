@@ -2,7 +2,7 @@
 layout: post
 title: "在代码审查中我们究竟想发现什么？- 性能篇"
 description: "性能是压死骆驼的草堆"
-tags: [web, develop]
+tags: [web, develop, code]
 ---
 这是关于`在代码审查中我们究竟想发现什么?`系列6篇文章中的第3篇。
 

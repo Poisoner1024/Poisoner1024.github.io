@@ -2,7 +2,7 @@
 layout: post
 title: "在代码审查中我们究竟想发现什么？- 测试篇"
 description: "没有测试的代码无法提及质量的保证"
-tags: [web, develop]
+tags: [web, develop, test]
 ---
 这是关于`在代码审查中我们究竟想发现什么?`系列6篇文章中的第2篇。
 

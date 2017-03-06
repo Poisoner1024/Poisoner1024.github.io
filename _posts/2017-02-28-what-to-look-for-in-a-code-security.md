@@ -2,7 +2,7 @@
 layout: post
 title: "在代码审查中我们究竟想发现什么？- 安全篇"
 description: "没有安全，没有用户"
-tags: [web, security]
+tags: [web, develop, security]
 ---
 这是关于`在代码审查中我们究竟想发现什么?`系列6篇文章中的第6篇。
 
