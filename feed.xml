@@ -18,7 +18,7 @@
       <item>
 
         <title>在代码审查中我们究竟想发现什么？- SOLID原则篇</title>
-        <description>Code Review是植根于工程师骨子里的一种态度</description>
+        <description>面向对象编程的五大核心原则</description>
         <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
         <link>/posts/what-to-look-for-in-a-code-solid-principles</link>
         <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-solid-principles</guid>
@@ -89,5 +89,6 @@
         <link>/posts/configuring-chalk</link>
         <guid isPermaLink="true">/posts/configuring-chalk</guid>
       </item>
+
   </channel>
 </rss>
