@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "在代码审查中我们究竟想发现什么？- SOLID原则篇"
-description: "Code Review是植根于工程师骨子里的一种态度"
+description: "面向对象编程的五大核心原则"
 tags: [web, develop, code]
 ---
 这是关于`在代码审查中我们究竟想发现什么?`系列6篇文章中的第5篇。
