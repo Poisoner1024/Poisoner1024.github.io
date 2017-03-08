@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>毒师1024的处方</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>什么是设计模式</title>
+        <description>可复用面向对象软件的基础</description>
+        <pubDate>Tue, 07 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-is-design-pattern</link>
+        <guid isPermaLink="true">/posts/what-is-design-pattern</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>在代码审查中我们究竟想发现什么？- 安全篇</title>
+        <description>没有安全，没有用户</description>
+        <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-security</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-security</guid>
+      </item>
+    
+      <item>
+        <title>在代码审查中我们究竟想发现什么？- SOLID原则篇</title>
+        <description>面向对象编程的五大核心原则</description>
+        <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-solid-principles</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-solid-principles</guid>
+      </item>
+    
+      <item>
+        <title>在代码审查中我们究竟想发现什么？- 测试篇</title>
+        <description>没有测试的代码无法提及质量的保证</description>
+        <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-review-tests</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-review-tests</guid>
+      </item>
+    
+      <item>
+        <title>在代码审查中我们究竟想发现什么？- 性能篇</title>
+        <description>性能是压死骆驼的草堆</description>
+        <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-performance</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-performance</guid>
+      </item>
+    
+      <item>
+        <title>在代码审查中我们究竟想发现什么？- 数据结构篇</title>
+        <description>好的数据结构，好的代码身材</description>
+        <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-data-structures</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-data-structures</guid>
+      </item>
+    
+      <item>
+        <title>在代码审查中我们究竟想发现什么？- 开篇</title>
+        <description>Code Review是植根于工程师骨子里的一种态度</description>
+        <pubDate>Fri, 24 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-to-look-for-in-a-code-review</link>
+        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-review</guid>
+      </item>
+    
+      <item>
+        <title>大型网站技术架构</title>
+        <description>网站架构其实并不难，真正能解决问题的技术一定是简单的。</description>
+        <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/web-site-architecture</link>
+        <guid isPermaLink="true">/posts/web-site-architecture</guid>
+      </item>
+    
+      <item>
+        <title>如何修炼成为安全技术专家</title>
+        <description>学习与打磨你自身的安全技术</description>
+        <pubDate>Fri, 10 Feb 2017 00:00:00 +0800</pubDate>
+        <link>/posts/how-to-be-a-security-expert</link>
+        <guid isPermaLink="true">/posts/how-to-be-a-security-expert</guid>
+      </item>
+    
+      <item>
+        <title>Introducing chalk</title>
+        <description>Chalk is a high quality, completely customizable, performant and 100% free blog template for Jekyll.</description>
+        <pubDate>Mon, 17 Oct 2016 00:00:00 +0800</pubDate>
+        <link>/posts/introducing-chalk</link>
+        <guid isPermaLink="true">/posts/introducing-chalk</guid>
+      </item>
+    
   </channel>
 </rss>
