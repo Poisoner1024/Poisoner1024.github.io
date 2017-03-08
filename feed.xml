@@ -7,6 +7,14 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>设计模式怎样解决设计问题</title>
+        <description>打开正确的使用设计模式的姿势</description>
+        <pubDate>Wed, 08 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/how-to-apply-design-pattern</link>
+        <guid isPermaLink="true">/posts/how-to-apply-design-pattern</guid>
+      </item>
+    
+      <item>
         <title>什么是设计模式</title>
         <description>可复用面向对象软件的基础</description>
         <pubDate>Tue, 07 Mar 2017 00:00:00 +0800</pubDate>
@@ -76,14 +84,6 @@
         <pubDate>Fri, 10 Feb 2017 00:00:00 +0800</pubDate>
         <link>/posts/how-to-be-a-security-expert</link>
         <guid isPermaLink="true">/posts/how-to-be-a-security-expert</guid>
-      </item>
-    
-      <item>
-        <title>Introducing chalk</title>
-        <description>Chalk is a high quality, completely customizable, performant and 100% free blog template for Jekyll.</description>
-        <pubDate>Mon, 17 Oct 2016 00:00:00 +0800</pubDate>
-        <link>/posts/introducing-chalk</link>
-        <guid isPermaLink="true">/posts/introducing-chalk</guid>
       </item>
     
   </channel>
