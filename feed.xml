@@ -7,6 +7,14 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>单元测试代码指导规范</title>
+        <description>如何写出优美而实效的单元测试代码</description>
+        <pubDate>Fri, 10 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/unit-testing-guidelines</link>
+        <guid isPermaLink="true">/posts/unit-testing-guidelines</guid>
+      </item>
+    
+      <item>
         <title>设计模式怎样解决设计问题</title>
         <description>打开正确的使用设计模式的姿势</description>
         <pubDate>Wed, 08 Mar 2017 00:00:00 +0800</pubDate>
@@ -77,14 +85,5 @@
         <link>/posts/web-site-architecture</link>
         <guid isPermaLink="true">/posts/web-site-architecture</guid>
       </item>
-    
-      <item>
-        <title>如何修炼成为安全技术专家</title>
-        <description>学习与打磨你自身的安全技术</description>
-        <pubDate>Fri, 10 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/how-to-be-a-security-expert</link>
-        <guid isPermaLink="true">/posts/how-to-be-a-security-expert</guid>
-      </item>
-    
-  </channel>
+    </channel>
 </rss>
