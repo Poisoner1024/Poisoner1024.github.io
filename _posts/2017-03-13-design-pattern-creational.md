@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "设计模式 - 创建型模式"
+title: "设计模式 - 创建型模式 - 开篇"
 description: "抽象了实例化的过程"
-tags: [design, code]
+tags: [design]
 ---
 
 ### 设计模式分类
@@ -24,72 +24,133 @@ tags: [design, code]
 
 我们将忽略许多迷宫中的细节以及一个迷宫游戏中有一个还是多个游戏者。我们仅仅关注迷宫是怎样被创建的。我们将一个迷宫定义为一系列房间，一个房间知道它的邻居；可能的邻居要么是另一个房间，要么是一堵墙，或者是到另一个房间的一扇门。
 
-类Room、Door和Wall定义了我们所有的例子中使用到的构件。我们仅定义这些类中对创建一个迷宫起重要作用的一些部分。
-
-`下图`表示这些类之间的关系：
-
-
+类Room、Door和Wall定义了我们所有的例子中使用到的构件。我们仅定义这些类中对创建一个迷宫起重要作用的一些部分。下图表示这些类之间的关系：
+{% include image.html path="documentation/design-pattern/Demo-Creational.png" path-detail="documentation/design-pattern/Demo-Creational.png" alt="Demo-Creational" %}
 
 每个房间有四面，我们使用枚举类型Direction来指定房间的东南西北.
-{% highlight markdown %}
+{% highlight java %}
 public enum Direction {
     North, South, East, West
 }
 {% endhighlight %}
-
-类MapSite是所有迷宫组件的公共抽象类。为了简化例子，MapSite仅定义了一个操作Enter，它的含义决定于你在进入什么。如果你进入一个房间，那么你的位置会发生改定。如果你试图进入一扇门，那么这两件事情中就有一件会发生：如果门是开着的，你进入另一个房间。如果门是关着的，那么你就会碰壁。Enter为更加复杂的游戏操作提供了一个简单基础。例如，如果你在一个房间中说“向东走”，游戏只能确定直接在东边的是哪一个MapSite并对它调用Enter。特定子类的Enter操作将计算出你的位置是发生改变，还是你会碰壁。在一个真正的游戏中，Enter可以将移动的游戏者对象作为一个参数
-{% highlight markdown %}
+类MapSite是所有迷宫组件的公共抽象类。为了简化例子，MapSite仅定义了一个操作Enter，它的含义决定于你在进入什么。如果你进入一个房间，那么你的位置会发生改定。如果你试图进入一扇门，那么这两件事情中就有一件会发生：如果门是开着的，你进入另一个房间。如果门是关着的，那么你就会碰壁。
+{% highlight java %}
 public abstract class MapSite {
     public abstract void enter();
 }
 {% endhighlight %}
 
+Enter为更加复杂的游戏操作提供了一个简单基础。例如，如果你在一个房间中说“向东走”，游戏只能确定直接在东边的是哪一个MapSite并对它调用Enter。特定子类的Enter操作将计算出你的位置是发生改变，还是你会碰壁。在一个真正的游戏中，Enter可以将移动的游戏者对象作为一个参数。
 
+Room是MapSite的一个具体的子类，而MapSite定义了迷宫中构件之间的主要关系。Room有指向其他MapSite对象的引用，并保存一个房间号，这个数字用来标识迷宫中的房间。
+{% highlight java %}
+public class Room extends MapSite {
+    private int roomNo;
+    private HashMap<Direction, MapSite> sides;
 
+    Room(int roomNo){
 
+    }
 
+    public MapSite getSides(Direction direction) {
 
+        return sides.get(direction);
+    }
 
+    public void setSides(Direction direction, MapSite side) {
+       sides.put(direction, side);
+    }
 
+    @Override
+    public void enter() {
 
+    }
+}
+{% endhighlight %}
+下面的类描述了一个房间的每一面所出现的墙壁或门。
+{% highlight java %}
+public class Wall extends MapSite {
+    public Wall(){
 
+    }
 
+    @Override
+    public void enter() {
 
+    }
+}
 
+public class Door extends MapSite {
+    public Door(Room room1, Room room2){
 
+    }
 
+    public Room otherSideFrom(Room otherSideFromRoom){
+        return null;
+    }
 
+    @Override
+    public void enter() {
 
+    }
 
+    private Room room1;
+    private Room room2;
+    private boolean isOpen;
+}
+{% endhighlight %}
+我们不仅需要知道迷宫的各部分，还要定义一个用来表示房间集合的Maze类，用RoomNo操作和给定的房间号，Maze就可以找到一个特定的房间。
+{% highlight java %}
+public class Maze {
+    public Maze(){
 
+    }
+    void addRoom(Room room){
 
+    }
+    
+    Room roomNo(int roomNo){
+        return null;
+    }
+    
+//    private Maze maze;
+}
+{% endhighlight %}
+定义的另一个类是MazeGame，由它来创建迷宫。一个简单直接的创建迷宫的方法是使用一系列操作将构建增加到迷宫中，然后连接它们。
+{% highlight java %}
+public class MazeGame {
+    public Maze createMaze(){
+        Maze aMaze = new Maze();
 
+        Room r1 = new Room(1);
+        Room r2 = new Room(2);
+        Door theDoor = new Door(r1, r2);
 
+        aMaze.addRoom(r1);
+        aMaze.addRoom(r2);
 
+        r1.setSides(Direction.North, new Wall());
+        r1.setSides(Direction.East, theDoor);
+        r1.setSides(Direction.North, new Wall());
+        r1.setSides(Direction.West, new Wall());
 
+        r2.setSides(Direction.North, new Wall());
+        r2.setSides(Direction.East, new Wall());
+        r2.setSides(Direction.North, new Wall());
+        r2.setSides(Direction.West, theDoor);
 
+        return aMaze;
+    }
+}
+{% endhighlight %}
+考虑到这个函数所做的仅是创建一个有两个房间的迷宫，它是相当复杂的。显然有办法使它变得更简单。例如：Room的构造器可以提前用墙壁来初始化房间的每一面。但这仅仅是将代码移到其他地方。这个成员成员函数真正的问题不在于它的大小而在于它*不灵活*。它对迷宫的布局进行硬编码。改变布局意味着改变这个成员函数，或是重定义它--这意味着重新实现整个过程--或是对它的部分进行改变--这容易产生错误并且不利于重用。
 
+创建型模式显示如何使得这个设计更*灵活*，但未必会更小。特别是，它们将便于修改定义一个迷宫构件的类。假设你想在一个包含（所有的东西）施了魔法的迷宫的新游戏中重用一个已有的迷宫布局。施了魔法的迷宫游戏有新的构件，像DoorNeedingSpell，它是一扇仅随着一个咒语才能被锁上和打开的门；以及EnchantedRoom，一个可以有不寻常东西的房间，比如魔法钥匙或是咒语。你怎样才能较容易的改变CreateMaze以让它用这些新类型的对象创建迷宫呢？
 
+这种情况下，改变的最大障碍是对被实例化的类进行硬编码。创建型模式提供了多种不同方法从实例化它们的代码中除去对这些具体类的显式引用：
+* 如果CreateMaze调用虚函数而不是构造器来创建它需要的房间、墙壁和门，那么你可以创建一个MazeGame的子类并重新定义这些虚函数，从而改变被实例化的类。这一方法是Factory Method模式的一个例子。
+* 如果传递一个对象给CreateMaze作参数来创建房间、墙壁和门，那么你可以传递不同的参数来改变房间、墙壁和门的类。这是Abstract Factory模式的一个例子。
+* 如果传递一个对象给CreateMaze，这个对象可以在它所建造的迷宫中使用增加房间、墙壁和门的操作，来全面创建一个新的迷宫，那么你可以使用继承来改变迷宫的一些部分或该迷宫的建造的方式。这是Builder模式的一个例子。
+* 如果CreateMaze由多种原型的房间、墙壁和门对象参数化，它拷贝并将这些对象增加到迷宫中，那么你可以用不同的对象替换这些原型对象以改变迷宫的构成。这是Prototype模式的一个例子。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+剩下的创建型模式，Singleton，可以保证每个游戏中仅有一个迷宫而且所有的游戏对象都可以迅速访问它--不需要求助于全局变量或函数。Singleton也使得迷宫易于扩展或替换，且不需要变动已有的代码。
