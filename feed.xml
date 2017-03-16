@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>设计模式 - 创建型模式 - 抽象工厂</title>
+        <description>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类</description>
+        <pubDate>Wed, 15 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-abstract-factory</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-abstract-factory</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 工厂方法</title>
+        <description>定义一个用于创建对象的接口，让子类决定实例化哪一个类</description>
+        <pubDate>Tue, 14 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-factory-method</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-factory-method</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 开篇</title>
+        <description>抽象了实例化的过程</description>
+        <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational</guid>
+      </item>
+    
+      <item>
         <title>单元测试代码指导规范</title>
         <description>如何写出优美而实效的单元测试代码</description>
         <pubDate>Fri, 10 Mar 2017 00:00:00 +0800</pubDate>
@@ -62,28 +86,5 @@
         <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-performance</guid>
       </item>
     
-      <item>
-        <title>在代码审查中我们究竟想发现什么？- 数据结构篇</title>
-        <description>好的数据结构，好的代码身材</description>
-        <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/what-to-look-for-in-a-code-data-structures</link>
-        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-data-structures</guid>
-      </item>
-    
-      <item>
-        <title>在代码审查中我们究竟想发现什么？- 开篇</title>
-        <description>Code Review是植根于工程师骨子里的一种态度</description>
-        <pubDate>Fri, 24 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/what-to-look-for-in-a-code-review</link>
-        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-review</guid>
-      </item>
-    
-      <item>
-        <title>大型网站技术架构</title>
-        <description>网站架构其实并不难，真正能解决问题的技术一定是简单的。</description>
-        <pubDate>Thu, 23 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/web-site-architecture</link>
-        <guid isPermaLink="true">/posts/web-site-architecture</guid>
-      </item>
-    </channel>
+  </channel>
 </rss>
