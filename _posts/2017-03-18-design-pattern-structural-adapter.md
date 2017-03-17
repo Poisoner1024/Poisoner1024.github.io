@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式 - 结构型模式 - 适配器"
 description: "将一个类的接口转换成客户希望的另外一个接口"
-tags: [design]
+tags: [design,pattern]
 ---
 
 ### 类对象结构型模式 - 适配器（ADAPTER）

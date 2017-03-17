@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式 - 创建型模式 - 开篇"
 description: "抽象了实例化的过程"
-tags: [design]
+tags: [design,pattern]
 ---
 
 ### 设计模式分类

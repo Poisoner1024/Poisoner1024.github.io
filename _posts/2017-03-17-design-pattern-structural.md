@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式 - 结构型模式 - 开篇"
 description: "组合类和对象以获得更大的结构"
-tags: [design]
+tags: [design,pattern]
 ---
 
 ### 结构型模式

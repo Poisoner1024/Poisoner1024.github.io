@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式 - 创建型模式 - 工厂方法"
 description: "定义一个用于创建对象的接口，让子类决定实例化哪一个类"
-tags: [design]
+tags: [design,pattern]
 ---
 
 ### 对象创建型模式 -- 工厂方法（Factory Method）

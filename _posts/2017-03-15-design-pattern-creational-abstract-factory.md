@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式 - 创建型模式 - 抽象工厂"
 description: "提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类"
-tags: [design]
+tags: [design,pattern]
 ---
 
 ### 对象创建型模式 -- 抽象工厂（Abstract Factory）
