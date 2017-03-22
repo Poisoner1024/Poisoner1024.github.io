@@ -7,6 +7,22 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>设计模式 - 结构型模式 - 装饰</title>
+        <description>动态地给一个对象添加一些额外的职责</description>
+        <pubDate>Wed, 22 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural-decorator</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural-decorator</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 结构型模式 - 组合</title>
+        <description>将对象组合成树形结构以表示‘部分-整体’的层次结构</description>
+        <pubDate>Tue, 21 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural-composite</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural-composite</guid>
+      </item>
+    
+      <item>
         <title>设计模式 - 结构型模式 - 适配器</title>
         <description>将一个类的接口转换成客户希望的另外一个接口</description>
         <pubDate>Sat, 18 Mar 2017 00:00:00 +0800</pubDate>
@@ -70,20 +86,5 @@
         <guid isPermaLink="true">/posts/what-is-design-pattern</guid>
       </item>
     
-      <item>
-        <title>在代码审查中我们究竟想发现什么？- 安全篇</title>
-        <description>没有安全，没有用户</description>
-        <pubDate>Tue, 28 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/what-to-look-for-in-a-code-security</link>
-        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-security</guid>
-      </item>
-    
-      <item>
-        <title>在代码审查中我们究竟想发现什么？- SOLID原则篇</title>
-        <description>面向对象编程的五大核心原则</description>
-        <pubDate>Mon, 27 Feb 2017 00:00:00 +0800</pubDate>
-        <link>/posts/what-to-look-for-in-a-code-solid-principles</link>
-        <guid isPermaLink="true">/posts/what-to-look-for-in-a-code-solid-principles</guid>
-      </item>
   </channel>
 </rss>
