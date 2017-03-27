@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>设计模式 - 行为模式 - 策略</title>
+        <description>定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换</description>
+        <pubDate>Mon, 27 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-strategy</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-strategy</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 观察者</title>
+        <description>当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</description>
+        <pubDate>Fri, 24 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-observer</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-observer</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 开篇</title>
+        <description>算法和对象间职责的分配</description>
+        <pubDate>Thu, 23 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral</guid>
+      </item>
+    
+      <item>
         <title>设计模式 - 结构型模式 - 装饰</title>
         <description>动态地给一个对象添加一些额外的职责</description>
         <pubDate>Wed, 22 Mar 2017 00:00:00 +0800</pubDate>
@@ -60,30 +84,6 @@
         <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/design-pattern-creational</link>
         <guid isPermaLink="true">/posts/design-pattern-creational</guid>
-      </item>
-    
-      <item>
-        <title>单元测试代码指导规范</title>
-        <description>如何写出优美而实效的单元测试代码</description>
-        <pubDate>Fri, 10 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/unit-testing-guidelines</link>
-        <guid isPermaLink="true">/posts/unit-testing-guidelines</guid>
-      </item>
-    
-      <item>
-        <title>设计模式怎样解决设计问题</title>
-        <description>打开正确的使用设计模式的姿势</description>
-        <pubDate>Wed, 08 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/how-to-apply-design-pattern</link>
-        <guid isPermaLink="true">/posts/how-to-apply-design-pattern</guid>
-      </item>
-    
-      <item>
-        <title>什么是设计模式</title>
-        <description>可复用面向对象软件的基础</description>
-        <pubDate>Tue, 07 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/what-is-design-pattern</link>
-        <guid isPermaLink="true">/posts/what-is-design-pattern</guid>
       </item>
     
   </channel>
