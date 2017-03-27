@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 什么是设计模式</title>
+  <meta name="description" content="可复用面向对象软件的基础">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="什么是设计模式">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/what-is-design-pattern">
+  <meta property="og:description" content="可复用面向对象软件的基础">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/what-is-design-pattern">
+  <meta name="twitter:title" content="什么是设计模式">
+  <meta name="twitter:description" content="可复用面向对象软件的基础">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>什么是设计模式</h1>
+            <p>可复用面向对象软件的基础</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 7, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>设计面向对象软件比较困难，而设计<em>可复用</em>的面向对象软件就更加困难。你必须找到相关的对象，以适当的颗粒度将他们归类，再定义类的接口和继承层次，建立对象之间的基本关系。你的设计应该对手头的问题有针对性，同时对将来的问题和需求也要有足够的通用性。你也希望避免重复设计或尽可能少做重复设计。这时候<em>设计模式</em>就登场了！我们做软件开发的过程中也不断的听到、提到<em>设计模式</em>，那究竟什么是<em>设计模式</em>呢？</p>
+
+<p>Christopher Alexander说过：</p>
+<blockquote>
+  <p>每个模式模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心。这样，你就能一次又一次地使用该方案而不必做重复劳动</p>
+</blockquote>
+
+<p>尽管Alex所指的是城市和建筑模式，但他的思想也同样适用于面向对象设计模式，只是在面向对象的解决方案里，我们用对象和接口代替了墙壁和门窗。两类模式的核心都在于提供了相关问题的解决方案。</p>
+
+<p>一般而言，一个模式有四个基本要素：</p>
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">模式名称</code>(pattern name) 一个助记名，它用一两个词来描述模式的问题、解决方案和效果。命名一个新的模式增加了我们的设计词汇。设计模式允许我们再较高的抽象层次上进行设计。基于一个模式的词汇表，我们自己以及同事之间就可以讨论模式并在编写文档时使用它们。模式名可以帮助我们思考，便于我们与其他人交流设计思想及设计结果。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">问题</code>(problem) 描述了应该在合适使用模式。它解释了设计问题和问题存在的前因后果，它能够描述了特定的设计问题，如怎样对对象表示算法等。也可能描述了导致不灵活设计的类或对象结构。有时候，问题部分会包括使用模式必须满足的一系列先决条件。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">解决方案</code>(solution) 描述了设计的组成部分，它们之间的相互关系及各自的职责和协作方式。因为模式就像一个模板，可应用于多种不同场合，所以解决方案并不描述一个特定而具体的设计或实现，而是提供设计问题的抽象描述和怎样用一个具有一般意思的元素组合（类或对象组合）来解决这个问题。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">效果</code>(consequences) 描述了模式应用效果及使用模式应权衡的问题。尽管我们描述设计决策时，并不总是提到模式效果，但对于评价设计选择和理解使用模式的代价和好处具有重要意义。软件效果大多关注对时间和空间的衡量，它们也表述了语言和实现问题。因为复用是面向对象设计的要素之一，所以模式效果包括对系统的灵活性、扩充性或可移植性的影响，显式地列出这些效果对理解和评价这些模式很有帮助。</p>
+  </li>
+</ol>
+
+<p>一个设计模式命名、抽象确定了一个通用设计结构的主要方面，这些设计结构能被用来构造可复用的面
+向对象设计。设计模式确定了所包含的类和实例，它们的角色、协作方式以及职责分配。每一个设计模式都集中于<em>一个特定的面向对象设计问题或设计要点，描述了什么时候使用它，在另一些设计约束条件下是否还能使用，以及使用的效果和如何取舍。</em></p>
+
+<h3 id="设计模式分类">设计模式分类</h3>
+
+<p>设计模式在粒度和抽象层次上各不相同。我们可以根据两条准则对模式进行分类。第一是<strong>目的</strong>准则，即模式是用来完成什么工作的。模式依据其目的可以分为<strong>创建型（Creational）、结构型（Structural)、行为型（Bahavioral)</strong>三种。创建型模式与对象的创建有关；结构型模式处理类或者对象的组合；行为型模式对类或对象怎样交互和怎样分配职责进行描述。第二是<strong>范围</strong>准则，指定模式主要是用于类还是用于对象。类模式处理类和子类之间的关系，这些关系通过继承建立，是静态的，在编译时刻便确定下来了。对象模式处理对象间的关系，这些关系在运行时刻是可以变化的，更具动态性。从某种意义上来说，几乎所有模式都使用继承机制，所以“类模式”只指那些集中于处理类间关系的模式，而大部分模式都属于对象模式的范畴。</p>
+
+<p>创建型类模式将对象的部分创建工作延迟到子类，而创建型对象模式则将它延迟到另一个对象中。结构型类模式使用继承机制来组合类，而结构型对象模式则描述了对象的组装方式。行为型类模式使用继承描述算法和控制流，而行为型对象模式则描述一组对象怎样协作完成单个对象所无法完成的任务。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=什么是设计模式 - /posts/what-is-design-pattern ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/what-is-design-pattern', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/what-is-design-pattern', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

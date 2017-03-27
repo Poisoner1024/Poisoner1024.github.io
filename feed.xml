@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>毒师1024的处方</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>设计模式 - 行为模式 - 策略</title>
+        <description>定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换</description>
+        <pubDate>Mon, 27 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-strategy</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-strategy</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>设计模式 - 行为模式 - 观察者</title>
+        <description>当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</description>
+        <pubDate>Fri, 24 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-observer</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-observer</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 开篇</title>
+        <description>算法和对象间职责的分配</description>
+        <pubDate>Thu, 23 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 结构型模式 - 装饰</title>
+        <description>动态地给一个对象添加一些额外的职责</description>
+        <pubDate>Wed, 22 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural-decorator</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural-decorator</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 结构型模式 - 组合</title>
+        <description>将对象组合成树形结构以表示‘部分-整体’的层次结构</description>
+        <pubDate>Tue, 21 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural-composite</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural-composite</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 结构型模式 - 适配器</title>
+        <description>将一个类的接口转换成客户希望的另外一个接口</description>
+        <pubDate>Sat, 18 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural-adapter</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural-adapter</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 结构型模式 - 开篇</title>
+        <description>组合类和对象以获得更大的结构</description>
+        <pubDate>Fri, 17 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 抽象工厂</title>
+        <description>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类</description>
+        <pubDate>Wed, 15 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-abstract-factory</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-abstract-factory</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 工厂方法</title>
+        <description>定义一个用于创建对象的接口，让子类决定实例化哪一个类</description>
+        <pubDate>Tue, 14 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-factory-method</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-factory-method</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 开篇</title>
+        <description>抽象了实例化的过程</description>
+        <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational</guid>
+      </item>
+    
   </channel>
 </rss>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 结构型模式 - 开篇</title>
+  <meta name="description" content="组合类和对象以获得更大的结构">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 结构型模式 - 开篇">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-structural">
+  <meta property="og:description" content="组合类和对象以获得更大的结构">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-structural">
+  <meta name="twitter:title" content="设计模式 - 结构型模式 - 开篇">
+  <meta name="twitter:description" content="组合类和对象以获得更大的结构">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 结构型模式 - 开篇</h1>
+            <p>组合类和对象以获得更大的结构</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 17, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 id="结构型模式">结构型模式</h3>
+
+<p>结构型模式涉及到如何组合类和对象以获得更大的结构。</p>
+
+<p>结构型<code class="highlighter-rouge">类模式</code>采用继承机制来组合接口或实现。一个简单的例子是采用多重继承方法将两个以上的类组合成一个，结果这个类包含了所有父类的性质。这一模式尤其有助于多个独立开发的类库协同工作。另外一个例子是类形式的Adapter模式。一般来说，适配器使得一个接口（adaptee的接口）与其他接口兼容，从而给出了多个不同接口的统一抽象。为此，类适配器对一个adaptee类进行私有继承。这样，适配器就可以用adaptee的接口表示它的接口。</p>
+
+<p>结构型<code class="highlighter-rouge">对象模式</code>不是对接口和实现进行组合，而是描述了如何对一些对象进行组合，从而实现新功能的一些方法。因为可以再运行时刻改变对象组合关系，所以对象组合方式具有更大的灵活性，而这个机制用静态类组合是不可能实现的。</p>
+
+<p>Composite模式是结构型对象模式的一个实例。它描述了如何构造一个类层次式结构，这一结构由两种类型对象（基元对象和组合对象）所对应的类构成。其中的组合对象使得你可以组合基元对象以及其他的组合对象，从而形成任意复杂的结构。在Proxy模式中，proxy对象作为其他对象的一个方便的替代或占位符。它的使用可以有多种形式。例如它可以再局部空间中代表一个远程地址空间中的对象，也可以标识一个要求被加载的较大的对象，还可以用来保护对敏感对象的访问。Proxy模式还提供了对对象的一些特有性质的一定程度上的间接访问，从而它可以限制、增强或修改这些性质。</p>
+
+<p>Flyweight模式为了共享对象定义了一个结构。至少有两个原因要求对象共享：<em>效率</em>和<em>一致性</em>。Flyweight的对象共享机制主要强调对象的空间效率。使用很多对象的应用必须考虑每一个对象的开销。使用对象共享而不是进行对象复制，可以节省大量的空间资源。但是仅当这些对象没有定义与上下文相关的状态时，它们才可以被共享。Flyweight的对象没有这样的状态。任何执行任务时需要的其他一些信息仅当需要时才传递过去。由于不存在与上下文相关的状态，因此Flyweight对象可以被自由地共享。</p>
+
+<p>如果说Flyweight模式说明了如何生成很多较小的对象，那么Facade模式则描述了如何用单个对象表示整个子系统。模式中的facade用来表示一组对象，facade的职责是将消息转发给它所表示的对象。Bridge模式将对象的抽象和其实现分离，从而可以独立地改变他们。</p>
+
+<p>Decorator模式描述了如何动态地为对象添加职责。Decorator模式是一种结构型模式。这一模式采用递归方式组合对象，从而允许你添加任意多的对象职责。例如，一个包含用户界面组件的Decorator对象可以将边框或阴影这样的装饰添加到该组件中，或者它可以将窗口滚动和缩放这样的功能添加到组件中。我们可以将一个Decorator对象嵌套在另外一个对象中就可以很简单地增加两个装饰，添加其他的装饰也是如此。因此，每个Decorator对象必须与其组件的接口兼容并且保证将消息传递给它。Decorator模式在转发一条信息之前或之后都可以完成它的工作（比如绘制组件的边框）。</p>
+
+<p>同样许多结构型模式在某种程度上具有相关性，我们会在关于结构型模式的总结中讨论这些关系。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 结构型模式 - 开篇 - /posts/design-pattern-structural ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-structural', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-structural', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
