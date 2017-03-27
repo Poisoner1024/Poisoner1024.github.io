@@ -2,7 +2,7 @@
 layout: post
 title: "设计模式怎样解决设计问题"
 description: "打开正确的使用设计模式的姿势"
-tags: [design, code]
+tags: [design, pattern]
 ---
 设计模式采用多种方法解决面向对象设计中经常碰到的问题。这里给出在面向对象设计中的典型问题以及如果使用设计模式解决它们的方法。
 {% highlight markdown %}
