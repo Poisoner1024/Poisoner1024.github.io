@@ -7,6 +7,14 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>设计模式 - 行为模式 - 模板方法</title>
+        <description>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中</description>
+        <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-template-method</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-template-method</guid>
+      </item>
+    
+      <item>
         <title>设计模式 - 行为模式 - 策略</title>
         <description>定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换</description>
         <pubDate>Mon, 27 Mar 2017 00:00:00 +0800</pubDate>
@@ -76,14 +84,6 @@
         <pubDate>Tue, 14 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/design-pattern-creational-factory-method</link>
         <guid isPermaLink="true">/posts/design-pattern-creational-factory-method</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 创建型模式 - 开篇</title>
-        <description>抽象了实例化的过程</description>
-        <pubDate>Mon, 13 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-creational</link>
-        <guid isPermaLink="true">/posts/design-pattern-creational</guid>
       </item>
     
   </channel>

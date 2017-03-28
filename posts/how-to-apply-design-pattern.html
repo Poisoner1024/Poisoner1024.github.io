@@ -61,8 +61,7 @@
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
                 
-                
-                  1 minute read
+                  2 minute read
                 
               </span>
               <span class="article-list-divider">-</span>
@@ -79,13 +78,13 @@
           <div class="article-content">
             <p>设计模式采用多种方法解决面向对象设计中经常碰到的问题。这里给出在面向对象设计中的典型问题以及如果使用设计模式解决它们的方法。</p>
 
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown"><span class="gt">&gt; 寻找合适的对象</span>
-<span class="gt">&gt; 决定对象的粒度</span>
-<span class="gt">&gt; 指定对象接口</span>
-<span class="gt">&gt; 描述对象的实现</span>
-<span class="gt">&gt; 运用复用机制</span>
-<span class="gt">&gt; 关联运行时刻和编译时刻的结构</span>
-<span class="gt">&gt; 设计应支持变化</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown"><span class="gt">&gt; 寻找合适的对象 - Finding Appropriate Objects </span>
+<span class="gt">&gt; 决定对象的粒度 - Determining Object Granularity</span>
+<span class="gt">&gt; 指定对象接口 - Specifying Object Interfaces</span>
+<span class="gt">&gt; 描述对象的实现 - Specifying Object Implementations</span>
+<span class="gt">&gt; 运用复用机制 - Putting Reuse Mechanisms to Work</span>
+<span class="gt">&gt; 关联运行时刻和编译时刻的结构 - Relating Run-Time and Compile-Time Structures</span>
+<span class="gt">&gt; 设计应支持变化 - Designing for Change</span></code></pre></figure>
 
 <h3 id="1-寻找合适的对象">1. 寻找合适的对象</h3>
 <p>面向对象程序由对象组成，<strong>对象</strong>包括数据和对数据进行操作的过程，过程通常称为<strong>方法</strong>或<strong>操作</strong>。对象在收到<strong>客户</strong>的<strong>请求</strong>（或<strong>消息</strong>）后，执行相应的操作。</p>
@@ -226,49 +225,51 @@
 <p>下面阐述了一些导致重新设计的一般原因，以及解决这些问题的设计模式：</p>
 <ul>
   <li>
-    <p>通过显示地指定一个类来创建对象</p>
+    <p><code class="highlighter-rouge">通过显示地指定一个类来创建对象</code>(Creating an object by specifying a class explicitly.)</p>
 
     <p>在创建对象时指定类名使你受特定实现的约束而不是特定接口的约束。这会使未来的变化更复杂。要避免这种情况，应该间接地创建对象。</p>
 
     <p>设计模式：Abstract Factory，Factory Method, Prototype。</p>
   </li>
   <li>
-    <p>对特殊操作的依赖</p>
+    <p><code class="highlighter-rouge">对特殊操作的依赖</code>(Dependence on specific operations.)</p>
 
     <p>当你为请求指定一个特殊操作时，完成该请求的方式就固定下来了，为了避免把请求代码写死，你将可以再编译时刻或运行时刻很方便地改变响应请求的方法。</p>
 
     <p>设计模式：Chain of Responsibility，Command。</p>
   </li>
   <li>
-    <p>对硬件和软件平台的依赖</p>
+    <p><code class="highlighter-rouge">对硬件和软件平台的依赖</code>(Dependence on hardware and software platform.)</p>
 
     <p>外部操作系统接口和应用编程接口（API）在不同的软硬件平台上是不同的。依赖于特定平台的软件将很难移植到其他平台上，甚至都很难跟上本地平台的更新。所以设计系统时限制其平台相关性就很重要了。</p>
 
     <p>设计模式：Abstract Factory，Bridge。</p>
   </li>
   <li>
-    <p>对对象表示或实现的依赖</p>
+    <p><code class="highlighter-rouge">对对象表示或实现的依赖</code>(Dependence on object representations or implementations.)</p>
 
     <p>知道对象怎样表示、保存、定位或实现的客户在对象发生变化时可能也需要变化。对客户隐藏这些信息能阻止连锁发生。</p>
 
     <p>设计模式：Abstract Factory，Bridge，Memento，Proxy。</p>
   </li>
   <li>
-    <p>算法依赖
-算法在开发和复用时常常被扩展、优化和替代。依赖于某个特定算法的对象在算法发生变化时不得不变化。因此有可能发生变化的算法应该被孤立起来。</p>
+    <p><code class="highlighter-rouge">算法依赖</code>(Algorithmic dependencies.)</p>
+
+    <p>算法在开发和复用时常常被扩展、优化和替代。依赖于某个特定算法的对象在算法发生变化时不得不变化。因此有可能发生变化的算法应该被孤立起来。</p>
 
     <p>设计模式：Builder，Iterator，Strategy，Template Method，Visitor。</p>
   </li>
   <li>
-    <p>紧耦合
-紧耦合的类很难独立地被复用，因为它们是相互依赖的。紧耦合产生单块的系统，要改变或删掉一个类，你必须理解和改变其他许多类。这样的系统是一个很难学习、移植和维护的密集体。</p>
+    <p><code class="highlighter-rouge">紧耦合</code>(Tight coupling.)</p>
+
+    <p>紧耦合的类很难独立地被复用，因为它们是相互依赖的。紧耦合产生单块的系统，要改变或删掉一个类，你必须理解和改变其他许多类。这样的系统是一个很难学习、移植和维护的密集体。</p>
 
     <p>松散耦合提高了一个类本身被复用的可能性，并且系统更易于学习、移植、修改和扩展。设计模式使用抽象耦合和分层技术来提高系统的松散耦合性。</p>
 
     <p>设计模式：Abstract Factory，Command，Facade，Mediator，Observer，Chain of Responsibility。</p>
   </li>
   <li>
-    <p>通过生成子类来扩充功能</p>
+    <p><code class="highlighter-rouge">通过生成子类来扩充功能</code>(Extending functionality by subclassing.)</p>
 
     <p>通常很难通过定义子类来定制对象。每一个新类都有固定的实现开销（初始化、终止处理等）。定义子类还需要对父类有深入的了解。如，重定义一个操作可能需要重定义其他操作。一个被重定义的操作可能需要调用继承下来的操作。并且子类方法会导致类爆炸，因为即使对于一个简单的扩充，你也不得不引入许多新的子类。</p>
 
@@ -277,8 +278,9 @@
     <p>设计模式：Bridge，Chain of Responsibility，Composite，Decorator，Observer，Strategy。</p>
   </li>
   <li>
-    <p>不能方便地对类进行修改
-有时你不得不改变一个难以修改的类。也许你需要源代码而又没有（对于商业类库就是这种情况），或者可能对类的任何改变会要求修改许多已存在的其他子类。设计模式提供在这些情况下对类进行修改的方法。</p>
+    <p><code class="highlighter-rouge">不能方便地对类进行修改</code>(Inability to alter classes conveniently.)</p>
+
+    <p>有时你不得不改变一个难以修改的类。也许你需要源代码而又没有（对于商业类库就是这种情况），或者可能对类的任何改变会要求修改许多已存在的其他子类。设计模式提供在这些情况下对类进行修改的方法。</p>
 
     <p>设计模式：Adapter，Decorator，Visitor。</p>
   </li>
