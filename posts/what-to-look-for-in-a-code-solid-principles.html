@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 在代码审查中我们究竟想发现什么？- SOLID原则篇</title>
+  <meta name="description" content="面向对象编程的五大核心原则">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="在代码审查中我们究竟想发现什么？- SOLID原则篇">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/what-to-look-for-in-a-code-solid-principles">
+  <meta property="og:description" content="面向对象编程的五大核心原则">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/what-to-look-for-in-a-code-solid-principles">
+  <meta name="twitter:title" content="在代码审查中我们究竟想发现什么？- SOLID原则篇">
+  <meta name="twitter:description" content="面向对象编程的五大核心原则">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>在代码审查中我们究竟想发现什么？- SOLID原则篇</h1>
+            <p>面向对象编程的五大核心原则</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                February 27, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/develop">develop</a>
+                
+                  <a href="/tag/code">code</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>这是关于<code class="highlighter-rouge">在代码审查中我们究竟想发现什么?</code>系列6篇文章中的第5篇。</p>
+
+<h3 id="1-什么是solid">1. 什么是SOLID？</h3>
+<p><em>SOLID</em>原则是面向对象设计与编程的五个核心原则。这篇博文并不要是告诉你这是原则是什么或者深入讨论你为什么要遵循它们，而是要帮助Code Reviewer来更容易的发现当代码没有遵循这些原则的时候的问题。</p>
+
+<p><em>SOLID</em> 代表：</p>
+<blockquote>
+  <ul>
+    <li><strong>S</strong> - 单一只能原则</li>
+    <li><strong>O</strong> - 开-闭原则</li>
+    <li><strong>L</strong> - 里氏替换原则</li>
+    <li><strong>I</strong> - 接口分离原则</li>
+    <li><strong>D</strong> - 依赖反转原则</li>
+  </ul>
+</blockquote>
+
+<h3 id="2-单一只能原则single-responsibility-principle">2. 单一只能原则（Single Responsibility Principle）</h3>
+<blockquote>
+  <p>不要多于一个原因修改类。</p>
+
+  <p>There should never be more than one reson for a class to change.</p>
+</blockquote>
+
+<p>很多时候一个很难从单一的一个code review中就能发现。按照定义，代码作者只应有有单一的原因来修改基础代码，如bug fix, 新功能后者一个专门的重构。</p>
+
+<p>你想看看在类中的哪些方法很可能在同一时间被改变，哪一系列方法在修改其他方法的时候不太可能会被改变。例如：
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5SRP1.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5SRP1.png" alt="CR5SRP1" />
+</a></p>
+
+<p>从代码的比对中可以看到，新增了一个功能在<em>TweetMonitor</em>里面，在某类用户接口中使其能够在leaderboard画出前10位Tweeters。这个看起来比较合理，因为它用通过<em>onMessage</em>方法聚合的数据，这里有违反SRP的迹象。方法<em>onMessage</em>和<em>getTweetMessageFromFullTweet</em>都是关于接收和解析一个Twitter信息的，然后<em>draw</em>是将所有的用来在UI上显示的数据进行重新组织。</p>
+
+<p>Reviewer需要指出这两个职责，找出更好的办法来分离这些功能：可以通过把Twitter字符串解析移到不同的类中，或者创建一个新类来渲染leaderboard。</p>
+
+<h3 id="3-开-闭原则open-closed-principle">3. 开-闭原则（Open-Closed Principle）</h3>
+<blockquote>
+  <p>软件实体应该是对扩展开放，对修改关闭。</p>
+
+  <p>Software entities should be open for extension, but closed for modification.</p>
+</blockquote>
+
+<p>当你看到一系列的<em>if</em>表达式来检查某个特定的类型，你可能发现了违反这一原则的线索。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5OCP1.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5OCP1.png" alt="CR5OCP1" />
+</a></p>
+
+<p>上面的代码，当有一个新的<em>Event</em>类型添加到系统的时候，新类型的创建者可能就需要添加另外一个<em>else</em>来处理这个新事件类型。</p>
+
+<p>多态（polymorphism）是用来移除<em>if</em>的好的选择：
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-OCP-remove-if.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-OCP-remove-if.png" alt="CR5-OCP-remove-if" />
+</a></p>
+
+<p><a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-OCP3.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-OCP3.png" alt="CR5-OCP3" />
+</a></p>
+
+<p>同样，对这个问题也不止这一个解决方案，但是关键是移除复杂的 <em>if/else</em>和<em>instanceof</em>检查。</p>
+
+<h3 id="4-里氏替换原则liskov-substitution-principle">4. 里氏替换原则（Liskov Substitution Principle）</h3>
+<blockquote>
+  <p>能对基础类引用的方法必须能够在不知道引申类对象的情况下使用它。</p>
+
+  <p>Functions that use references to base classes must be able to use objects of derived classes without knowing it.</p>
+</blockquote>
+
+<p>一个很容易发现违法这一原则的方法是寻找明确的转型（casting）。如果你必须把一个对象转换成其他类型，在不了解引申类的情况下没有使用基类。
+更多细小违法这一原则的迹象可以再检查下面的内容里发现。</p>
+<ul>
+  <li>前提条件不能强加子类型；</li>
+  <li>后置调价不能弱化为子类型；
+想象下，例如，我们有个抽象的<em>Order</em>，它有一系列的子类，<em>BookOrder</em>，<em>ElectronicsOrder</em>,等等。 方法<em>placeOrder</em>可以带有一个<em>Warehouse</em>，并且可以用它来修改仓库中的物理原件的目录等级。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP4.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP4.png" alt="CR5-LSP4" />
+</a></li>
+</ul>
+
+<p>现在我们引入电子礼品卡的概念， 它只是仅仅往钱包中放入收支，但是不需要物理目录。如果实现如<em>GiftCardOrder</em>，那么<em>placeOrder</em>方法不需要使用<em>warehouse</em>参数。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP12.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP12.png" alt="CR5-LSP12" />
+</a></p>
+
+<p>这个看上去像逻辑上使用了继承（inheritance），但事实上你可以认为<em>GiftCardOrder</em>中的代码期望这个类能与其他的类有相似的功能，如，你可以把这个传给所有的子类：
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP2.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP2.png" alt="CR5-LSP2" />
+</a></p>
+
+<p>但是在<em>GiftCardOrder</em>里面这个不会被传递，<em>GiftCardOrder</em>有一个不同的订单行为。如果你看到这样的代码，你需要注意这里的继承的使用，可能订单行为可以插在用组合代替继承的实现里面。</p>
+
+<h3 id="5-接口分离原则interface-segregation-principle">5. 接口分离原则（Interface Segregation Principle）</h3>
+<blockquote>
+  <p>许多特定客户端的接口要好于一个通用目的的接口</p>
+
+  <p>Many client specific interfaces are better than one general purpose interface</p>
+</blockquote>
+
+<p>如果接口里面有许多的方法，你可能很容易发现这一远程被违反了。这个原则也是遵从SRP的，你可以看到有多个方法的接口实际上在一个区域功能上又多个职责。</p>
+
+<p>但是有时一个接口甚至只有区区两个方法也应该别分成两个接口：
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP3.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-LSP3.png" alt="CR5-LSP3" />
+</a></p>
+
+<p>这个例子里面，如果<em>decode</em>方法有时不需要，在不同的使用场景下，codec可能被当作一个encoder或者decoder，这里最好将<em>SimpleCodec</em>接口分开成<em>Encoder</em>和<em>Decoder</em>。有些类可以选择两个都实现，但是它可以不用实现一个<em>override</em>的方法当它不需要的时候，或者一个类只需要<em>Encoder</em>就不需要知道有<em>decode</em>的实现。</p>
+
+<h3 id="6-依赖反转原则dependency-inversion-principle">6. 依赖反转原则（Dependency Inversion Principle）</h3>
+<blockquote>
+  <p>依赖于抽象，不要依赖于具体。</p>
+
+  <p>Depend upon Abstractions. Do not depend upon concretions.</p>
+</blockquote>
+
+<p>我们尝试着去找到一些违反这一原则的简单的cases，比如，<em>liberal</em>中用<em>new</em>关键字（代替依赖注入或工厂）和十分容易接受的集合类型（如申明<em>ArrayList</em>变量或参数来替代<em>List</em>），reviewer要确定代码作者使用或新建了正确的抽象。</p>
+
+<p>看个例子，service-level代码使用了一个直接的<em>database</em>连接来进行读写数据操作：
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR5-DIP1.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/what-to-look-for-in-a-code-review/CR5-DIP1.png" alt="CR5-DIP1" />
+</a></p>
+
+<p>这段代码依赖于很多特殊的实现细节：<em>JDBC</em>作为关系型<em>database</em>连接；具体的<em>database</em>的<em>SQL</em>；已知的<em>database</em>结构；等等。这个确实需要存在你的系统的某个位置，但是不应该出现在这里，因为这里的其他方法并不需要了解关于<em>database</em>的细节。做好是提取出<em>DAO</em>或者是使用<em>Repository Pattern</em>,往这个<em>service</em>里面注入<em>DAO</em>或<em>repository</em>。</p>
+
+<h3 id="7-写在最后">7. 写在最后</h3>
+<p>有些代码的坏味道会反映出一个或多个SOLID的原则被违反了：</p>
+<ul>
+  <li>长的<em>if/esle</em>申明</li>
+  <li>向下转型</li>
+  <li>很多公共方法</li>
+  <li>抛出<em>UnsupportedOperatioException</em>的实现方法</li>
+</ul>
+
+<p>和所有的设计问题一样，需要找到团队的喜好与遵循这些原则之间的平衡。但是如果你在code review中发现复杂的代码，你可能会发现这时如果你应用上述的一个原则会提供一个更简单的，更容易理解的解决方案。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=在代码审查中我们究竟想发现什么？- SOLID原则篇 - /posts/what-to-look-for-in-a-code-solid-principles ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/what-to-look-for-in-a-code-solid-principles', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/what-to-look-for-in-a-code-solid-principles', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
