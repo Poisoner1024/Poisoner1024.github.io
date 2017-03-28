@@ -6,13 +6,13 @@ tags: [design, pattern]
 ---
 设计模式采用多种方法解决面向对象设计中经常碰到的问题。这里给出在面向对象设计中的典型问题以及如果使用设计模式解决它们的方法。
 {% highlight markdown %}
-> 寻找合适的对象
-> 决定对象的粒度
-> 指定对象接口
-> 描述对象的实现
-> 运用复用机制
-> 关联运行时刻和编译时刻的结构
-> 设计应支持变化
+> 寻找合适的对象 - Finding Appropriate Objects 
+> 决定对象的粒度 - Determining Object Granularity
+> 指定对象接口 - Specifying Object Interfaces
+> 描述对象的实现 - Specifying Object Implementations
+> 运用复用机制 - Putting Reuse Mechanisms to Work
+> 关联运行时刻和编译时刻的结构 - Relating Run-Time and Compile-Time Structures
+> 设计应支持变化 - Designing for Change
 {% endhighlight %}
 ### 1. 寻找合适的对象
 面向对象程序由对象组成，**对象**包括数据和对数据进行操作的过程，过程通常称为**方法**或**操作**。对象在收到**客户**的**请求**（或**消息**）后，执行相应的操作。
@@ -144,40 +144,44 @@ tags: [design, pattern]
 设计模式可以确保系统能以特定方式变化，从而帮助你避免重新设计系统。每一个设计模式允许系统结构的某个方面的变化独立于其他方面，这样产生的系统对于某一种特殊变化将更健壮。
 
 下面阐述了一些导致重新设计的一般原因，以及解决这些问题的设计模式：
-* 通过显示地指定一个类来创建对象
+* `通过显示地指定一个类来创建对象`(Creating an object by specifying a class explicitly.)
 
   在创建对象时指定类名使你受特定实现的约束而不是特定接口的约束。这会使未来的变化更复杂。要避免这种情况，应该间接地创建对象。
 
   设计模式：Abstract Factory，Factory Method, Prototype。
-* 对特殊操作的依赖
+
+* `对特殊操作的依赖`(Dependence on specific operations.)
 
   当你为请求指定一个特殊操作时，完成该请求的方式就固定下来了，为了避免把请求代码写死，你将可以再编译时刻或运行时刻很方便地改变响应请求的方法。
 
   设计模式：Chain of Responsibility，Command。
-* 对硬件和软件平台的依赖
+
+* `对硬件和软件平台的依赖`(Dependence on hardware and software platform.)
 
   外部操作系统接口和应用编程接口（API）在不同的软硬件平台上是不同的。依赖于特定平台的软件将很难移植到其他平台上，甚至都很难跟上本地平台的更新。所以设计系统时限制其平台相关性就很重要了。
 
   设计模式：Abstract Factory，Bridge。
 
-* 对对象表示或实现的依赖
-  
+* `对对象表示或实现的依赖`(Dependence on object representations or implementations.) 
+
   知道对象怎样表示、保存、定位或实现的客户在对象发生变化时可能也需要变化。对客户隐藏这些信息能阻止连锁发生。
 
   设计模式：Abstract Factory，Bridge，Memento，Proxy。
 
-* 算法依赖
+* `算法依赖`(Algorithmic dependencies.)
+
   算法在开发和复用时常常被扩展、优化和替代。依赖于某个特定算法的对象在算法发生变化时不得不变化。因此有可能发生变化的算法应该被孤立起来。
 
   设计模式：Builder，Iterator，Strategy，Template Method，Visitor。
 
-* 紧耦合
+* `紧耦合`(Tight coupling.)
+
   紧耦合的类很难独立地被复用，因为它们是相互依赖的。紧耦合产生单块的系统，要改变或删掉一个类，你必须理解和改变其他许多类。这样的系统是一个很难学习、移植和维护的密集体。
 
   松散耦合提高了一个类本身被复用的可能性，并且系统更易于学习、移植、修改和扩展。设计模式使用抽象耦合和分层技术来提高系统的松散耦合性。
 
   设计模式：Abstract Factory，Command，Facade，Mediator，Observer，Chain of Responsibility。
-* 通过生成子类来扩充功能
+* `通过生成子类来扩充功能`(Extending functionality by subclassing.)
 
   通常很难通过定义子类来定制对象。每一个新类都有固定的实现开销（初始化、终止处理等）。定义子类还需要对父类有深入的了解。如，重定义一个操作可能需要重定义其他操作。一个被重定义的操作可能需要调用继承下来的操作。并且子类方法会导致类爆炸，因为即使对于一个简单的扩充，你也不得不引入许多新的子类。
 
@@ -185,13 +189,13 @@ tags: [design, pattern]
 
   设计模式：Bridge，Chain of Responsibility，Composite，Decorator，Observer，Strategy。
 
-* 不能方便地对类进行修改
+* `不能方便地对类进行修改`(Inability to alter classes conveniently.)
+
   有时你不得不改变一个难以修改的类。也许你需要源代码而又没有（对于商业类库就是这种情况），或者可能对类的任何改变会要求修改许多已存在的其他子类。设计模式提供在这些情况下对类进行修改的方法。
 
   设计模式：Adapter，Decorator，Visitor。
 
 这些例子反映了使用设计模式有助于增强软件的灵活性。这种灵活性所具有的重要程度取决于你将要建造的软件系统。
-
 
 
 
