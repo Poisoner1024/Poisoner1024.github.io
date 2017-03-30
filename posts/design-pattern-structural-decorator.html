@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 结构型模式 - 装饰</title>
+  <meta name="description" content="动态地给一个对象添加一些额外的职责">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 结构型模式 - 装饰">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-structural-decorator">
+  <meta property="og:description" content="动态地给一个对象添加一些额外的职责">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-structural-decorator">
+  <meta name="twitter:title" content="设计模式 - 结构型模式 - 装饰">
+  <meta name="twitter:description" content="动态地给一个对象添加一些额外的职责">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 结构型模式 - 装饰</h1>
+            <p>动态地给一个对象添加一些额外的职责</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 22, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 id="对象结构型模式---装饰decorator">对象结构型模式 - 装饰（DECORATOR）</h3>
+
+<h4 id="1-意图">1. 意图</h4>
+<p>动态地给一个对象添加一些额外的职责。就增加功能来说，Decorator模式比生产子类更为灵活。</p>
+
+<h4 id="2-别名">2. 别名</h4>
+<p>包装器Wrapper</p>
+
+<h4 id="3-动机">3. 动机</h4>
+<p>有时我们希望给某个对象而不死整个类添加一些功能。例如，一个图形用户界面工具箱允许你对任意一个用户界面组件添加一些特性，例如边框，或是一些行为，例如窗口滚动。</p>
+
+<p>使用继承机制是添加功能的一种有效途径，从其他类继承过来的边框特性可以被多个子类的实例所使用。但这个方法不够灵活，因为边框的选择是静态的，用户不能控制对组件加边框的方式和时机。</p>
+
+<p>一种较为灵活的方式是将组件嵌入另一个对象中，由这个对象添加边框。我们称这个嵌入的对象为<strong>装饰</strong>。这个装饰与所有的装饰的组件接口一致，因此它对使用该组件的客户透明。它将客户请求转发给该组件，并且可能在转发前后执行一些额外的动作（例如画一个边框）。透明性使得你可以递归的嵌套多个装饰，从而可以添加任意多的功能。</p>
+
+<p>例如，假定有一个对象TextView，它可以再窗口中显示正文。缺省的TextView没有滚动条，因为我们可能有时并不需要滚动条。当需要滚动条时，我们可以用ScrollDecorator添加滚动条。如果我们还想再TextView周围添加一个粗黑边框，可以使用BorderDecorator添加。因此只要简单地将这些装饰和TextView进行组合，就可以达到预期的效果。 
+<a href="/assets/documentation/design-pattern/Decorator-Composite-Demo.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Decorator-Composite-Demo.png" alt="Decorator-Composite-Demo" />
+</a></p>
+
+<p>ScrollDecorator和BorderDecorator类是Decorator类的子类。Decorator类是一个可视组件的抽象类，用于装饰其他可视组件，如下图所示。
+<a href="/assets/documentation/design-pattern/Decorator-Demo.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Decorator-Demo.png" alt="Decorator-Demo" />
+</a></p>
+
+<p>VisualComponent是一个描述可视对象的抽象类，它定义了绘制和事件处理的接口。<code class="highlighter-rouge">注意</code>Decorator类怎样将绘制请求简单地发送给它的组件，以及Decorator的子类如何扩展这个操作。</p>
+
+<p>Decorator的子类为特定功能可以自由地添加一些操作。例如，如果其他对象知道界面中恰好有一个ScrollDecorator对象，这些对象就可以用ScrollDecorator兑现搞得ScrollTo操作滚动这个界面。这个模式中有一点很重要，它使得在VisualComponent可以出现的任何地方都可以有装饰。因此，客户通常不会感觉到装饰过的组件与为装饰组件之间的差异，也不会与装饰产生任何依赖关系。</p>
+
+<h4 id="4-适用性">4. 适用性</h4>
+<ul>
+  <li>在不影响其他对象的情况下，以动态、透明的方式给对个对象添加职责。</li>
+  <li>处理那些可以撤销的职责。</li>
+  <li>当不能采用生成子类的方法进行扩充时。一种情况是，可能有大量独立的扩展，为支持每一种组合将产生大量的子类，使得子类数目呈爆炸式增长。另一种情况可能是因为类定义被隐藏，或类定义不能用于生成子类。</li>
+</ul>
+
+<h4 id="5-结构">5. 结构</h4>
+<p><a href="/assets/documentation/design-pattern/Decorator-Pattern-Structure.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Decorator-Pattern-Structure.png" alt="Decorator-Pattern-Structure" />
+</a></p>
+
+<h4 id="6-参与者">6. 参与者</h4>
+<ul>
+  <li>Component（VisualComponent）  定义一个对象接口，可以给这些对象动态地添加职责。</li>
+  <li>ConcreteComponent（TextView）  定义一个对象，可以给这个对象添加一些职责。</li>
+  <li>Decorator  维持一个指向Component对象的指针，并定义一个与Component接口一致的接口。</li>
+  <li>ConcreteDecorator（BorderDecorator，ScrollDecorator）  向组件添加职责。</li>
+</ul>
+
+<h4 id="7-协作">7. 协作</h4>
+<p>Decorator将请求转发给它的Component对象，并有可能在转发请求前后执行一些附加的动作。</p>
+
+<h4 id="8-效果">8. 效果</h4>
+<p>Decorator模式至少有两个主要的<code class="highlighter-rouge">优点</code>与<code class="highlighter-rouge">缺点</code>：</p>
+<ul>
+  <li>
+    <p>比静态继承更灵活</p>
+
+    <p>与对象的静态继承（多重继承）相比，Decorator模式提供了更加灵活的向对象添加职责的方式。可以用添加和分离的方法，用装饰在运行时候增加和删除职责。相比之下，继承机制要求为每个添加的职责创建一个新的子类（例如，BorderScrollableTextView，BorderedTextView)。这会产生许多新的类，并且会增加系统的复杂度。此外，为一个特定的Component类提供多个不同的Decorator类，这就使得你可以对一些职责进行混合和匹配。使用Decorator模式可以很容易地重复添加一个特性，例如在TextView上添加双边框时，仅需将添加两个BorderDecorator即可。而两次继承Border类则极容易出错。</p>
+  </li>
+  <li>
+    <p>避免在层次结构高层的类有太多的特性</p>
+
+    <p>Decorator模式提供了一种“即用即付”的方法来添加职责。它并不试图在一个复杂的可定制的类中支持所有可预见的特征，相反，你可以定义一个简单的类，并且用Decorator类给它逐渐地添加功能。可以从简单的部件组合出复杂的功能。这样，应用程序不必为不需要的特征付出代价。同时也更易于不依赖于Decorator所扩展（甚至是不可预知的扩展）的类而独立地定义新类型的Decorator。扩展一个复杂类的时候，很可能会暴露与添加的职责无关的细节。</p>
+  </li>
+  <li>
+    <p>Decorator与它的Component不一样</p>
+
+    <p>Decorator是一个透明的包装。如果我们从对象标识的观点出发，一个被装饰了的组件与这个组件是有差别的，因此，使用装饰时不应该依赖对象标识。</p>
+  </li>
+  <li>
+    <p>有许多小对象</p>
+
+    <p>采用Decorator模式进行系统设计往往会产生许多看上去类似的小对象，这些对象仅仅在他们相互连接的方式上有所不同，而不是它们的类或是它们的属性值有所不同。尽管对于那些了解这些系统的人来说，很容易对它们进行定制，但是很难学习这些系统，排错也很困难。</p>
+  </li>
+</ul>
+
+<h4 id="9-实现">9. 实现</h4>
+<p>使用Decorator模式时应注意一下几点：</p>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">接口的一致性</code>  装饰对象的接口必须与它所装饰的Component的接口是一致的，因此，所有的ConcreteDecorator类必须有一个公共的父类（至少在C++中如此）。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">省略抽象的Decorator类</code>  当你仅需要添加一个职责时，没有必要定义抽象Decorator类。你常常需要处理现存的类层次而不是设计一个新系统，这时你可以把Decorator向Component转发请求的责任合并到ConcreteDecorator中。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">保持Component类的简单性</code>  为了保证接口的一致性，组件和装饰必须有一个公共的Component父类。因此保持这个类的简单性是很重要的；即，它应集中于定义接口而不是存储数据。对数据表示的定义应延迟到子类中，否则Component类会变得过于复杂和庞大，因而难以大量使用。赋予Component太多的功能也使得，具体的子类有一些它们并不需要的功能的可能性大大增加。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">改变对象外壳与改变对象内核</code> 我们可以将Decorator看作一个对象的外壳，它可以改变这个对象的行为。另外一种方法是改变对象的内核。例如，Strategy模式就是一个用于改变内核的很好的模式。当Component类原本就很庞大时，使用Decorator模式代价太高，Strategy模式相对更好一些。在Strategy模式中，组件将它的一些行为转发个一个独立的策略对象，我们可以替换strategy对象，从而改变或扩充组件的功能。</p>
+  </li>
+</ul>
+
+<h4 id="10-代码示例">10. 代码示例</h4>
+<p>我们假定已经存在一个Component类VisualComponent。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">VisualComponent</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">VisualComponent</span><span class="o">(){</span>
+
+    <span class="o">};</span>
+
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">resize</span><span class="o">();</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>定义一个VisualComponent的一个子类Decorator，我们将生成Decorator的子类以获取不同的装饰。Decorator装饰由_component实例变量引用的VisualComponent，这个实例变量在构造器中被初始化。对于VisualComponent接口中定义的每一个操作，Decorator类都定义了一个缺省的实现，这一实现将请求转发给_component。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Decorator</span> <span class="kd">extends</span> <span class="n">VisualComponent</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">VisualComponent</span> <span class="n">_component</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Decorator</span><span class="o">(</span><span class="n">VisualComponent</span> <span class="n">component</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">_component</span> <span class="o">=</span> <span class="n">component</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">draw</span><span class="o">(){</span>
+        <span class="n">_component</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">resize</span><span class="o">(){</span>
+        <span class="n">_component</span><span class="o">.</span><span class="na">resize</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Decorator的子类定义了特殊的装饰功能，例如，BorderDecorator类为它所包含的组件添加了一个边框。BorderDecorator是Decorator的子类，它重定义Draw操作用于绘制边框。同时BorderDecorator还定义了一个私有的辅助操作DrawBorder，由它绘制边框。这些子类继承了Decorator类所有其他的操作。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BorderDecorator</span> <span class="kd">extends</span> <span class="n">Decorator</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">_width</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">BorderDecorator</span><span class="o">(</span><span class="n">VisualComponent</span> <span class="n">component</span><span class="o">,</span> <span class="kt">int</span> <span class="n">borderWidth</span><span class="o">){</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">component</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">_width</span> <span class="o">=</span> <span class="n">borderWidth</span><span class="o">;</span>
+
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">draw</span><span class="o">(){</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+        <span class="n">drawBorder</span><span class="o">(</span><span class="n">_width</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">drawBorder</span><span class="o">(</span><span class="kt">int</span> <span class="n">width</span><span class="o">){</span>
+        <span class="c1">//do something</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>类似的可以实现DropShadowDecorator，它们给可视组件添加滚动和阴影功能。现在我们组合这些类的实例以提供不同的装饰效果，一下代码展示了如何使用Decorator创建一个具有边界的可滚动TextView。首先将一个可视组件放入窗口对象中，假设Window类已经提供了setContents操作</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Window</span> <span class="n">window</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Window</span><span class="o">();</span>
+<span class="n">TextView</span> <span class="n">textView</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">();</span>
+
+<span class="n">window</span><span class="o">.</span><span class="na">setContents</span><span class="o">(</span><span class="n">textView</span><span class="o">);</span> 
+
+<span class="c1">//如果要添加一个有边界和可以滚动的TextView</span>
+<span class="n">window</span><span class="o">.</span><span class="na">setContents</span><span class="o">(</span><span class="k">new</span> <span class="n">BorderDecorator</span><span class="o">(</span>
+    <span class="k">new</span> <span class="nf">ScrollDecorator</span><span class="o">(</span><span class="n">textView</span><span class="o">),</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="o">);</span></code></pre></figure>
+
+<p>由于Window通过VisualComponent接口访问它的内容，因此它并不知道存在该装饰。如果你需要直接与正文视图交互，例如，你想调用一些操作，而这些操作不是VisualComponent接口的一部分，此时你可以跟踪正文视图。依赖于组件标识的客户也应该直接应用它。</p>
+
+<h4 id="11-已知应用">11. 已知应用</h4>
+<p>许多面向对象的用户界面工具箱使用装饰为你窗口组件添加图形装饰。但是Decorator模式不仅仅局限于图形用户界面，下面的例子说明了这一点。</p>
+
+<p>Streams是大多数I/O设备的基础抽象结构，它提供了将对象转换成字节或字符流的操作接口，使我们可以将一个对象转变成一个文件或内存中的字符串，可以再以后恢复使用。一个简单直接的方法是定义一个抽象的Stream类，它有两个子类MemoryStream与FileStream。但是假定我们还希望能够做下面一些事情：</p>
+<ul>
+  <li>用不同的压缩算法对数据流进行压缩。</li>
+  <li>将数据简化为7位ASCII码字符，这样它就可以在ASCII信道上传输。</li>
+</ul>
+
+<p>下图的给出了一个解决问题的方法。
+<a href="/assets/documentation/design-pattern/Decorator-Application-Stream.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Decorator-Application-Stream.png" alt="Decorator-Application-Stream" />
+</a></p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Stream</span> <span class="n">aStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CompressingStream</span><span class="o">(</span>
+    <span class="k">new</span> <span class="nf">ASCIIStream</span><span class="o">(</span>
+        <span class="k">new</span> <span class="nf">FileStream</span><span class="o">(</span><span class="s">"aFileName"</span><span class="o">))</span>
+    <span class="o">);</span>
+
+<span class="n">aStream</span><span class="o">.</span><span class="na">putInt</span><span class="o">(</span><span class="mi">12</span><span class="o">);</span>
+<span class="n">aStream</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">"aString"</span><span class="o">);</span></code></pre></figure>
+
+<h4 id="12-相关模式">12. 相关模式</h4>
+<p>Adapter模式：Decorator模式不同于Adapter模式，因为装饰仅改变对象的职责而不改变它的接口；而适配器将给对象一个全新的接口。</p>
+
+<p>Composite模式：可以将装饰视为一个退化的、仅有一个组件的组合。然而，装饰仅给对象添加一些额外的职责 – 它的目的不在于对象聚集。</p>
+
+<p>Strategy模式：用一个装饰你可以改变对象的外表；而Strategy模式使你可以改变对象的内核。这是改变对象的两种途径。</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 结构型模式 - 装饰 - /posts/design-pattern-structural-decorator ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-structural-decorator', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-structural-decorator', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

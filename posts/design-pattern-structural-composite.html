@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 结构型模式 - 组合</title>
+  <meta name="description" content="将对象组合成树形结构以表示‘部分-整体’的层次结构">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 结构型模式 - 组合">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-structural-composite">
+  <meta property="og:description" content="将对象组合成树形结构以表示‘部分-整体’的层次结构">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-structural-composite">
+  <meta name="twitter:title" content="设计模式 - 结构型模式 - 组合">
+  <meta name="twitter:description" content="将对象组合成树形结构以表示‘部分-整体’的层次结构">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 结构型模式 - 组合</h1>
+            <p>将对象组合成树形结构以表示‘部分-整体’的层次结构</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 21, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 id="对象结构型模式---组合composite">对象结构型模式 - 组合（COMPOSITE）</h3>
+
+<h4 id="1-意图">1. 意图</h4>
+<p>将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对当个对象和组合对象的使用具有一致性。</p>
+
+<h4 id="2-动机">2. 动机</h4>
+<p>在绘图编辑器和图形捕捉系统这样的图形应用程序中，用户可以使用简单的组件创建复杂的图表。用户可以组合多个简单组件以形成一些较大的组件，这些组件又可以组合成更大的组件。一个简单的实现方法是Text和Line这样的图元定义一些类，另外定义一些类作为这些图元的容器类（Container）。</p>
+
+<p>然后这种方法存在一个问题：使用这些类的代码必须区别对待图元对象与容器对象，而实际上大多数情况下用户认为它们是一样的。对这些类区别使用，使得程序更加负责。Composite模式描述了如何使用递归组合，使得用户不必对这些类进行区别，如下图所示。
+<a href="/assets/documentation/design-pattern/Composite-Demo.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Composite-Demo.png" alt="Composite-Demo" />
+</a></p>
+
+<p>Composite模式的关键是一个抽象类，它既可以代表图元，又可以代表图元的容器。在图形系统中这个类就是Graphic，它声明一些与特定图形对象相关的操作，例如Draw。同时它也声明了所有的组合对象共享的一些操作，例如一些操作用于访问和管理它的子部件。</p>
+
+<p>子类Line，Rectangle和Text定义了一些图元对象，这些类实现Draw，分别用于绘制直线、矩形和正文。由于图元都没有子图形，因此它们都不执行与子类有关的操作。</p>
+
+<p>Picture类定义了一个Graphic对象的聚合。Picture的Draw操作是通过对它的子部件调用Draw实现的，Picture还用这种方法实现了一些与其子部件相关的操作。由于Picture接口与Graphic接口是一致的，因此Picture对象可以可以递归的组合对象结构。</p>
+
+<h4 id="3-适用性">3. 适用性</h4>
+<ul>
+  <li>你想要表示对象的部分–整体层次结构</li>
+  <li>你希望用户忽略组合对象与单个对象的不同，用户将图一地使用组合结构中的所有对象。</li>
+</ul>
+
+<h4 id="4-结构">4. 结构</h4>
+<p><a href="/assets/documentation/design-pattern/Composite-Structure.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Composite-Structure.png" alt="Composite-Structure" />
+</a></p>
+
+<p>典型的Composite对象结构如下图所示：
+<a href="/assets/documentation/design-pattern/Composite-Relationship.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Composite-Relationship.png" alt="Composite-Relationship" />
+</a></p>
+
+<h4 id="5-参与者">5. 参与者</h4>
+<ul>
+  <li>Component（Graphic）
+    <ul>
+      <li>为组合中的对象声明接口。</li>
+      <li>在适当的情况下，实现所有类共有接口的缺省行为。</li>
+      <li>声明一个接口用于访问和管理Component的子组件</li>
+      <li>（可选）在递归结构中定义一个接口，用于访问一个父组件，并在合适的情况下实现它。</li>
+    </ul>
+  </li>
+  <li>Leaf（Rectangle，Leaf，Text等）
+    <ul>
+      <li>在组合中表示叶节点对象，叶节点没有子节点</li>
+      <li>在组合中定义图元对象的行为。</li>
+    </ul>
+  </li>
+  <li>Composite（Picture）
+    <ul>
+      <li>定义有子部件的那些部件的行为。</li>
+      <li>存储子部件。</li>
+      <li>在Component接口中实现与子部件有关的操作。</li>
+    </ul>
+  </li>
+  <li>Client
+    <ul>
+      <li>通过Component接口操纵组合部件的对象。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="7-效果">7. 效果</h4>
+<ul>
+  <li>
+    <p>定义了包含基本对象和组合对象的类层次结构  基本对象可以被组合成更复杂的组合对象，而这个组合对象又可以被组合，这样不断的递归下去。客户代码中，任何用到基本对象的地方都可以使用组合对象。</p>
+  </li>
+  <li>
+    <p>简化客户代码  客户可以一致的使用组合结构和单个对象。通常用户不知道（也不关心）处理的是一个叶节点还是一个组合组件。这就简化了客户代码，因为在定义组合的那些类中不需要写一些充斥着选择语句的函数。</p>
+  </li>
+  <li>
+    <p>使得更容易增加新类型的组件  新定义的Composite或Leaf子类自动的与已有的结构和客户代码一起工作，客户程序不需要因新的Component类而改变。</p>
+  </li>
+  <li>
+    <p>使你的设计变得更加一般化  容易增加新组合也会产生一些问题，那就是很难限制组合中的组件。有时你希望一个组合只能有某些特定的组件。使用Composite时，你不能依赖类型系统施加这些约束，而必须在运行时刻进行检查。</p>
+  </li>
+</ul>
+
+<h4 id="8-实现">8. 实现</h4>
+<p>我们在实现Composite模式使需要考虑以下几个问题：</p>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">显式的父部件引用</code>  保存从子部件到父部件的引用能简化组合结构的遍历和管理。父部件引用可以简化结构的上移和组件的删除，同时父部件引用也支持Chain of Responsibility模式。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">共享组件</code>  共享组件是很有用的，比如它可以减少对存储的需求。但是当一个组件只有一个父部件时，很难共享组件。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">最大化Component接口</code>  Composite模式的目的之一是使得用户不知道他们正在使用的具体的Leaf和Composite类。为了达到这一目的，Composite类应为Leaf和Composite类尽可能多定义一些公共操作。Composite类通常为这些操作提供缺省的实现，而Leaf和Composite子类可以对它们进行重定义。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">声明管理子部件的操作</code>  虽然Composite类实现了Add和Remove操作用于管理子部件，但是Composite模式中一个重要的问题是：在Composite类层次结构中哪一些类声明这些操作。我们是应该在Component中声明这些操作，并使这些操作对Leaf类有意义呢，还是只应该在Composite和它的子类中声明并定义这些操作呢？这需要在安全性和透明性之间做出权衡选择。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Component是否应该实现一个Component列表</code>  你可能希望在Component类中奖子节点集合定义为一个实例变量，而这个Component类中也声明了一些操作对子节点进行访问和管理。但是在基类中存放子类指针，对叶节点来说会导致空间浪费，因为叶节点根本没有子节点。只有当该结构中子类数目相对较少时，才值得使用这种方法。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">子部件排序</code>  许多设计指定了Composite的子部件顺序。在前面的Graphic例子中，排序可能表示了从前至后的顺序。如果Composite表示语法分析树，Composite子部件的顺序必须反映程序结构，而组合语句就是这样一些Composite的实例。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">使用高速缓冲存储改善性能</code>  如果你需要对组合进行频繁的遍历或查找。Composite类可以缓存存储对它的子节点进行遍历或查找的相关信息。Composite可以缓冲存储你实际结构或者仅仅是一些用于缩短遍历或查找长度信息。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">应该由谁删除Component</code>  在没有垃圾回收机制的语言中，当一个Composite被销毁时，通常最好由Composite负责删除其子节点。但有一种情况除外，即Leaf对象不会改变，因以被共享。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">存储组件最好用哪一种数据结构</code> Composite可以使用多种数据结构存储它们的子节点，包括连接列表、树、数组和hash表。数据结构的选择取决于效率。事实上，使用通用的数据结构根本没有必要。有时对每个子节点，Composite都有一个变量与之对应，这就要求Composite的每个子类都要实现自己的管理接口。可以参考Interpreter模式。</p>
+  </li>
+</ul>
+
+<h4 id="9-代码示例">9. 代码示例</h4>
+<p>计算机和立体声组合音响这样的设备经常被组装成<code class="highlighter-rouge">部分-整体层次结构</code>或者是<code class="highlighter-rouge">容器层次结构</code>。例如，底盘可包含驱动装置和平面板，总线含有多个插件，机柜包括底盘、总线等。这种结构可以很自然地用Composite模式进行模拟。</p>
+
+<p>Equipment类为在部分 - 整体层次结构中的所有设备定义一个接口。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Equipment</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">_name</span><span class="o">;</span>
+
+    <span class="n">Equipment</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">name</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">_name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="n">Watt</span> <span class="nf">power</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">netPrice</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">discountPrice</span><span class="o">();</span>
+
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Equipment</span> <span class="n">eq</span><span class="o">);</span>
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Equipment</span> <span class="n">eq</span><span class="o">);</span>
+    <span class="kd">abstract</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Equipment</span><span class="o">&gt;</span> <span class="nf">createIterator</span><span class="o">();</span>
+
+    <span class="n">Equipment</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Equipment的子类包括表示磁盘驱动器、集成电路和开关的Leaf类：</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">FloppyDisk</span> <span class="kd">extends</span> <span class="n">Equipment</span> <span class="o">{</span>
+    <span class="n">FloppyDisk</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="n">Watt</span> <span class="nf">power</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">netPrice</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">discountPrice</span><span class="o">();</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">_name</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>CompositeEquipment是包含其他设备的基类，它也是Equipment的子类。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">CompositeEquipment</span> <span class="kd">extends</span> <span class="n">Equipment</span> <span class="o">{</span>
+    <span class="n">CompositeEquipment</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+
+    <span class="n">CompositeEquipment</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="n">Watt</span> <span class="nf">power</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">netPrice</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">discountPrice</span><span class="o">();</span>
+
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Equipment</span> <span class="n">eq</span><span class="o">);</span>
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Equipment</span> <span class="n">eq</span><span class="o">);</span>
+    <span class="kd">abstract</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Equipment</span><span class="o">&gt;</span> <span class="nf">createIterator</span><span class="o">();</span>
+
+
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Equipment</span><span class="o">&gt;</span> <span class="n">_equipment</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">_name</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>现在我们将计算机的底盘表示为CompositeEquipment的子类Chassis。Chassis从CompositeEquipment继承了与子类有关的那些操作。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Chassis</span> <span class="kd">extends</span> <span class="n">CompositeEquipment</span> <span class="o">{</span>
+
+    <span class="n">Chassis</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="n">Watt</span> <span class="nf">power</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">netPrice</span><span class="o">();</span>
+    <span class="kd">abstract</span> <span class="n">Currency</span> <span class="nf">discountPrice</span><span class="o">();</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">_name</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>我们可用相似的方式定义其他设备容器，如Cabinet和Bus。这样我们就得到了组装一台（非常简单）个人计算机所需的所有设备</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">Cabinet</span> <span class="n">cabinet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cabinet</span><span class="o">(</span><span class="s">"PC Cabinet"</span><span class="o">);</span>
+        <span class="n">Chassis</span> <span class="n">chassis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Chassis</span><span class="o">(</span><span class="s">"PC Chassis"</span><span class="o">);</span>
+        
+        <span class="n">cabinet</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">chassis</span><span class="o">);</span>
+        
+        <span class="n">Bus</span> <span class="n">bus</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bus</span><span class="o">(</span><span class="s">"MCA Bus"</span><span class="o">);</span>
+        <span class="n">bus</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Card</span><span class="o">(</span><span class="s">"16Mbs Token Ring"</span><span class="o">));</span>
+
+        <span class="n">chassis</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bus</span><span class="o">);</span>
+        <span class="n">chassis</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">FloppyDisk</span><span class="o">(</span><span class="s">"3.5in Floppy"</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<h4 id="10-已知应用">10. 已知应用</h4>
+<p>几乎在所有面向对象的系统中都有Composite模式的应用实例。</p>
+
+<h4 id="11-相关模式">11. 相关模式</h4>
+<p>通常部件 - 父部件连接用于Chain of Responsibility模式。</p>
+
+<p>Decorator模式经常与Composite模式一起使用。当装饰与组合一起使用时，它们通常有一个公共的父类。因此装饰必须支持具有Add、Remove和GetChild操作的Component接口。</p>
+
+<p>Flyweight让你共享组件，但不再能引用它们的父部件。</p>
+
+<p>Iterator可以用来遍历Composite。</p>
+
+<p>Visitor将本来应该分布在Composite和Leaf类中的操作和行为局部化。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 结构型模式 - 组合 - /posts/design-pattern-structural-composite ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-structural-composite', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-structural-composite', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
