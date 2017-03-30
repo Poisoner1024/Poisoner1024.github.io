@@ -7,6 +7,22 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>设计模式 - 创建型模式 - 原型</title>
+        <description>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-prototype</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-prototype</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 单件</title>
+        <description>保证一个类仅有一个实例</description>
+        <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-singleton</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-singleton</guid>
+      </item>
+    
+      <item>
         <title>设计模式 - 行为模式 - 模板方法</title>
         <description>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中</description>
         <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
@@ -68,22 +84,6 @@
         <pubDate>Fri, 17 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/design-pattern-structural</link>
         <guid isPermaLink="true">/posts/design-pattern-structural</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 创建型模式 - 抽象工厂</title>
-        <description>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类</description>
-        <pubDate>Wed, 15 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-creational-abstract-factory</link>
-        <guid isPermaLink="true">/posts/design-pattern-creational-abstract-factory</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 创建型模式 - 工厂方法</title>
-        <description>定义一个用于创建对象的接口，让子类决定实例化哪一个类</description>
-        <pubDate>Tue, 14 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-creational-factory-method</link>
-        <guid isPermaLink="true">/posts/design-pattern-creational-factory-method</guid>
       </item>
     
   </channel>
