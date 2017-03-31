@@ -7,11 +7,35 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>微服务设计安全篇 - 服务间的身份验证和授权</title>
+        <description>程序或其他服务之间的认证</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-aa-between-services</link>
+        <guid isPermaLink="true">/posts/micro-service-security-aa-between-services</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 身份验证和授权</title>
+        <description>系统交互的人和事的核心概念</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-aa</link>
+        <guid isPermaLink="true">/posts/micro-service-security-aa</guid>
+      </item>
+    
+      <item>
         <title>设计模式 - 创建型模式 - 原型</title>
         <description>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</description>
         <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/design-pattern-creational-prototype</link>
         <guid isPermaLink="true">/posts/design-pattern-creational-prototype</guid>
+      </item>
+    
+      <item>
+        <title>Richardson成熟度模型</title>
+        <description>RESTFul API成熟度模型</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/richardson-maturity-model</link>
+        <guid isPermaLink="true">/posts/richardson-maturity-model</guid>
       </item>
     
       <item>
@@ -60,30 +84,6 @@
         <pubDate>Wed, 22 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/design-pattern-structural-decorator</link>
         <guid isPermaLink="true">/posts/design-pattern-structural-decorator</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 结构型模式 - 组合</title>
-        <description>将对象组合成树形结构以表示‘部分-整体’的层次结构</description>
-        <pubDate>Tue, 21 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-structural-composite</link>
-        <guid isPermaLink="true">/posts/design-pattern-structural-composite</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 结构型模式 - 适配器</title>
-        <description>将一个类的接口转换成客户希望的另外一个接口</description>
-        <pubDate>Sat, 18 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-structural-adapter</link>
-        <guid isPermaLink="true">/posts/design-pattern-structural-adapter</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 结构型模式 - 开篇</title>
-        <description>组合类和对象以获得更大的结构</description>
-        <pubDate>Fri, 17 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-structural</link>
-        <guid isPermaLink="true">/posts/design-pattern-structural</guid>
       </item>
     
   </channel>
