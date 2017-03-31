@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>毒师1024的处方</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>微服务设计安全篇 - 服务间的身份验证和授权</title>
+        <description>程序或其他服务之间的认证</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-aa-between-services</link>
+        <guid isPermaLink="true">/posts/micro-service-security-aa-between-services</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>微服务设计安全篇 - 身份验证和授权</title>
+        <description>系统交互的人和事的核心概念</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-aa</link>
+        <guid isPermaLink="true">/posts/micro-service-security-aa</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 原型</title>
+        <description>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-prototype</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-prototype</guid>
+      </item>
+    
+      <item>
+        <title>Richardson成熟度模型</title>
+        <description>RESTFul API成熟度模型</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/richardson-maturity-model</link>
+        <guid isPermaLink="true">/posts/richardson-maturity-model</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 单件</title>
+        <description>保证一个类仅有一个实例</description>
+        <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-singleton</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-singleton</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 模板方法</title>
+        <description>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中</description>
+        <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-template-method</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-template-method</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 策略</title>
+        <description>定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换</description>
+        <pubDate>Mon, 27 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-strategy</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-strategy</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 观察者</title>
+        <description>当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</description>
+        <pubDate>Fri, 24 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral-observer</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral-observer</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 行为模式 - 开篇</title>
+        <description>算法和对象间职责的分配</description>
+        <pubDate>Thu, 23 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-behavioral</link>
+        <guid isPermaLink="true">/posts/design-pattern-behavioral</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 结构型模式 - 装饰</title>
+        <description>动态地给一个对象添加一些额外的职责</description>
+        <pubDate>Wed, 22 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-structural-decorator</link>
+        <guid isPermaLink="true">/posts/design-pattern-structural-decorator</guid>
+      </item>
+    
   </channel>
 </rss>
