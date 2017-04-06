@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 微服务设计安全篇 - 身份验证和授权</title>
+  <meta name="description" content="系统交互的人和事的核心概念">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="微服务设计安全篇 - 身份验证和授权">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/micro-service-security-aa">
+  <meta property="og:description" content="系统交互的人和事的核心概念">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/micro-service-security-aa">
+  <meta name="twitter:title" content="微服务设计安全篇 - 身份验证和授权">
+  <meta name="twitter:description" content="系统交互的人和事的核心概念">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>微服务设计安全篇 - 身份验证和授权</h1>
+            <p>系统交互的人和事的核心概念</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 30, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/service">service</a>
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>当我们谈到与我们系统交互的人和事时，<em>身份验证</em>和<em>授权</em>是核心概念。在安全领域中，身份验证是确认他是谁的过程。对于一个人，通常通过用户输入的用户名和密码来验证。我们认为只有用户本人能够知道这些信息，因此输入这些信息的人一定是他。当然，还存在其他更复杂的系统。我们的手机可以通过指纹来确认是否是本人。通常来说，当我们抽象地讨论进行身份验证的人或事时，我们称之为<strong>主体</strong>（principal）。</p>
+
+<p>通过授权机制，可以把主体映射到他可以进行的操作中。通常，当一个主体通过身份验证后，我们将获得关于他的信息，这些信息可以帮助我们决定其可以进行的操作。例如，当我们知道他在哪个部门或办公室工作后，系统可以通过这些信息来决定他能做什么和不能做什么。</p>
+
+<p>一般来讲，对于单一的单块系统来说，应用程序本身会处理身份验证和授权。例如，Django，一个Python的Web框架，提供了现成的用户管理功能。不过，在分布式系统这个领域，我们需要考虑更高级的方案。我们不希望每个人使用不同的用户名和密码来登录不同的系统。我们的目的是<strong>要有一个单一的标识且只需要进行一次验证</strong>。</p>
+
+<h3 id="1-常见的单点登录实现">1. 常见的单点登录实现</h3>
+<p>身份验证和授权的一种常见方法是，使用某舟形式的SSO（Single Sign-On，单点登录）解决方案。在企业级领域中占据统治地位的SAML和OpenID Connect，也提供了这方面的能力。虽然术语略有不同，但它们或多或少使用了相同的核心概念。这里使用的术语来自SAML。</p>
+
+<p>当主体试图访问一个资源（比如基于Web的接口）时，他会被定向到一个<strong>身份提供者</strong>那里进行身份验证。这个身份提供者会要求他提供用户名和密码，或使用更先进的双重身份验证。一旦身份提供者确认主体已通过身份验证，它会发消息给<strong>服务提供者</strong>，让服务提供者来决定是否允许他访问资源。</p>
+
+<p>这个身份提供者可能是一个外部托管系统，也可能是你自己组织内部的系统。例如，谷歌提供一个OpenID Connect身份提供者。不过，对于企业来说，通常有自己的身份提供者，它会连接到公司的<strong>目录服务</strong>。目录服务可能使用LDAP（Lightweight Directory Access Protocol，轻量级目录访问协议）或活动目录（Active Directory）。这些系统允许你存储主体的信息，例如他们在组织中扮演什么样的角色。通常情况下，目录服务和身份提供者是同一个系统，不过有时也会有所不同，但保持连接。例如，Okta是一个托管的SAML身份提供者，它可以处理像双重身份验证这样的任务，但可以连接到你公司的目录服务，将其作为信息来源。</p>
+
+<p>SAML是一个基于SOAP的标准，尽管有库和工具支持它，但用起来还是相当复杂。基于Google和其他公司处理SSO的方式，OpenID Connect已经成为了OAuth 2.0具体实现中的一个标准。它使用简单的REST调用，因为提供了其易用性，在我们看来很有可能进军企业级应用。现在其最大的障碍是缺乏支持它的身份提供者。对于一个面向公众的网站，你或许可以使用Google作为提供者，但对于内部系统，或对于数据需要有更多控制权的系统而言，你希望有自己的内部身份提供者。近些年来，相比SAML丰富的选择（包括无处不在的活动目录），OpenAM和Gluu是这个领域为数不多的两个选项。除非等到现在的身份提供者开始支持OpenID Connect，不然它的发展会仅限于公共身份提供者这种有限的情况。OpenID Connect可能是未来的方向，但很有可能需要一段时间，它才能被广泛地应用。</p>
+
+<h3 id="2-单点登录网关">2. 单点登录网关</h3>
+<p>在微服务系统中，每个服务可以自己处理如何重定向到身份提供者，并与其进行握手。显然，这意味着大量的重复工作。使用共享库可以解决这个问题，但我们必须小心地避免可能来自共享代码的耦合。而且如果有多个不同的技术栈，共享库也很难提供帮助。</p>
+
+<p>你可以使用位于服务和外部世界之间的网关作为代理，而不是让每个服务管理与身份提供者握手。基本想法是，我们可以集中处理重定向用户的行为，并且只在一个地方执行握手。使用网关实现单点登录，如下图：
+<a href="/assets/documentation/microservices/using-a-gateway-to-handle-sso.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/microservices/using-a-gateway-to-handle-sso.png" alt="using-a-gateway-to-handle-sso" />
+</a></p>
+
+<p>然而，我们仍然需要解决<code class="highlighter-rouge">下游服务如何接受主体信息的问题</code>，例如用户名和角色。如果你使用HTTP，你可以把这些信息放到HTTP头上。在这方面，Shibboleth这样的工具可以帮助你。我们见过人们把它和Apache一起使用，这种方式能够很好地处理与基于SAML的身份提供的集成。</p>
+
+<p>另一个问题是，如果我们决定把身份认证的责任移到网关，那么孤立地在<code class="highlighter-rouge">微服务中间定位问题</code>就变得很难。如何重现类生产环境的挑战？如果选择使用网关路由，请确保你的开发人员不需要太多的工作，就可以启动一个网关及背后的服务。</p>
+
+<p>这种方法的最后一个问题是，它会带给你一种<code class="highlighter-rouge">虚假的安全感</code>。我们喜欢深度防御的理念，从网络边界，到子网，到防火墙，到主机，到操作系统，再到底层硬件。你需要在所有这些方面都实现安全措施的能力。我们知道有些人把所有的鸡蛋都放在一个篮子里，依靠网关来处理每一步安全措施。我们都知道当这个点发生故障后会发生什么。。。</p>
+
+<p>显然，你还可以使用这个网关来做其他事情。例如，如果你使用Apache的一个实例运行Shibboleth，也可以再这一级别决定终止HTTPS，运行入侵检测，等等。不过，一定要小心。网关层承担越来越多的功能后，最终本身会是一个庞大的耦合点。而且功能越多，受攻击面就越大。</p>
+
+<h3 id="3-细粒度的授权">3. 细粒度的授权</h3>
+<p>网关可以提供相当有效的粗粒度的身份验证。例如，它可以阻止任何未登陆用户访问帮助台应用程序。假如我们的网关在身份验证完成时能提取出主体的属性，则可以据此作出更细致的决定。例如，我们通常将人放到某些组或分配某些角色，通过使用这些信息来了解他们能做什么。所以，对于帮助台应用程序，我们可能只允许具有某个特定的角色（如工作人员）的主体访问。不过，超出允许（或禁止）的特定资源或端点的访问部分，它们可以留给微服务本身来处理，它会对允许哪些操作做进一步的决定。</p>
+
+<p>回到我们的帮助台应用程序：我们会允许任何员工查看任何信息和所有细节吗？更可能的是，工作上会有不同的角色。例如，CALL_CENTER组中的主体可以查看除付款细节外所有客户的信息。该主体也可以发起退款，但是额度会受限制。然而，CALL_CENTER_TEAM_LEADER角色的主体，可以进行更大额度的退款。</p>
+
+<p>应该在微服务内部做这些决定。我们见过，人们以可怕的方式，使用身份提供者提供的各种属性，比如CALL_CENTER_50_DOLLAR_REFUND这种非常细粒度的角色，将属于系统行为的某个特定部分的信息放到目录服务中。这对系统维护来说是一场噩梦，并且很难让我们的服务拥有独立的生命周期，因为有关服务行为的一部分信息突然间被放置到了别的地方，甚至有可能是由组织中一个不同部分管理的系统 。</p>
+
+<p>相反，你应该清晰于使用粗粒度的角色，围绕组织的工作方式建模。我们构建的软件要与组织的工作方式相匹配。所以也请以这种方式来使用角色。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=微服务设计安全篇 - 身份验证和授权 - /posts/micro-service-security-aa ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/micro-service-security-aa', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/micro-service-security-aa', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
