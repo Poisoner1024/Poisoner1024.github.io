@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>微服务设计安全篇 - 示例</title>
+        <description>结合之前的安全概念，展示下如何使用这些安全技术</description>
+        <pubDate>Thu, 06 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-demo</link>
+        <guid isPermaLink="true">/posts/micro-service-security-demo</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 静态数据的安全</title>
+        <description>数据加密是一种责任，尤其当它是敏感数据时</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-static-data</link>
+        <guid isPermaLink="true">/posts/micro-service-security-static-data</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 深度防御</title>
+        <description>不把鸡蛋放在一个篮子里面</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-depense-in-depth</link>
+        <guid isPermaLink="true">/posts/micro-service-security-depense-in-depth</guid>
+      </item>
+    
+      <item>
         <title>微服务设计安全篇 - 服务间的身份验证和授权</title>
         <description>程序或其他服务之间的认证</description>
         <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
@@ -60,30 +84,6 @@
         <pubDate>Mon, 27 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/design-pattern-behavioral-strategy</link>
         <guid isPermaLink="true">/posts/design-pattern-behavioral-strategy</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 行为模式 - 观察者</title>
-        <description>当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</description>
-        <pubDate>Fri, 24 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-behavioral-observer</link>
-        <guid isPermaLink="true">/posts/design-pattern-behavioral-observer</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 行为模式 - 开篇</title>
-        <description>算法和对象间职责的分配</description>
-        <pubDate>Thu, 23 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-behavioral</link>
-        <guid isPermaLink="true">/posts/design-pattern-behavioral</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 结构型模式 - 装饰</title>
-        <description>动态地给一个对象添加一些额外的职责</description>
-        <pubDate>Wed, 22 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-structural-decorator</link>
-        <guid isPermaLink="true">/posts/design-pattern-structural-decorator</guid>
       </item>
     
   </channel>
