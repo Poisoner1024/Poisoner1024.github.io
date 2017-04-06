@@ -4,6 +4,9 @@ title: "Richardson成熟度模型"
 description: "RESTFul API成熟度模型"
 tags: [web, service, rest]
 ---
+
+原文：[Richardson Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html)
+
 ### 通往REST的荣耀之巅的阶梯
 Leonard Richardson开发了一个模型，将通往REST的方式划分非三个步骤。它们分别是资源，HTTP的动词，和超媒体控件。这个模型非常好的解释了如何使用REST中的技术。一图胜千言：
 {% include image.html path="documentation/rest/maturity-model-overview.png" path-detail="documentation/rest/maturity-model-overview.png" alt="maturity-model-overview" %}
@@ -265,4 +268,4 @@ Location: http://royalhope.nhs.uk/slots/1234/appointment
 
 结果就是一个模型可以帮助我们思考我们想要提供一种什么样的HTTP服务，以及构建了人们希望和其进行交互的期望。
 
-原文：[Richardson Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html)
+
