@@ -6,6 +6,10 @@ tags: [design,pattern]
 ---
 
 ### 对象结构型模式 - 装饰（DECORATOR）
+{:.no_toc}
+
+* 目录
+{:toc}
 
 #### 1. 意图
 动态地给一个对象添加一些额外的职责。就增加功能来说，Decorator模式比生产子类更为灵活。

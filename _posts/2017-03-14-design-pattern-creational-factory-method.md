@@ -6,6 +6,10 @@ tags: [design,pattern]
 ---
 
 ### 对象创建型模式 -- 工厂方法（Factory Method）
+{:.no_toc}
+
+* 目录
+{:toc}
 
 #### 1. 意图
 定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到子类。

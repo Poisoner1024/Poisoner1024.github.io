@@ -4,6 +4,8 @@ title: "Richardson成熟度模型"
 description: "RESTFul API成熟度模型"
 tags: [web, service, rest]
 ---
+* 目录
+{:toc}
 
 原文：[Richardson Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html)
 
