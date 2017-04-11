@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>白帽子兵法</title>
+        <description>具体设计安全方案时的技巧</description>
+        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-strategy-of-white-hat</link>
+        <guid isPermaLink="true">/posts/security-strategy-of-white-hat</guid>
+      </item>
+    
+      <item>
+        <title>如何实施安全评估</title>
+        <description>安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案</description>
+        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/how-to-execute-security-evalution</link>
+        <guid isPermaLink="true">/posts/how-to-execute-security-evalution</guid>
+      </item>
+    
+      <item>
+        <title>安全的本质与属性</title>
+        <description>返璞归真，揭秘安全的本质与安全的基本组成元素</description>
+        <pubDate>Mon, 10 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-is-security</link>
+        <guid isPermaLink="true">/posts/what-is-security</guid>
+      </item>
+    
+      <item>
         <title>微服务设计安全篇 - 示例</title>
         <description>结合之前的安全概念，展示下如何使用这些安全技术</description>
         <pubDate>Thu, 06 Apr 2017 00:00:00 +0800</pubDate>
@@ -60,30 +84,6 @@
         <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/richardson-maturity-model</link>
         <guid isPermaLink="true">/posts/richardson-maturity-model</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 创建型模式 - 单件</title>
-        <description>保证一个类仅有一个实例</description>
-        <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-creational-singleton</link>
-        <guid isPermaLink="true">/posts/design-pattern-creational-singleton</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 行为模式 - 模板方法</title>
-        <description>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中</description>
-        <pubDate>Tue, 28 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-behavioral-template-method</link>
-        <guid isPermaLink="true">/posts/design-pattern-behavioral-template-method</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 行为模式 - 策略</title>
-        <description>定义一系列算法，把它们一个个封装起来，并且使它们可以相互替换</description>
-        <pubDate>Mon, 27 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-behavioral-strategy</link>
-        <guid isPermaLink="true">/posts/design-pattern-behavioral-strategy</guid>
       </item>
     
   </channel>

@@ -62,7 +62,7 @@
               <span class="article-list-minutes">
                 
                 
-                  2 minute read
+                  3 minute read
                 
               </span>
               <span class="article-list-divider">-</span>
@@ -79,14 +79,44 @@
           <div class="article-content">
             <p>大家在写代码的时候，很多人很多时候都一直在提及关于测试，关于单元测试之于产品质量的重要性，我一直也想找个机会给自己做个关于Unit Testing方面的总结，在网上看到了一篇自己觉得质量很高，也很符合自己期望的文章，翻译在这里供有志趣的同路人们一起把玩。</p>
 
-<h3 id="什么是单元测试unit-testing">什么是单元测试（Unit Testing）？</h3>
+<h3 class="no_toc" id="什么是单元测试unit-testing">什么是单元测试（Unit Testing）？</h3>
 <blockquote>
   <p>单元测试又称为模块测试, 是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程
 序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向
 对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。</p>
 </blockquote>
 
-<h3 id="单元测试代码指导规范">单元测试代码指导规范</h3>
+<h3 class="no_toc" id="单元测试代码指导规范">单元测试代码指导规范</h3>
+
+<ul id="markdown-toc">
+  <li><a href="#1-保持单元测试代码短小而快速" id="markdown-toc-1-保持单元测试代码短小而快速">1. 保持单元测试代码短小而快速</a></li>
+  <li><a href="#2-单元测试代码应该全自动化并且没有相互影响" id="markdown-toc-2-单元测试代码应该全自动化并且没有相互影响">2. 单元测试代码应该全自动化并且没有相互影响</a></li>
+  <li><a href="#3-单元测试必须很简单就能运行" id="markdown-toc-3-单元测试必须很简单就能运行">3. 单元测试必须很简单就能运行</a></li>
+  <li><a href="#4-测试结果能够衡量" id="markdown-toc-4-测试结果能够衡量">4. 测试结果能够衡量</a></li>
+  <li><a href="#5-立即修复失败的测试" id="markdown-toc-5-立即修复失败的测试">5. 立即修复失败的测试</a></li>
+  <li><a href="#6-保持测试是在单元级别" id="markdown-toc-6-保持测试是在单元级别">6. 保持测试是在单元级别</a></li>
+  <li><a href="#7-从简单开始" id="markdown-toc-7-从简单开始">7. 从简单开始</a></li>
+  <li><a href="#8-保持单元测试代码的独立性" id="markdown-toc-8-保持单元测试代码的独立性">8. 保持单元测试代码的独立性</a></li>
+  <li><a href="#9-保证测试代码接近于被测试的类" id="markdown-toc-9-保证测试代码接近于被测试的类">9. 保证测试代码接近于被测试的类</a></li>
+  <li><a href="#10-恰当的命名测试" id="markdown-toc-10-恰当的命名测试">10. 恰当的命名测试</a></li>
+  <li><a href="#11-测试开发的应用程序接口" id="markdown-toc-11-测试开发的应用程序接口">11. 测试开发的应用程序接口</a></li>
+  <li><a href="#12-黑盒思考" id="markdown-toc-12-黑盒思考">12. 黑盒思考</a></li>
+  <li><a href="#13-白盒思考" id="markdown-toc-13-白盒思考">13. 白盒思考</a></li>
+  <li><a href="#14-琐碎的cases同样需要测试" id="markdown-toc-14-琐碎的cases同样需要测试">14. 琐碎的cases同样需要测试</a></li>
+  <li><a href="#15-首先专注于执行的覆盖率" id="markdown-toc-15-首先专注于执行的覆盖率">15. 首先专注于执行的覆盖率</a></li>
+  <li><a href="#16-覆盖边缘cases" id="markdown-toc-16-覆盖边缘cases">16. 覆盖边缘cases</a></li>
+  <li><a href="#17-提供一个随机值生成器" id="markdown-toc-17-提供一个随机值生成器">17. 提供一个随机值生成器</a></li>
+  <li><a href="#18-每次测试一个功能" id="markdown-toc-18-每次测试一个功能">18. 每次测试一个功能</a></li>
+  <li><a href="#19-使用明确的断言" id="markdown-toc-19-使用明确的断言">19. 使用明确的断言</a></li>
+  <li><a href="#20-提供反面测试" id="markdown-toc-20-提供反面测试">20. 提供反面测试</a></li>
+  <li><a href="#21-在设计代码的时候就要考虑测试" id="markdown-toc-21-在设计代码的时候就要考虑测试">21. 在设计代码的时候就要考虑测试</a></li>
+  <li><a href="#22-不要连接提前定义的外面资源" id="markdown-toc-22-不要连接提前定义的外面资源">22. 不要连接提前定义的外面资源</a></li>
+  <li><a href="#23-了解测试的花费" id="markdown-toc-23-了解测试的花费">23. 了解测试的花费</a></li>
+  <li><a href="#24-给测试排优先级" id="markdown-toc-24-给测试排优先级">24. 给测试排优先级</a></li>
+  <li><a href="#25-准备失败的测试代码" id="markdown-toc-25-准备失败的测试代码">25. 准备失败的测试代码</a></li>
+  <li><a href="#26-写可以重现bugs的测试" id="markdown-toc-26-写可以重现bugs的测试">26. 写可以重现bugs的测试</a></li>
+  <li><a href="#27-了解单元测试的局限性" id="markdown-toc-27-了解单元测试的局限性">27. 了解单元测试的局限性</a></li>
+</ul>
 
 <h4 id="1-保持单元测试代码短小而快速">1. 保持单元测试代码短小而快速</h4>
 <p>理想情况下，在每次代码迁入之前都要执行整个测试集。保持测试代码能够快速跑完以减少代码开发的周转期</p>
