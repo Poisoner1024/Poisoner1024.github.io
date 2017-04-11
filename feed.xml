@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>毒师1024的处方</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>白帽子兵法</title>
+        <description>具体设计安全方案时的技巧</description>
+        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-strategy-of-white-hat</link>
+        <guid isPermaLink="true">/posts/security-strategy-of-white-hat</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>如何实施安全评估</title>
+        <description>安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案</description>
+        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/how-to-execute-security-evalution</link>
+        <guid isPermaLink="true">/posts/how-to-execute-security-evalution</guid>
+      </item>
+    
+      <item>
+        <title>安全的本质与属性</title>
+        <description>返璞归真，揭秘安全的本质与安全的基本组成元素</description>
+        <pubDate>Mon, 10 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-is-security</link>
+        <guid isPermaLink="true">/posts/what-is-security</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 示例</title>
+        <description>结合之前的安全概念，展示下如何使用这些安全技术</description>
+        <pubDate>Thu, 06 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-demo</link>
+        <guid isPermaLink="true">/posts/micro-service-security-demo</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 静态数据的安全</title>
+        <description>数据加密是一种责任，尤其当它是敏感数据时</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-static-data</link>
+        <guid isPermaLink="true">/posts/micro-service-security-static-data</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 深度防御</title>
+        <description>不把鸡蛋放在一个篮子里面</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-depense-in-depth</link>
+        <guid isPermaLink="true">/posts/micro-service-security-depense-in-depth</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 服务间的身份验证和授权</title>
+        <description>程序或其他服务之间的认证</description>
+        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-aa-between-services</link>
+        <guid isPermaLink="true">/posts/micro-service-security-aa-between-services</guid>
+      </item>
+    
+      <item>
+        <title>微服务设计安全篇 - 身份验证和授权</title>
+        <description>系统交互的人和事的核心概念</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/micro-service-security-aa</link>
+        <guid isPermaLink="true">/posts/micro-service-security-aa</guid>
+      </item>
+    
+      <item>
+        <title>设计模式 - 创建型模式 - 原型</title>
+        <description>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/design-pattern-creational-prototype</link>
+        <guid isPermaLink="true">/posts/design-pattern-creational-prototype</guid>
+      </item>
+    
+      <item>
+        <title>Richardson成熟度模型</title>
+        <description>RESTFul API成熟度模型</description>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
+        <link>/posts/richardson-maturity-model</link>
+        <guid isPermaLink="true">/posts/richardson-maturity-model</guid>
+      </item>
+    
   </channel>
 </rss>

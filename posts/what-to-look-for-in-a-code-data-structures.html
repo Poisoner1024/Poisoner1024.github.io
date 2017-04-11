@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 在代码审查中我们究竟想发现什么？- 数据结构篇</title>
+  <meta name="description" content="好的数据结构，好的代码身材">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="在代码审查中我们究竟想发现什么？- 数据结构篇">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/what-to-look-for-in-a-code-data-structures">
+  <meta property="og:description" content="好的数据结构，好的代码身材">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/what-to-look-for-in-a-code-data-structures">
+  <meta name="twitter:title" content="在代码审查中我们究竟想发现什么？- 数据结构篇">
+  <meta name="twitter:description" content="好的数据结构，好的代码身材">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>在代码审查中我们究竟想发现什么？- 数据结构篇</h1>
+            <p>好的数据结构，好的代码身材</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                February 27, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/develop">develop</a>
+                
+                  <a href="/tag/code">code</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>这是关于<code class="highlighter-rouge">在代码审查中我们究竟想发现什么?</code>系列6篇文章中的第4篇。</p>
+
+<p>数据结构是编程的基本部分，这也是计算机科学专业里面一直教授的课程。然而令人吃惊的是它们依然十分容易用错。这个POST里面我们要来聊聊关于数据结构中的一些味道😇。</p>
+
+<h3 id="1-lists">1. Lists</h3>
+<p>这个可能是最常见的也最常用的数据结构。因为一般情况下大家都选择它，但是有时它被用在了不该用的地方。</p>
+<ul>
+  <li>
+    <p>反模式：查询过多
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListIteration.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListIteration.png" alt="CR4-ListIteration" />
+</a></p>
+
+    <p>在List自己里面做迭代本身并不是件什么不好的事情。但是如果每次十分普通的操作都要迭代的话（如上面的通过ID查找客户），有更好的数据结构可以用。创建ID和客户之间的Map可能是一个更好的选择。</p>
+
+    <p>记住在Java8里面，语言自身支持更加表达式的查寻，这个可能不像for-loop那样明显，但是这个问题依然存在。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListIterationJava8Fixed.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListIterationJava8Fixed.png" alt="CR4-ListIterationJava8Fixed" />
+</a></p>
+  </li>
+  <li>
+    <p>反模式：频繁的重新排序
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListSorting.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListSorting.png" alt="CR4-ListSorting" />
+</a></p>
+
+    <p>List在保持初始顺便不变的时候表现的很好，但是你可以看到上面的代码是对List做重新排序，这时reviewer需要询问List是否是正确的选择。在上面的代码16行，<em>twitterUsers</em>在返回之前总是要做重新排序。再说说明，Java8让这个操作看起来很容易，它尝试着去忽略这些标注：
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListSortingJava8.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListSortingJava8.png" alt="CR4-ListSortingJava8" />
+</a></p>
+
+    <p>这个情况下，如果<em>TwitterUser</em>是唯一的，看起来你想要一个按照初始排序的集合，<em>TreeSet</em>看起来才是你想要的。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListSortedSet.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4ListSortedSet.png" alt="CR4-ListSortedSet" />
+</a></p>
+  </li>
+</ul>
+
+<h3 id="2-maps">2. Maps</h3>
+<p>功能齐全的数据结构可以提供<em>O(1)</em>的访问特定元素的复杂度，只要你选中了正确的key。</p>
+<ul>
+  <li>
+    <p>反模式：Map用做全局常量
+Map是个非常好的通用目的的数据结构，可以用一个全局可访问的map来让任何类获取它的数据。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4MapGlobal.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4MapGlobal.png" alt="CR4-MapGlobal" />
+</a></p>
+
+    <p>上面的代码里，作者选择简单的把<em>CUSTOMERS</em> map当做一个全局常量。因此<em>CustomerUpdateService</em>直接用这个map来做增加和更行<em>customers</em>操作。这个看上去并不是十分恶劣，因为<em>CustomerUpdateService</em>就是用来做增加和更新操作的，无论如何这些都要修改map。问题来了，当其他类，特别是这是从其他系统来的要访问这些数据的时候。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4MapAbuse.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4MapAbuse.png" alt="CR4-MapAbuse" />
+</a></p>
+
+    <p>这里，<em>order service</em>用这个数据结构去存<em>customer</em>。事实上，在上面的代码里，作者犯了个错误，他们没有去检查<em>customer</em>是否为<em>null</em>，所以在12行可能会引起<em>NullPointException</em>。作为reviewer，你需要建议把这个数据结构隐藏起来，提供一个合适的访问方法。这样可以让其他的类更容易起理解，把复杂的map管理逻辑隐藏在<em>CustomerRepository</em>里面，另外，你如果在后来修改<em>customers</em>的数据结构，又或许转向去用一个分布式缓存或者其他技术，这些相关的修改被限定在<em>CustomerRepository</em>类里面，不会波及整个系统。这就是<em>Information Hiding</em>原则。</p>
+
+    <p><a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4MapHidden.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4MapHidden.png" alt="CR4-MapHidden" />
+</a></p>
+
+    <p>尽管修改后的代码不会变的更短，但是你将核心功能进行了标准化和集中式处理。比如，如果去取一个存在在的<em>customer</em>总是会给你一个<em>Exception</em>，后者你可以选择让这个方法返回一个新的<em>Optional</em>类型。</p>
+
+    <p>注意在code review中要去发现这个一类问题，隐藏全局变量很难做一旦在系统中到处在使用它们，但是这些问题在刚开始被引入的时候很好解决。</p>
+  </li>
+  <li>
+    <p>其他的反模式：迭代和重排序
+和List一样，如果代码作者引入了很多排序、迭代在map里面，你可能需要建议去其他的可替代的数据结构。</p>
+  </li>
+  <li>
+    <p>注意Java中特有的东西
+在Java里面，map的行为通常依赖于你对key和value的<em>equals</em>和<em>hashCode</em>的实现。作为reviewer，你应该去检查类中的关于<em>key</em>和<em>value</em>操作相关的方法来保证她们能得到期望的结构。</p>
+
+    <p>Java8中增加了需要好用的方法在<em>Map</em>接口里，比如<em>getOrDefault</em>方法可以简化上面例子中的<em>CustomerRepository</em>的11行。</p>
+  </li>
+</ul>
+
+<h3 id="3-sets">3. Sets</h3>
+<p>经常用在底层的一个数据结构，它的长处是不包括重复的元素。</p>
+<ul>
+  <li>
+    <p>反模式：有时你确实不想要冗余</p>
+
+    <p>假设你有一个<em>user</em>类，用一个<em>set</em>来追踪用户访问了哪些website，现在有一个新功能是返回他们近期访问了哪些website。
+<a href="/assets/documentation/what-to-look-for-in-a-code-review/CR4SetMisuse.png" class="fluidbox-trigger">
+<img src="/assets/documentation/what-to-look-for-in-a-code-review/CR4SetMisuse.png" alt="CR4-SetMisuse" />
+</a></p>
+
+    <p>代码的作者把用来记录追踪用户访问sites的初始<em>set</em>从<em>HashSet</em>修改成<em>LinkedHashSet</em>，后者的实现保存了插入的次序，现在我们的<em>set</em>按照访问顺序记录了每一个<em>URI</em>。</p>
+
+    <p>在这段代码有好几处错误。首先，作者不得不用代价很大的变量整个<em>set</em>的操作去找到最后的元素（13-15行），<em>sets</em>不是被设计用来按位置访问元素的，这些操作<em>lists</em>能完美胜任。其次，因为<em>sets</em>不包含重复的值，也就是说如果最后一个页面在之前已经被访问过，那么在<em>set</em>中最后一个位置将不记录，它还是存在于之前出现的位置。</p>
+
+    <p>在这个case下面，<em>stack</em>，甚至单一字段都比用<em>set</em>用来访问最后一个页面都要好。</p>
+  </li>
+  <li>
+    <p>注意Java中的特别的东西</p>
+
+    <p>在Java中，<em>set</em>的关键操作是<em>contains</em>，reviewer应该检查<em>set</em>中针对包含操作时用到的<em>equals</em>的实现。</p>
+  </li>
+</ul>
+
+<h3 id="4-stacks">4. Stacks</h3>
+<p><em>Stacks</em>是计算机科学中很受欢迎的类，然后再现实世界的情况是，它常常被忽视。在Java里面，也许是因为<em>Stack</em>是<em>Vector</em>的一种扩展，因此它会被在某种程度是认为是过时的。这里不做过于细节的讨论，只是列出两个关键点：</p>
+<ul>
+  <li><em>Stacks</em>支持<em>LIFO</em>，用于push/pop操作十分理想，用来遍历的效果不好。</li>
+  <li>在Java中，<em>Deque</em>是<em>stack</em>的实现，既可以用做<em>queue</em>，又可以当<em>stack</em>用，reviewer需要注意<em>Deque</em>的是否与要做到的场景一致。</li>
+</ul>
+
+<h3 id="5-queues">5. Queues</h3>
+<p>另一个<em>CS</em>中很受欢迎的类，<em>Queues</em>,经常跟并发一起提起（确实，大多数实现存在于<em>java.util.concurrent</em>中），是用来在线程与模块之间传递数据的一种很常见的方式。</p>
+<ul>
+  <li>
+    <p><em>Queues</em>是<em>FIFO</em>的数据结构，通常用来添加一个新元素到队列末，后者在队列前删除东西。Review的时候如果发现对<em>queue</em>的遍历（尤其是访问队列中间的元素），需要注意下对<em>queue</em>的使用正确与否。</p>
+  </li>
+  <li>
+    <p><em>Queues</em>可以是有边界的也可以是无边界的。无边界的<em>queues</em>潜在可以无限增长，所有在review这个类型的数据结构是，看下前面关于<em>performance</em>的文章。有边界的<em>queues</em>同样也有自己的问题，在review时，需要注重什么样的条件下<em>queue</em>会变满，询问在它变满时对系统有什么影响。</p>
+  </li>
+</ul>
+
+<h3 id="6-java开发者通用的注意事项">6. Java开发者通用的注意事项</h3>
+<p>作为reviewer，你不仅要注意一些通用的数据结构的特点，还要注意它们的实现的好处与坏处。在Java 8里面，很多集合增加了新方法，要能够建设什么时候该使用新的方法代理老方法。</p>
+
+<h3 id="7-为什么要正确的选择数据结构">7. 为什么要正确的选择数据结构？</h3>
+
+<ul>
+  <li>
+    <p>性能：这点大家应该都能明白，正确的数据结构的选择无疑能沟通提升性能。</p>
+  </li>
+  <li>
+    <p>表述期望的行为：不管是代码后继的开发者，还是你系统暴露的API的使用者来说，他们都基于数据结构做一些确定的假设。如果一个方法返回的数据是<em>list</em>，开发者会认为它是被排过顺序的。如果数据是存在<em>map</em>里面，开发者认为这里的数据会频繁的用<em>key</em>来做查询。如果数据是在<em>set</em>里面，那么它应该是只存一次不重复，这是一些很好的满足潜在约定的例子。</p>
+  </li>
+  <li>
+    <p>减少复杂度：对于任何开发人员，甚至是reviewer来说，他们的整体的目标应该是hi代码按照他们设想的那些来运行，并且复杂度最小。这个使得代码在将来更易读，更易理解，更易修改与维护。就像上面提到的一些反模式的错误使用，使得代码作者要写更多的代码。选择正确的数据结构一般都能够简化代码。</p>
+  </li>
+</ul>
+
+<h3 id="8-写在最后">8. 写在最后</h3>
+<p>选择了错误的数据结构的特征：</p>
+<ul>
+  <li>在查询时对数据做了大量的变量；</li>
+  <li>频繁的对数据进行重新排序；</li>
+  <li>没有使用数据结构提供的关键方法，比如：<em>stack</em>的push/pop;</li>
+  <li>对数据结构进行读、写的代码很复杂；</li>
+</ul>
+
+<p>另外，暴露了选择的数据结构的细节，不论是提供了全局的数据结构自身的访问，还是通过你自己类的紧耦合来操作底层的数据结构，都会倒是设计瓶颈，以后后来难以重做。最好要早点找出这些问题，而不至于在以后留下不可避免的技术债务。</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=在代码审查中我们究竟想发现什么？- 数据结构篇 - /posts/what-to-look-for-in-a-code-data-structures ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/what-to-look-for-in-a-code-data-structures', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/what-to-look-for-in-a-code-data-structures', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
