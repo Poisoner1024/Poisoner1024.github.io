@@ -1,0 +1,64 @@
+---
+layout: post
+title: "SDL的开发与测试阶段"
+description: "在SDL的开发与测试阶段的安全实践"
+tags: [web, security]
+---
+注：原文来自《白帽子讲Web安全》
+
+* 目录
+{:toc}
+
+## 开发阶段
+开发阶段是安全工作的一个重点。依据`安全是为业务服务`这一指导思想，在需求层面，安全改变业务的地方较少，因此应当力求代码实现上的安全，也就是要做到`安全的功能`。
+
+要达到这个目标，首先要分析可能出现的漏洞，并从代码上提供可行的解决方案，设计一套适用于企业自身开发环境的安全方案。
+
+### 提供安全的函数
+OWASP的开源项目[OWASP ESAPI](https://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API)也为安全模块的实现提供了参考。如果开发者没有把握实现一个足够好的安全模块，则最好参考OWASP ESAPI的实现方式。
+
+ESAPI目前有针对多种不同Web语言的版本，其中又以Java版本最为完善。
+<div align='center'>
+{% include image.html path="documentation/white-hat-web-security/owasp-esapi-packages.png" path-detail="documentation/white-hat-web-security/owasp-esapi-packages.png" alt="owasp-esapi-packages" %}
+</div>
+把很多安全功能放到开发框架中实现，会大大降低程序员的开发工作量。在开发阶段，还可以使用的一个最佳实践就是制定出开发者的`开发规范`，并将安全技术方案写进开发规范中，让开发者牢记开发规范。
+
+**将安全方案写入开发规范中，就真正地让安全方案落了地。**这样不仅仅是为了方便开发者写出安全的代码，同时也为代码安全审计带来了方便。
+
+### 代码安全审计工具
+常见的一些代码审计工具，在面对复杂项目时往往会束手无策。这一般有两个原因造成的。
+* 1）函数的调用时一个复杂的过程，甚至常有一个函数调用另外一个文件中的函数的情况出现。当代码审计工具找到敏感函数如eval时，回溯函数的调用路径往往会遇到困难。
+* 2）如果程序使用了复杂的框架，则代码审计工具往往也缺乏对框架的支持，从而造成大量的误报和漏报。
+
+代码自动化审计工具的另外一种思路是，找到所有可能的用户输入入口，然后跟踪变量的传递情况，看变量最后是否会走到危险函数（如eval）。这种思路比回溯函数调用过程要容易实现，但仍然会存在较多的误报。
+
+目前还没有比较完美的自动化代码审计工具，代码审计工具的结果仍然需要人工处理。下面列出了一些常见的代码审计工具。
+<div align='center'>
+{% include image.html path="documentation/white-hat-web-security/common-code-audit-tools.png" path-detail="documentation/white-hat-web-security/common-code-audit-tools.png" alt="common-code-audit-tools" %}
+</div>
+代码的自动化审计比较困难，而半自动的代码审计仍然需要消耗大量的人力，那么有没有取巧的办法呢？实际上，对于甲方公司来说，完全可以根据开发规范来定制代码审计工具。其核心思想是，`并非直接检查代码是否安全，而是检查开发者是否遵守了开发规范。`
+
+这样就把复杂的“代码自动化审计”这一难题，转化为“代码是否符合开发规范”的问题。而开发规范在编写时就可以写成易于审计的一种规范。最终，如果开发规范中的安全方案没有问题的话，当开发者严格遵守开发规范时，产出的代码就应该是安全的。
+
+## 测试阶段
+安全测试应该独立于代码审计而存在。“安全测试”相对于“代码审计”而言，至少有两个好处：
+* 1）有一些代码逻辑较为复杂，通过代码审计难以发现所有问题，而通过安全测试可以将问题看得更清楚；
+* 2）有一些逻辑漏洞通过安全测试，可以更快地得到结果。
+
+安全测试，一般分为**自动化测试**和**手动测试**两中方式。
+
+自动化测试以覆盖性测试为目的，可以通过“Web安全扫描器”对项目或产品进行漏洞扫描。
+
+目前Web安全扫描器针对“XSS”， “SQL Injection”， “Open Redirect”， “PHP File Include”等漏洞的检查技术已经比较成熟。这是因为这些漏洞的检测方法主要是`检测返回结构的字符串特征`。
+
+而对于“CSRF”、“越权访问”、“文件上传”等漏洞，却`难以达到自动化检测的效果`。这是因为这些漏洞涉及系统逻辑或业务逻辑，有时候还需要人机交互与页面流程。因此这类漏洞的检测更多的需要依靠手动测试完成。
+
+Web应用的安全测试工具一般是使用Web安全扫描器。传统的软件安全测试中常用到的fuzzing测试（模糊测试），在Web安全测试领域比较少用。从某种程度上来说，Web扫描也可以看做是一种fuzzing。
+
+扫描器的性能、误报率、漏报率等指标是考核一个扫描器是否优秀的标准，通过不同扫描器之间的对比测试，可以挑选出最适合企业的扫描器。同时，也可以参考下表所示的一份公开的测评报告，以及业内同行的使用经验。图片来自[Security Tools Benchmarking ](http://sectooladdict.blogspot.com/2011/08/commercial-web-application-scanner.html)
+<div align='center'>
+{% include image.html path="documentation/white-hat-web-security/FeatureCount-Unified.png" path-detail="documentation/white-hat-web-security/FeatureCount-Unified.png" alt="FeatureCount-Unified" %}
+</div>
+[skipfish](https://code.google.com/archive/p/skipfish/wikis/SkipfishDoc.wiki)是Google使用的一款Web安全扫描器，Google开发了其源代码，对于想定制扫描器的安全团队来说，是一个二次开发的上佳选择。
+
+安全测试完成以后，需要生成一份安全测试报告。这份报告并不是扫描器的扫描报告。扫描报告可能会存在误报与漏报，因此扫描报告需要经过安全工程师的最终确认。确认后的扫描报告，结合手动测试结果，最终形成一份安全测试报告。
