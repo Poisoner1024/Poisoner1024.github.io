@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>SDL 实战经验</title>
+        <description>在实施SDL中的准则</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-development-lifecycle-practice</link>
+        <guid isPermaLink="true">/posts/security-development-lifecycle-practice</guid>
+      </item>
+    
+      <item>
+        <title>安全开发生命周期</title>
+        <description>试图从安全漏洞产生的根源上解决问题</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-development-lifecycle-introduce</link>
+        <guid isPermaLink="true">/posts/security-development-lifecycle-introduce</guid>
+      </item>
+    
+      <item>
+        <title>SDL 需求分析阶段的Checklist</title>
+        <description>安全专家Lenny Zeltser的需求分析checklist</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/sdl-checklist-in-the-requirement-analysis-phase</link>
+        <guid isPermaLink="true">/posts/sdl-checklist-in-the-requirement-analysis-phase</guid>
+      </item>
+    
+      <item>
         <title>白帽子兵法</title>
         <description>具体设计安全方案时的技巧</description>
         <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
@@ -60,30 +84,6 @@
         <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
         <link>/posts/micro-service-security-aa-between-services</link>
         <guid isPermaLink="true">/posts/micro-service-security-aa-between-services</guid>
-      </item>
-    
-      <item>
-        <title>微服务设计安全篇 - 身份验证和授权</title>
-        <description>系统交互的人和事的核心概念</description>
-        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/micro-service-security-aa</link>
-        <guid isPermaLink="true">/posts/micro-service-security-aa</guid>
-      </item>
-    
-      <item>
-        <title>设计模式 - 创建型模式 - 原型</title>
-        <description>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</description>
-        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/design-pattern-creational-prototype</link>
-        <guid isPermaLink="true">/posts/design-pattern-creational-prototype</guid>
-      </item>
-    
-      <item>
-        <title>Richardson成熟度模型</title>
-        <description>RESTFul API成熟度模型</description>
-        <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/richardson-maturity-model</link>
-        <guid isPermaLink="true">/posts/richardson-maturity-model</guid>
       </item>
     
   </channel>

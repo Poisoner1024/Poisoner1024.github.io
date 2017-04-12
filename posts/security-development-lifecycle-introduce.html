@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 安全开发生命周期</title>
+  <meta name="description" content="试图从安全漏洞产生的根源上解决问题">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="安全开发生命周期">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/security-development-lifecycle-introduce">
+  <meta property="og:description" content="试图从安全漏洞产生的根源上解决问题">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/security-development-lifecycle-introduce">
+  <meta name="twitter:title" content="安全开发生命周期">
+  <meta name="twitter:description" content="试图从安全漏洞产生的根源上解决问题">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>安全开发生命周期</h1>
+            <p>试图从安全漏洞产生的根源上解决问题</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 12, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>注：原文来自《白帽子讲Web安全》</p>
+
+<ul id="markdown-toc">
+  <li><a href="#微软安全开发生命周期" id="markdown-toc-微软安全开发生命周期">微软安全开发生命周期</a>    <ul>
+      <li><a href="#阶段1-培训" id="markdown-toc-阶段1-培训">阶段1： 培训</a></li>
+      <li><a href="#阶段2-安全要求" id="markdown-toc-阶段2-安全要求">阶段2： 安全要求</a></li>
+      <li><a href="#阶段3-质量门bug栏" id="markdown-toc-阶段3-质量门bug栏">阶段3： 质量门/bug栏</a></li>
+      <li><a href="#阶段4安全和隐私风险评估" id="markdown-toc-阶段4安全和隐私风险评估">阶段4：安全和隐私风险评估</a></li>
+      <li><a href="#阶段5-设计要求" id="markdown-toc-阶段5-设计要求">阶段5： 设计要求</a></li>
+      <li><a href="#阶段6-减小攻击面" id="markdown-toc-阶段6-减小攻击面">阶段6： 减小攻击面</a></li>
+      <li><a href="#阶段7-威胁建模" id="markdown-toc-阶段7-威胁建模">阶段7： 威胁建模</a></li>
+      <li><a href="#阶段8-使用指定的工具" id="markdown-toc-阶段8-使用指定的工具">阶段8： 使用指定的工具</a></li>
+      <li><a href="#阶段9-弃用不安全的函数" id="markdown-toc-阶段9-弃用不安全的函数">阶段9： 弃用不安全的函数</a></li>
+      <li><a href="#阶段10-静态分析" id="markdown-toc-阶段10-静态分析">阶段10： 静态分析</a></li>
+      <li><a href="#阶段11-动态程序分析" id="markdown-toc-阶段11-动态程序分析">阶段11： 动态程序分析</a></li>
+      <li><a href="#阶段12-模糊测试fuzzing-test" id="markdown-toc-阶段12-模糊测试fuzzing-test">阶段12： 模糊测试（Fuzzing Test）</a></li>
+      <li><a href="#阶段13-威胁模型和攻击面评析" id="markdown-toc-阶段13-威胁模型和攻击面评析">阶段13： 威胁模型和攻击面评析</a></li>
+      <li><a href="#阶段14-事件响应计划" id="markdown-toc-阶段14-事件响应计划">阶段14： 事件响应计划</a></li>
+      <li><a href="#阶段15-最终安全评析" id="markdown-toc-阶段15-最终安全评析">阶段15： 最终安全评析</a></li>
+      <li><a href="#阶段16-发布存档" id="markdown-toc-阶段16-发布存档">阶段16： 发布/存档</a></li>
+    </ul>
+  </li>
+  <li><a href="#samm" id="markdown-toc-samm">SAMM</a></li>
+</ul>
+
+<h2 id="微软安全开发生命周期">微软安全开发生命周期</h2>
+<p><a href="https://www.microsoft.com/en-us/sdl/default.aspx">MS SDL Home</a></p>
+
+<p>SDL 的全称：Security Development Lifecycle，即安全开发生命周期。它是由微软最早提出的，在软件工程中实施，是帮助解决安全问题的办法。SDL 是一个安全保证的过程，其重点是软件开发，它在开发的所有阶段都引入了安全和隐私的原则。SDL 的大致步骤如下：
+<a href="/assets/documentation/white-hat-web-security/ms-sdl.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/ms-sdl.png" alt="sms-sdl" />
+</a></p>
+
+<h3 id="阶段1-培训">阶段1： 培训</h3>
+<p>开发团队的所有成员都必须接受适当的安全培训，了解相关的安全知识。微软推荐的培训，会覆盖安全设计、威胁建模、安全编码、安全测试、隐私等方面知识。</p>
+
+<h3 id="阶段2-安全要求">阶段2： 安全要求</h3>
+<p>在项目确定之前，需要提前与项目经理或者产品owner进行沟通，确定安全的要求和需要做的事情。确定项目计划和里程碑，尽量避免因为安全问题而导致项目延期发布。</p>
+
+<h3 id="阶段3-质量门bug栏">阶段3： 质量门/bug栏</h3>
+<p>质量门和bug栏用于确定安全和隐私质量的最低可接受级别。</p>
+
+<h3 id="阶段4安全和隐私风险评估">阶段4：安全和隐私风险评估</h3>
+<p>安全风险评估（SRA）和隐私风险评估（PRA）是一个必要的过程，用于确定软件中需要深入评析的功能环节。这些评估必须包括以下信息：</p>
+<ul>
+  <li>1）（安全）项目的那些部分在发布前需要威胁模型？</li>
+  <li>2）（安全）项目的哪些部分在发布前需要进行安全设计评析？</li>
+  <li>3）（安全）项目的哪些部分（如果有）需要由不属于项目团队且双方认可的小组进行渗透测试？</li>
+  <li>4）（安全）是否存在安全顾问认可有必要增加的测试或分析要求以缓解安全风险？</li>
+  <li>5）（安全）模糊测试要求的具体范围是什么？</li>
+  <li>6）（隐私）隐私影响评级如何？</li>
+</ul>
+
+<h3 id="阶段5-设计要求">阶段5： 设计要求</h3>
+<p>在设计阶段应仔细考虑安全和隐私问题，在项目初期确定好安全需求，尽可能避免安全 引起的需求变更。</p>
+
+<h3 id="阶段6-减小攻击面">阶段6： 减小攻击面</h3>
+<p>减小攻击面与威胁建模紧密相关，不过它解决安全问题的角度稍有不同。减小攻击面通过减少攻击者利用潜在弱点或漏洞的机会来降低风险。减小攻击面包括关闭或限制对系统服务的访问，应用”最小权限原则“，以及尽可能地进行分层防御。</p>
+
+<h3 id="阶段7-威胁建模">阶段7： 威胁建模</h3>
+<p>为项目或产品面临的威胁建立模型，明确可能来自的攻击有哪些方面。微软提出了STRIDE模型以帮助建立威胁模型，这是非常好的做法。</p>
+
+<h3 id="阶段8-使用指定的工具">阶段8： 使用指定的工具</h3>
+<p>开发团队使用的编译器、链接器等相关工具，可能会涉及一些安全相关的环节，因此在使用工具的版本上，需要提前与安全团队进行沟通。</p>
+
+<h3 id="阶段9-弃用不安全的函数">阶段9： 弃用不安全的函数</h3>
+<p>许多常用函数可能存在安全隐患，应该禁用不安全的函数或API，使用安全团队推荐的函数。</p>
+
+<h3 id="阶段10-静态分析">阶段10： 静态分析</h3>
+<p>代码静态分析可以由相关工具辅助完成，其结果与人工分析相结合。</p>
+
+<h3 id="阶段11-动态程序分析">阶段11： 动态程序分析</h3>
+<p>动态分析是静态分析的补充，用于测试环节验证程序的安全性。</p>
+
+<h3 id="阶段12-模糊测试fuzzing-test">阶段12： 模糊测试（Fuzzing Test）</h3>
+<p>模糊测试是一种专门形式的动态分析，它通过故意向应用程序引入不良格式或随机数据诱发程序故障。模糊测试策略的制定，以应用程序的预期用途，以及应用程序的功能和设计规范为基础。安全顾问可能要求进行额外的模糊测试，或者扩大模糊测试的范围和增加持续时间。</p>
+
+<h3 id="阶段13-威胁模型和攻击面评析">阶段13： 威胁模型和攻击面评析</h3>
+<p>项目经常会因为需求变更等因素导致最终的产出偏离原本设定的目标，因此在项目后期重新对威胁模型和攻击面进行评析是有必要的，能够及时法相问题并修正。</p>
+
+<h3 id="阶段14-事件响应计划">阶段14： 事件响应计划</h3>
+<p>受SDL要求约束的每个软件在发布时都必须包含事件响应计划。即使在发布时不包含任何已知的漏洞的产品，也可能在日后面临新出现的威胁。需要注意的是，如果产品中包含第三方的代码，也需要留下第三方的联系方式并加入事件响应计划，以便在发生问题时能够找到对应的人。</p>
+
+<h3 id="阶段15-最终安全评析">阶段15： 最终安全评析</h3>
+<p>最终安全评析（FSR）是在发布之前仔细检查对软件执行的所有安全活动。通过FSR将得出以下三种不同的结果：</p>
+<ul>
+  <li>通过FSR。</li>
+  <li>通过FSR但有异常。</li>
+  <li>需要上报问题的FSR。</li>
+</ul>
+
+<h3 id="阶段16-发布存档">阶段16： 发布/存档</h3>
+<p>在通过FSR或者虽有问题但达成一致后，可以完成产品发布。但发布的同时仍需对各个问题和文档进行存档，为紧急响应和产品升级提供帮助。</p>
+
+<h2 id="samm">SAMM</h2>
+<p>相对于微软的SDL，OWASP推出了SAMM（Software Assurance Maturity Model），帮助开发者在软件工程的过程中实施安全。
+<a href="/assets/documentation/white-hat-web-security/SAMM-Overview.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/SAMM-Overview.png" alt="SAMM-Overview" />
+</a></p>
+
+<p><a href="http://www.opensamm.org/">SAMM Home</a></p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=安全开发生命周期 - /posts/security-development-lifecycle-introduce ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/security-development-lifecycle-introduce', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/security-development-lifecycle-introduce', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
