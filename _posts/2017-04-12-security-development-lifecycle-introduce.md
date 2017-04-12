@@ -10,6 +10,7 @@ tags: [web, security]
 {:toc}
 
 ## 微软安全开发生命周期
+[MS SDL Home](https://www.microsoft.com/en-us/sdl/default.aspx)
 
 SDL 的全称：Security Development Lifecycle，即安全开发生命周期。它是由微软最早提出的，在软件工程中实施，是帮助解决安全问题的办法。SDL 是一个安全保证的过程，其重点是软件开发，它在开发的所有阶段都引入了安全和隐私的原则。SDL 的大致步骤如下：
 {% include image.html path="documentation/white-hat-web-security/ms-sdl.png" path-detail="documentation/white-hat-web-security/ms-sdl.png" alt="sms-sdl" %}
@@ -73,8 +74,9 @@ SDL 的全称：Security Development Lifecycle，即安全开发生命周期。�
 
 ## SAMM
 相对于微软的SDL，OWASP推出了SAMM（Software Assurance Maturity Model），帮助开发者在软件工程的过程中实施安全。
+{% include image.html path="documentation/white-hat-web-security/SAMM-Overview.png" path-detail="documentation/white-hat-web-security/SAMM-Overview.png" alt="SAMM-Overview" %}
 
-
+[SAMM Home](http://www.opensamm.org/)
 
 
 
