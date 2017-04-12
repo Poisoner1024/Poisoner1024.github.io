@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "安全开发生命周期"
+title: "微软安全开发生命周期"
 description: "试图从安全漏洞产生的根源上解决问题"
 tags: [web, security]
 ---
