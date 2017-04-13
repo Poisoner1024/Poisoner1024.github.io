@@ -7,6 +7,22 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>安全运营</title>
+        <description>俗话说，安全是‘三分技术，七分管理’</description>
+        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-operations</link>
+        <guid isPermaLink="true">/posts/security-operations</guid>
+      </item>
+    
+      <item>
+        <title>谈谈互联网企业安全的发展方向</title>
+        <description>我们今天做了什么，做得够不够，接下来我们还需要做什么</description>
+        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-of-web-enterprise-in-future</link>
+        <guid isPermaLink="true">/posts/security-of-web-enterprise-in-future</guid>
+      </item>
+    
+      <item>
         <title>SDL 实战经验</title>
         <description>在实施SDL中的准则</description>
         <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
@@ -15,11 +31,19 @@
       </item>
     
       <item>
-        <title>安全开发生命周期</title>
+        <title>微软安全开发生命周期</title>
         <description>试图从安全漏洞产生的根源上解决问题</description>
         <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
         <link>/posts/security-development-lifecycle-introduce</link>
         <guid isPermaLink="true">/posts/security-development-lifecycle-introduce</guid>
+      </item>
+    
+      <item>
+        <title>SDL的开发与测试阶段</title>
+        <description>在SDL的开发与测试阶段的安全实践</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/sdl-in-design-and-test-phases</link>
+        <guid isPermaLink="true">/posts/sdl-in-design-and-test-phases</guid>
       </item>
     
       <item>
@@ -60,30 +84,6 @@
         <pubDate>Thu, 06 Apr 2017 00:00:00 +0800</pubDate>
         <link>/posts/micro-service-security-demo</link>
         <guid isPermaLink="true">/posts/micro-service-security-demo</guid>
-      </item>
-    
-      <item>
-        <title>微服务设计安全篇 - 静态数据的安全</title>
-        <description>数据加密是一种责任，尤其当它是敏感数据时</description>
-        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/micro-service-security-static-data</link>
-        <guid isPermaLink="true">/posts/micro-service-security-static-data</guid>
-      </item>
-    
-      <item>
-        <title>微服务设计安全篇 - 深度防御</title>
-        <description>不把鸡蛋放在一个篮子里面</description>
-        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/micro-service-security-depense-in-depth</link>
-        <guid isPermaLink="true">/posts/micro-service-security-depense-in-depth</guid>
-      </item>
-    
-      <item>
-        <title>微服务设计安全篇 - 服务间的身份验证和授权</title>
-        <description>程序或其他服务之间的认证</description>
-        <pubDate>Fri, 31 Mar 2017 00:00:00 +0800</pubDate>
-        <link>/posts/micro-service-security-aa-between-services</link>
-        <guid isPermaLink="true">/posts/micro-service-security-aa-between-services</guid>
       </item>
     
   </channel>
