@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 微服务设计安全篇 - 服务间的身份验证和授权</title>
+  <meta name="description" content="程序或其他服务之间的认证">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="微服务设计安全篇 - 服务间的身份验证和授权">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/micro-service-security-aa-between-services">
+  <meta property="og:description" content="程序或其他服务之间的认证">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/micro-service-security-aa-between-services">
+  <meta name="twitter:title" content="微服务设计安全篇 - 服务间的身份验证和授权">
+  <meta name="twitter:description" content="程序或其他服务之间的认证">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>微服务设计安全篇 - 服务间的身份验证和授权</h1>
+            <p>程序或其他服务之间的认证</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 31, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/service">service</a>
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>我们之前一直在使用主体这个术语，用来描述可以进行身份验证和授权的任何事物，但我们的例子都是关于使用电脑的人类。那程序或其他服务之间如何进行身份验证呢？</p>
+
+<h3 id="1-在边界内允许一切">1. 在边界内允许一切</h3>
+<p>我们的第一个选项是，在边界内对服务的任何调用都是默认可信的。</p>
+
+<p>取决于数据的敏感性，这种方式可能没有问题。一些组织尝试在他们的网络范围内确保安全，因此认为，当两个服务彼此访问时，它们不需要额外做任何事情。然而，如果一个攻击者入侵你的网络，你将对典型的<strong>中间人</strong>攻击基本没有任何防备。如果攻击者决定拦截并读取你正在发送的数据，在你不知情时更改数据，甚至在某些情况下假装你正在通信的对象，你将不得而知。</p>
+
+<p>迄今为止，边界内信任这种形式被大多数组织采用。他们可能决定在通信中使用HTTPS，但仅此而已。这可不是一件好事！对于大多数使用这种模式的组织来说，我们担心隐式信任模型并不是一个明智的决定，而更糟糕的是，很多时候人们没有在一开始意识到它的风险。</p>
+
+<h3 id="2-https基本身份验证">2. HTTP(S)基本身份验证</h3>
+<p>HTTP基本身份验证，允许客户端在标准的HTTP头中发送用户名和密码。服务端可以验证这些信息，并确认客户端是否有权访问服务。这样做的好处在于，这是一种非常容易理解且得到广泛支持的协议。问题在于，通过HTTP有很高的风险，因为用户名和密码并没有以安全的方式发送。任何中间方都可以看到HTTP头的信息并读取里面的数据。因此，HTTP基本身份验证通常应该通过HTTPS进行通信。</p>
+
+<p>当使用HTTPS时，客户端获得强有力的保证，它所通信的服务端就是客户端想要通信的服务端。它给予我们额外的保护，避免人们窃听客户端和服务端之间的通信，或篡改有效负载。</p>
+
+<p>服务端需要管理自己的SSL证书，当需要管理多态机器时会出现问题。一些组织自己承担签发证书的过程，这是一个额外的行政和运营负担。管理者方面的自动化工具远不够成熟，使用它们后你会发现，需要自己处理的事情就不止证书签发了。自签名证书不容易撤销，因此需要对灾难情景有更多的考虑。看看你是否能够避免自签名，以避开所有的这些工作。</p>
+
+<p>SSL智商的流量不能被反向代理服务器（如Varnish或Squid）所缓存，这是使用HTTPS的另一个缺点。这意味着，如果你需要缓存信息，就不得不在服务端或客户端内部实现。你可以在负载均衡中把HTTPS的请求转成HTTP的请求，然后在负载均衡之后就可以用缓存了。</p>
+
+<p>还需要考虑，如果我们已经在使用现成的SSO方案（比如包含用户名密码信息的SAML），该怎么办？我们想要基本身份验证使用同一套认证信息，然后在同一个进程里颁发和撤销吗？让服务与实现SSO所使用的那个目录服务进行通信即可做到这一点。或者，我们可以在服务内部存储用户名和密码，但需要承担存在重复行为的风险。</p>
+
+<p><code class="highlighter-rouge">注意</code>：使用这种方法，服务器只知道客户端有用户名和密码。我们不知道这个信息是否来自我们期望的机器；它可能来自网络中的其他人。</p>
+
+<h3 id="3-使用saml或openid-connect">3. 使用SAML或OpenID Connect</h3>
+<p>如果你已经在使用SAML或OpenID Connect作为身份验证和授权方案，你可以在服务之间的交互中也使用它们。如果你正在使用一个网关，可以使用同一个网关来路由所有内网通信，但如果每个服务自己处理集成，那么系统应该就自然而然这么工作。这样做的好处在于，你利用现有的基础设施，并把所有服务的访问控制集中在中央目录服务器。如果想要避免中间人的攻击，我们仍然需要通过HTTPS来路由通信。</p>
+
+<p>客户端有一组凭证，用于向身份提供者验证自身，而服务获取所需的信息，用于任何细粒度的身份验证。</p>
+
+<p>这意味着你需要为客户端创建账号，有时被称为<strong>服务账号</strong>。许多组织普遍使用这种方法。不过，需要提醒一句：如果你打算创建服务账号，应尽量限制其使用范围。因此，要考虑每个微服务都要有自己的一组凭证。如果凭证被泄露，你只需撤销有限的受影响的凭证即可。这使得撤销/更改访问更简单。</p>
+
+<p>然而，还有其他几个缺点。首先，像使用基本身份验证一样，我们需要安全地存储凭证：用户名和密码放在哪里？客户端需要找到一些安全的方法来存储这些数据。另一个问题是，在这个领域的技术实现方面，做身份验证需要相当繁琐的代码。尤其是SAML，在其智商实现一个客户端非常痛苦。OpenID Connect的工作流要简单些，不过它尚未被很好地支持。</p>
+
+<h3 id="4-客户端证书">4. 客户端证书</h3>
+<p>确认客户端身份的另一种方法是，使用TLS（Transport Layer Security，安全传输层协议），TLS是SSL的客户端证书方面的继承者。在这里，每个客户端都安装了一个X 509证书，用于客户端和服务器端之间建立通信链路。服务器可以验证客户端证书的真实性，为客户端的有效性提供强有力的保证。</p>
+
+<p>使用这种方法，证书管理的工作要比只使用服务器端证书更加繁重。它不只是创建和管理数量更多的证书这么简单；相反，所有的复杂性在于证书本身，你很有可能会花费大量的时间来试图诊断服务端为什么不接受你认为的一个完全有效的客户端证书。接下来，我们要考虑在最坏的情况下，撤销和补发证书的难度。使用通配符证书能够解决一些问题，但不是全部。这些额外的负担意味着，当你特别关注所发数据的敏感性，或无法控制发送数据所使用的网络时，才考虑使用这种技术。因此，你应该在通过互联网发送非常重要的数据时，才使用安全通信。</p>
+
+<h3 id="5-http之上的hmac">5. HTTP之上的HMAC</h3>
+<p>正如我们前面所讨论的，如果担心用户名和密码被泄露，基本身份验证使用普通HTTP并不是非常明智的。传统的替代方法是使用HTTPS路由通信，但也有一些确定。除了需要管理证书，HTTPS通信的开销使得服务器压力增加（尽管，现在比以前影响要小得多），而且通信难以被轻松的缓存。</p>
+
+<p>另一种方法使用HMAC（Hash-based Message Authentication Code，基于哈希的消息码）对请求进行签名，它是OAuth规范的一部分，并被广泛应用于亚马逊AWS的S3 API。</p>
+
+<p>使用HMAC，请求主体和私有秘钥一起被哈希处理，生成的哈希值随请求一起发送。然后，服务器使用请求主体和自己的私钥副本重建哈希值。如果匹配，它便接受请求。这样做的好处是，如果一个中间人更改了请求，那么哈希值会不匹配，服务器便知道该请求已被篡改过。并且，私钥永远不会随请求发送，因此不存在传输中被泄露的问题。额外的好处是，这个通信更容易被缓存，而且生成哈希的开销要低于处理HTTPS通信的开销（虽然你的情况有可能不同）。</p>
+
+<p>这种方法有<code class="highlighter-rouge">三个缺点</code>。首先，客户端和服务端需要一个共享的，以某种方式交流的密钥。它们如何共享？可能是在两端都硬编码，但这样会带来一个问题，当密钥被泄露后，你需要撤销访问。如果你通过一些替代的协议来共享密钥，那么需要确保这个协议是非常安全的！</p>
+
+<p>其次，这是一种模式，而不是标准，因此有各种不同的实现方式。结果就是，缺乏一个优秀的，开放的且有效的实现方式。通常来说，如果你对这种方式感兴趣，需要多去看看和理解不同的实现方式。你可以先去看看亚马逊的S3，然后参考它的方式，特别是类似于SHA-256中使用的合适长度的密钥和合理的哈希函数。JWT（JSON Web Token，JSON Web令牌）也值得一看，它们使用类似的方式实现，并且似乎正在吸引跟多的关注。但是要注意，正确实现这个方式的南多。我的同时曾经与一个团队实施自己的JWT方案，仅仅因为忽略了一个布尔检查，就导致整个身份验证码都失效！希望随着时间的推移，我们可以看到更多可重用库的实现。</p>
+
+<p>最后，要理解这个方法只能保证第三方无法篡改请求，且私钥本身不会泄露。但请求中所带来的其他数据，对网络嗅探来说仍是可见的。</p>
+
+<h3 id="6-api密钥">6. API密钥</h3>
+<p>像Twitter、Google、Flickr、和AWS这样的服务商，提供的所有公共API都使用API密钥。API密钥允许服务识别出谁在进行调用，然后对他们能做的进行限制。限制通常不仅限于特定资源的访问，还可以扩展到类似于针对特定的调用者限速，以保护其他人服务调用的质量等。</p>
+
+<p>具体该如何使用API密钥方式来处理你的微服务间的访问，取决于你所使用的具体技术。一些系统使用一个共享的API密钥，并且使用一种类似于刚才所说的HMAC的方式。更常见的方法是，使用给一个公钥私钥对。通常情况下，正如集中管理人的身份标识一样，我们也会集中管理密钥。网关模型在这个领域很受欢迎。</p>
+
+<p>其受欢迎的原因一部分源于这样一个事实，API密钥重点关注的是对程序来说的易用性。相对于处理SAML握手，基于API密钥的身份验证更简单直接。</p>
+
+<p>API密钥解决方案在商业和开源领域存在很多选项，每种系统提供的具体功能有所不同。有些产品只处理API密钥交换和一些基本的密钥管理。其他工具提供包括限速、变现、API目录和发现系统等功能。</p>
+
+<p>一些API系统允许你将API密钥和现有目录服务联系起来。这允许将API密钥发布给你组织中主体（代表人或系统），从而可以跟管理普通凭证一样，来控制这些密钥的生命周期。这为通过不同的方式访问系统，但保持一样的可靠信息来源提供了可能性。例如下图，SSO使用SAML对人进行身份验证及服务间进行通信时使用API密钥。
+<a href="/assets/documentation/microservices/using-directory-services-to-sync-principal-info-between-an-SSO-and-an-API-gateway.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/microservices/using-directory-services-to-sync-principal-info-between-an-SSO-and-an-API-gateway.png" alt="using-directory-services-to-sync-principal-info-between-an-SSO-and-an-API-gateway" />
+</a></p>
+
+<h3 id="7-代理问题">7. 代理问题</h3>
+<p>给指定的微服务进行主体的身份验证非常简单。但是，如果该服务需要更多的调用才能完成，会发生什么呢？下图展示了MusicCorp的在线购物网站。我们的在线商店是一个基于浏览器的，使用JavaScript的用户界面。它使用的是”为前端服务的后端“模型，来调用服务端的商店应用程序。浏览器对服务端调用时的身份验证，可以使用SAML、OpenID Connect或类似的方式。到目前为止，一切还好。
+<a href="/assets/documentation/microservices/an-example-where-a-confused-deputy-could-come-into-play.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/microservices/an-example-where-a-confused-deputy-could-come-into-play.png" alt="an-example-where-a-confused-deputy-could-come-into-play" />
+</a></p>
+
+<p>当我登录后，可以单击一个链接来查看订单的详细信息。为了显示这些信息，我们需要从订单服务中找到原始订单，但我们也想要查看订单的物流信息。所以点击链接/orderStatus/12345，会使在线商店通过在线商店服务向订单服务和物流服务发送请求，以获得这些信息。但这些下游服务是否该接受在线商店的调用呢？我们可以采用一种隐式信任的方式：因为调用在我们的信任边界内，所以是可以接受的。我们甚至可以使用证书或API密钥，来确认真的是在线商店请求这些信息。但这是否就足够了呢？</p>
+
+<p>有一种安全漏洞叫作<strong>混淆代理人问题</strong>，指的是在服务间通信的上下文中，攻击者采用一些措施欺骗代理服务，让它调用其下游服务，从做到一些他不应该能做到的事情。例如，作为一个用户，当我登录到在线购物系统时，可以查看我的账户详细。但如果我使用登录后的凭证，欺骗在线购物用户界面去请求别人的信息，那该怎么办？</p>
+
+<p>在这个例子中，如何阻止我查询不属于我的订单？一旦登录，我可以尝试给不属于我的其他订单发送请求，看是否能得到有用的信息。我们可以尝试让在线商店本生防止这种情况的发生，通过检查订单是谁的，然后拒绝别人访问不属于自己的订单。然而，如果有很多不同的应用程序来访问这些信息，可能会在很多地方重复这个逻辑。我们可以直接路由用户界面的请求到订单服务，让它来验证请求，不过这样会遇到其他一些关于微服务集成的问题。</p>
+
+<p>另一种方法是，当在线商店给订单服务发送请求时，它不仅要说明想要哪个订单，还要说明以谁的名义来调用。一些身份验证方案允许我们传递原始主体的凭证给下游，不过使用SAML时，这会是一场噩梦，包含嵌套的SAML断言在技术上可实现的 – 不过非常难，以至于从来没有人实现过。当然，这可能变得更加复杂，想象一下，如果在线商店调用的服务，转而调用更多的下游服务。我们需要在验证代理可信性上花费多少精力？</p>
+
+<p>不幸的是，这个问题没有简单的答案，因为它本身就不是一个简单的问题。不过，要知道它的存在。根据所讨论操作的敏感性，你可能需要在隐式信任、验证调用方的身份或要求提供者提供原始主体的凭证这些安全方式里做一个选择。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=微服务设计安全篇 - 服务间的身份验证和授权 - /posts/micro-service-security-aa-between-services ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/micro-service-security-aa-between-services', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/micro-service-security-aa-between-services', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

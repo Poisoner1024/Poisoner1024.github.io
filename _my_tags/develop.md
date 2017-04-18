@@ -1,4 +1,0 @@
----
-slug: develop
-name: Develop
----

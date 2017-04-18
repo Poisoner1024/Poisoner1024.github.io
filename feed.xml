@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>毒师1024的处方</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>服务器端应用安全</title>
+        <description>常见的服务器端应用安全问题描述</description>
+        <pubDate>Fri, 14 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/application-security-on-server-end</link>
+        <guid isPermaLink="true">/posts/application-security-on-server-end</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>安全运营</title>
+        <description>俗话说，安全是‘三分技术，七分管理’</description>
+        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-operations</link>
+        <guid isPermaLink="true">/posts/security-operations</guid>
+      </item>
+    
+      <item>
+        <title>谈谈互联网企业安全的发展方向</title>
+        <description>我们今天做了什么，做得够不够，接下来我们还需要做什么</description>
+        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-of-web-enterprise-in-future</link>
+        <guid isPermaLink="true">/posts/security-of-web-enterprise-in-future</guid>
+      </item>
+    
+      <item>
+        <title>SDL 实战经验</title>
+        <description>在实施SDL中的准则</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-development-lifecycle-practice</link>
+        <guid isPermaLink="true">/posts/security-development-lifecycle-practice</guid>
+      </item>
+    
+      <item>
+        <title>微软安全开发生命周期</title>
+        <description>试图从安全漏洞产生的根源上解决问题</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-development-lifecycle-introduce</link>
+        <guid isPermaLink="true">/posts/security-development-lifecycle-introduce</guid>
+      </item>
+    
+      <item>
+        <title>SDL的开发与测试阶段</title>
+        <description>在SDL的开发与测试阶段的安全实践</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/sdl-in-design-and-test-phases</link>
+        <guid isPermaLink="true">/posts/sdl-in-design-and-test-phases</guid>
+      </item>
+    
+      <item>
+        <title>SDL 需求分析阶段的Checklist</title>
+        <description>安全专家Lenny Zeltser的需求分析checklist</description>
+        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/sdl-checklist-in-the-requirement-analysis-phase</link>
+        <guid isPermaLink="true">/posts/sdl-checklist-in-the-requirement-analysis-phase</guid>
+      </item>
+    
+      <item>
+        <title>白帽子兵法</title>
+        <description>具体设计安全方案时的技巧</description>
+        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-strategy-of-white-hat</link>
+        <guid isPermaLink="true">/posts/security-strategy-of-white-hat</guid>
+      </item>
+    
+      <item>
+        <title>如何实施安全评估</title>
+        <description>安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案</description>
+        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/how-to-execute-security-evalution</link>
+        <guid isPermaLink="true">/posts/how-to-execute-security-evalution</guid>
+      </item>
+    
+      <item>
+        <title>安全的本质与属性</title>
+        <description>返璞归真，揭秘安全的本质与安全的基本组成元素</description>
+        <pubDate>Mon, 10 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/what-is-security</link>
+        <guid isPermaLink="true">/posts/what-is-security</guid>
+      </item>
+    
   </channel>
 </rss>
