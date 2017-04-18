@@ -13,7 +13,7 @@ tags: [web, security]
 ### 1. Buissness Requirements
 
 #### Business Model
-* What is the application's primary business purpos?
+* What is the application's primary business purpose?
 * How will the application make money?
 * What are the planned business milestones for developing or improving the application?
 * How is the application marketed?
