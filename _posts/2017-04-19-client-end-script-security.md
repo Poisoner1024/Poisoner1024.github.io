@@ -110,32 +110,62 @@ XSS 根据效果的不同可以分成如下几类：
 
 ## 3. 跨站点请求伪造（CSRF）
 
+### CSRF 简介
+CSRF 的全名是Cross Site Request Forgery。先来看一个例子。
 
+假设现在Sohu 博客有个XSS 问题，只需要请求下面这个URL，就能够把编号为“156713012”的博客文章删除。
+{% highlight URL %}
+http://blog.sohu.com/manage/entry.do?m=delete&id=156713012
+{% endhighlight %} 
 
+这个URL同时还存在CSRF 漏洞。我们将尝试利用CSRF 漏洞，删除编号为“156713012”的博客文章。
+* 1. 攻击者首先在自己的域构造一个页面：
+{% highlight URL %}
+http://www.a.com/csrf.html
+{% endhighlight %} 
 
+其内容为：
+{% highlight JavaScript %}
+<img src="http://blog.sohu.com/manage/entry.do?m=delete&id=156713012" />
+{% endhighlight %} 
 
+* 2. 攻击者诱使目标用户，也就是博客主访问这个页面，已执行CSRF 攻击。
+在博客主访问http://www.a.com/csrf.html时，图片标签向搜狐的服务器发送了一次GET请求，而这次请求，导致了搜狐博客上的一篇文章被删除。
 
+回顾下整个攻击过程，攻击者仅仅诱使用户访问了一个页面，就使该用户身份在第三方站点里执行了一次操作。试想：如果这张图片是展示在某个论坛、某个博客，甚至搜狐的一些用户控件中，会产生什么效果呢？只需要经过精心的设计，就能够起到更大的破坏作用。
 
+这个删除博客文章的请求，是攻击者所伪造的，所以这种攻击就叫做“跨站点请求伪造”。
 
+### CSRF 本质
+CSRF 为什么能够攻击成功？其本质原因是`重要操作的所有参数都是可以被攻击者猜测到的`。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+攻击者只有预测出URL 的所有参数与参数值，才能成功地构造一个伪造的请求；反之，攻击者将无法攻击成功。
 
 ## 4. 点击劫持（ClickJacking）
+2008年，安全专家Robert Hansen 与 Jeremiah Grossman发现了一种被他们称为“ClickJacking”（点击劫持）的攻击，这种攻击方式影响了几乎所有的桌面平台，包括IE、Safari、Firefox、Opera以及Adobe Flash。
+
+点击劫持是一种视觉上的欺骗手段。攻击者使用一个透明的、不可见的iframe，覆盖在一个网页上，然后诱使用户在该网页上进行操作，此时用户将在不知情的情况下点击透明的iframe页面。通过调整iframe页面的位置，可以诱使用户恰好点击在iframe页面的一些功能性按钮上。
+
+点击劫持攻击与CSRF 攻击有异曲同工之妙，都是在用户不知情的情况下诱使用户完成一些动作。但是在CSRF 攻击的过程中，如果出现用户交互的页面，则攻击可能会无法顺利完成。与之相反的是，点击劫持没有这个顾虑，它利用的就是与用户产生交互的页面。
+
+点击劫持攻击的类型有：
+* Flash 点击劫持；
+* 图片覆盖攻击；
+* 拖拽劫持与数据窃取；
+* ClickJacking 3.0:屏幕劫持；
+
+针对传统的ClickJacking，一般可以通过禁止跨域的iframe来防范。
+
 ## 5. HTML 5安全
+HTML 5带来了新的功能，也带来了新的安全挑战。
+
+### HTML 5新标签
+* 新标签的XSS
+* iframe的sandbox
+* Link Types: noreferrer
+* Canvas的妙用
+
+### HTML 5其他安全问题
+* Cross-Origin Resource Sharing
+* postMessage - 跨窗口传递消息
+* Web Storage
