@@ -69,22 +69,73 @@ Sandbox 的应用范围非常广泛。比如一个提供hosting 服务的共享�
 {% include image.html path="documentation/white-hat-web-security/Google-Chrome-warning.png" path-detail="documentation/white-hat-web-security/Google-Chrome-warning.png" alt="Google-Chrome-warning" %}
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+常见的恶意网址分为两类：1、挂马网站，这些网站通常包含有恶意的脚本如JavaScript 或Flash，通过利用浏览器的漏洞（包括一些插件、控件漏洞）执行shellcode，在用户电脑中植入木马；2、钓鱼网站，通过模仿知名网站的相似页面来欺骗用户。
 
 ## 2. 跨站脚本攻击（XSS）
+
+### XSS 简介
+跨站脚本攻击，英文全称是Cross Site Script，本来的缩写是CSS，但是为了和层叠样式表（Cascading Style Sheet, CSS）有所区别，所以在安全领域叫做“XSS”。
+
+**XSS攻击，通常指黑客通过“HTML 注入”篡改了网页，插入了恶意的脚本，从而在用户浏览网页时，控制用户浏览器的一种攻击。**在一开始，这种攻击的演示案例是跨域的，所以叫做“跨站脚本”。但是发展到今天，由于JavaScript的强大功能以及网站前端应用的复杂化，是否跨域已经不再重要。但是由于历史原因，XSS 这个名字却一直保留下来。
+
+XSS 长期以来被列为客户端Web安全中的头号大敌。因为XSS 破坏力强大，且产生的场景复杂，难以一次性解决。现在业内达成的共识是：针对各种不同场景产生的XSS，需要区分情景对待。即便如此，复杂的应用环境仍然是XSS 滋生的温床。
+
+XSS 根据效果的不同可以分成如下几类：
+* 1. 反射型XSS
+  反射型XSS 只是简单地把用户输入的数据“反射”给浏览器。也就是说，黑客往往需要诱使用户“点击”一个恶意链接，才能攻击成功。
+
+  反射型XSS 也叫做“非持久型 XSS”（Non-persistent XSS）。
+
+* 2. 存储型XSS
+  存储型XSS 会把用户输入的数据“存储”在服务器端。这种XSS 具有很强的稳定性。比较常见的一个场景就是，黑客写下一篇包含恶意JavaScript 代码的博客文章，文章发表后，所有访问该博客文章的用户，都会在他们的浏览器中执行这段恶意的JavaScript代码。黑客把恶意的脚本保存到服务器端，所以这种XSS 攻击就叫做“存储型 XSS”。
+
+  存储型 XSS 通常也叫做“持久型 XSS”（Persistent XSS），因为从效果上来说，它存在的时间是比较长的。
+
+* 3. DOM Based XSS
+  实际上，这种类型的XSS 并非按照“数据是否保存在服务器端”来划分，DOM Based XSS 从效果上来说也是反射型XSS。单独划分出来，是因为DOM Based XSS的形成原因比较特别，发现它的安全专家专门提出了这种类型的XSS。出于历史原因，也就把它单独作为一个分类了。
+
+  通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。
+
+### XSS 攻击平台
+* [Attack API](http://pdp.soup.io/post/7429829/Bring-Back-the-Attack-to-the-API)
+  Attack API 是安全研究中pdp所主导的一个项目，它总结了很多能够直接使用XSS Payload，归纳为API的方式
+  
+* [BeEF](http://beefproject.com/)
+  BeEF曾经是最好的XSS 演示平台。不同于Attack API，BeEF所演示的是一个完整的攻击过程。BeEF有一个控制后台，攻击者可以在后台控制前端的一切。每个被XSS 攻击的用户都将出现在后台，后台控制者就可以控制这些浏览器的行为，并可以通过XSS 向这些用户发送命令。
+
+* [XSS-Proxy](http://xss-proxy.sourceforge.net/)
+  XSS-Proxy是一个轻量级的XSS 攻击平台，通过嵌套iframe的方式可以实时地远程控制被XSS 攻击的浏览器。
+
+这些XSS 攻击平台有助于深入理解XSS 的原理和危害。
+
 ## 3. 跨站点请求伪造（CSRF）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 4. 点击劫持（ClickJacking）
 ## 5. HTML 5安全
