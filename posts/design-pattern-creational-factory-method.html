@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 创建型模式 - 工厂方法</title>
+  <meta name="description" content="定义一个用于创建对象的接口，让子类决定实例化哪一个类">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 创建型模式 - 工厂方法">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-creational-factory-method">
+  <meta property="og:description" content="定义一个用于创建对象的接口，让子类决定实例化哪一个类">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-creational-factory-method">
+  <meta name="twitter:title" content="设计模式 - 创建型模式 - 工厂方法">
+  <meta name="twitter:description" content="定义一个用于创建对象的接口，让子类决定实例化哪一个类">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 创建型模式 - 工厂方法</h1>
+            <p>定义一个用于创建对象的接口，让子类决定实例化哪一个类</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 14, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 class="no_toc" id="对象创建型模式--工厂方法factory-method">对象创建型模式 – 工厂方法（Factory Method）</h3>
+
+<ul id="markdown-toc">
+  <li><a href="#1-意图" id="markdown-toc-1-意图">1. 意图</a></li>
+  <li><a href="#2-别名" id="markdown-toc-2-别名">2. 别名</a></li>
+  <li><a href="#3-动机" id="markdown-toc-3-动机">3. 动机</a></li>
+  <li><a href="#4-适用性" id="markdown-toc-4-适用性">4. 适用性</a></li>
+  <li><a href="#5-结构" id="markdown-toc-5-结构">5. 结构</a></li>
+  <li><a href="#6-参与者" id="markdown-toc-6-参与者">6. 参与者</a></li>
+  <li><a href="#7-协作" id="markdown-toc-7-协作">7. 协作</a></li>
+  <li><a href="#8-效果" id="markdown-toc-8-效果">8. 效果</a></li>
+  <li><a href="#9-实现" id="markdown-toc-9-实现">9. 实现</a></li>
+  <li><a href="#10-代码示例" id="markdown-toc-10-代码示例">10. 代码示例</a></li>
+  <li><a href="#11-已知应用" id="markdown-toc-11-已知应用">11. 已知应用</a></li>
+  <li><a href="#12-相关模式" id="markdown-toc-12-相关模式">12. 相关模式</a></li>
+</ul>
+
+<h4 id="1-意图">1. 意图</h4>
+<p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到子类。</p>
+<h4 id="2-别名">2. 别名</h4>
+<p>虚构造器（Virtual Constructor）</p>
+<h4 id="3-动机">3. 动机</h4>
+<p>框架使用抽象类定义和维护对象之间的关系。这些对象的创建通常也是由框架负责。</p>
+
+<p>考虑这样一个应用框架，它可以向用户显示多个文档。这这个框架中，两个主要的抽象是类Application和Document。这两个类都是抽象的，客户必须通过它们的子类来做与具体应用相关的实现。例如：为了创建一个绘图应用，我们定义类DrawingApplication和DrawingDocument。Application类负责管理Document并根据需要创建它们–例如，当用户从菜单中选择Open或New的时候。</p>
+
+<p>因为被实例化的特定Document子类是与特定应用相关的，所以Application类不可能预测到哪个Document子类将被实例化–Application类仅知道一个新的文档<em>何时</em>应被创建，而不知道<em>哪一种</em>Document将被创建。这就产生了一个尴尬的局面：框架必须实例化类，但是它只知道不能被实例化的抽象类。</p>
+
+<p>Factory Method模式提供了一个解决方案。它封装了哪一个Document子类将被创建的信息并将这些信息从该框架中分离出来，如图示：
+<a href="/assets/documentation/design-pattern/Factory-Method-Demo.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Factory-Method-Demo.png" alt="Factory-Method-Demo" />
+</a></p>
+
+<p>Application的子类重定义Application的抽象操作CreateDocument以返回适当的Document子类对象。一旦一个Application子类实例化以后，它就可以实例化与应用相关的文档，而无需知道这些文档的类。我们称CreateDocument是一个工厂方法（factory method），因为它负责“生产”一个对象。</p>
+<h4 id="4-适用性">4. 适用性</h4>
+<p>在下列情况下可以使用Factory Method模式：</p>
+<ul>
+  <li>当一个类不知道它所必须创建的对象的类的时候。</li>
+  <li>当一个类希望由它的子类来指定它所创建的对象的时候。</li>
+  <li>当类将创建对象的职责委托给多个帮助子类中的某一，并且你希望将哪一个帮助子类是代理者这一信息局部化的时候。</li>
+</ul>
+
+<h4 id="5-结构">5. 结构</h4>
+<p><a href="/assets/documentation/design-pattern/Factory-Method-Pattern-Class-Diagram.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Factory-Method-Pattern-Class-Diagram.png" alt="Factory-Method-Pattern-Class-Diagram " />
+</a></p>
+
+<h4 id="6-参与者">6. 参与者</h4>
+<ul>
+  <li>Product（Document）
+    <ul>
+      <li>定义工厂方法所创建的对象的接口</li>
+    </ul>
+  </li>
+  <li>ConcreteProduct（MyDocument）
+    <ul>
+      <li>实现Product接口</li>
+    </ul>
+  </li>
+  <li>Creator（Application）
+    <ul>
+      <li>声明工厂方法，该方法返回一个Product类型的对象。Creator也可以定义一个工厂方法的缺省实现，它返回一个缺省的ConcreteProduct对象。</li>
+      <li>可以调用工厂方法以创建一个Product对象。</li>
+    </ul>
+  </li>
+  <li>ConcreteCreator（MyApplication）
+    <ul>
+      <li>重定义工厂方法以返回一个ConcreteProduct实例</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="7-协作">7. 协作</h4>
+<p>Creator依赖于它的子类来定义工厂方法，所以它返回一个适当的ConcreteProduct实例。</p>
+
+<h4 id="8-效果">8. 效果</h4>
+<p>工厂方法不再将与特定应用有关的类绑定到你的代码中。代码仅处理Product接口；因此它可以与用户定义的任何ConcreteProduct类一起使用。</p>
+
+<p>工厂方法的一个潜在缺点在于客户可能仅仅为了创建一个特定的ConcreteProduct对象，但是就不得不创建Creator子类。当Creator子类不必须时，客户现在必然要处理类演化得其他方面；但是当客户无论如何必须创建Creator的子类时，创建子类也是可行的。</p>
+
+<p>下面是Factory Method模式的另外两种效果：</p>
+<ul>
+  <li>
+    <p>为子类提供挂钩（hook）</p>
+
+    <p>用工厂方法在一个类的内部创建对象通常比直接创建的对象更灵活。Factory Method给子类一个挂钩以提供对象的扩展版本。
+在Document的例子中，Document类可以定义一个称为CreateFileDialog的工厂方法，该方法为打开一个已有的文档创建默认的文件对话框对象。Document子类可以重定义这个工厂方法以定义一个与特定应用相关的文件对话框。在这种情况下，工厂方法就不再抽象了而是提供了一个合理的缺省实现。</p>
+  </li>
+  <li>
+    <p>连接平行的类层次</p>
+
+    <p>迄今为止，在我们所考虑的例子中，工厂方法并不仅仅被Creator调用，客户可以找到一些有用的工厂方法，尤其在平行类层次的情况下。
+当一个类将它的一些职责委托给一个独立的类的时候，就产生了类平行层次。考虑可以被交互操纵的图形；也就是说，它们可以用鼠标进行伸展、移动，或者旋转。实现这样一些交互并不总是那么容易，它通常需要存储和更新在给定时刻记录操纵状态的信息。这个状态仅仅在操纵时需要。因此它不需要被保存在图形对象中。此外，当用户操纵图形时，不同的图形有不同的行为。例如，将直线图形拉长可能会产生一个端点被移动的效果，而伸展正文图形则可能会改变行距。</p>
+
+    <p>有了这些限制，最好使用给一个独立的Manipulator对象实现交互并保存所需要的任何与特定操纵相关的状态。不同的图形将使用不同的Manipulator子类来处理 特定的交互。得到的Manipulator类层次与Figure类层次是平行（至少部分平行），如下图所示：
+<a href="/assets/documentation/design-pattern/Demo-Parallel-Class-Hierarchy.png" class="fluidbox-trigger">
+<img src="/assets/documentation/design-pattern/Demo-Parallel-Class-Hierarchy.png" alt="Demo-Parallel-Class-Hierarchy" />
+</a></p>
+
+    <p>Figure类提供了一个CreateManipulator工厂方法，它使得客户可以创建一个与Figure相对应的Manipulator。Figure子类重定义该方法以返回一个合适的Manipulator子类实例。做为一种选择，Figure类可以实现CreateManipulator以返回一个默认的Manipulator实例，而Figure子类可以只是继承这个缺省实现。这样的Figure类不要相应的Manipulator子类–因此该层次只是部分平行。</p>
+
+    <p><code class="highlighter-rouge">注意</code>工厂方法是怎样定义两个类层次之间的连接的。它将哪些类应一同工作的信息局部化了。</p>
+  </li>
+</ul>
+
+<h4 id="9-实现">9. 实现</h4>
+<p>当应用Factory Method模式时要考虑下面一些问题：</p>
+<ul>
+  <li>
+    <p>主要有两种不同的情况</p>
+
+    <p>Factory Method模式主要有两种不同的情况：1）Creator类是一个抽象类并且不提供它所声明的工厂方法的实现。2）Creator是一个具体的类而且为工厂方法提供一个缺省的实现。也有可能有一个定义了缺省实现的抽象类，但这不太常见。</p>
+
+    <p>第一种情况需要子类来定义实现，因为没有合理的缺省实现。它避免了不得不实例化不可以预见类的问题。第二种情况中，具体的Creator主要因为灵活性才使用工厂方法。它所遵循的准则是，“用一个独立的操作创建对象，这样子类才能重定义它们的创建方式。”这条准则保证了子类的设计者能够在必要的时候改变父类所实例化的对象的类。</p>
+  </li>
+  <li>
+    <p>参数化工厂方法</p>
+
+    <p>该模式的另一种情况使得工厂方法可以创建多种产品。工厂方法采用一个标识要被创建的对象种类参数。工厂方法创建的所有对象将共享Product接口。在Document的例子中个，Application可能支持不同种类的Document。你给CreateDocument传递一个外部参数来指定将要创建的文档的种类。</p>
+  </li>
+  <li>
+    <p>特定语言的变化问题</p>
+
+    <p>不同的语言有助于产生一些有趣的变化和警告（caveat）。</p>
+  </li>
+  <li>
+    <p>使用模板以避免创建子类
+正如我们已经提及的，工厂方法另一个潜在的问题是它们可能仅为了创建适当的Product对象而迫使你创建一个Creator子类。在C++中另一个解决办法是提供Creator的一个模板子类，它使用Product类作为模板参数。</p>
+  </li>
+  <li>
+    <p>命名约定</p>
+
+    <p>使用命名约定是一个好习惯，它可以清楚地说明你正在使用工厂方法。例如，Macintosh的应用框架MacAPP总是声明那些定义为工厂方法的抽象操作为Class*DoMakeClass(), 此处Classshi Product类。</p>
+  </li>
+</ul>
+
+<h4 id="10-代码示例">10. 代码示例</h4>
+<p>函数CreateMaze建造并返回一个迷宫。这个函数存在的一个问题是它对迷宫、房间、门和墙壁的类进行了硬编码。我们将引入工厂方法以使子类可以徐泽这些构建。首先我们将在MazeGame中定义工厂方法以创建迷宫、房间、和门对象:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MazeGame</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Maze</span> <span class="nf">createMaze</span><span class="o">(){</span>
+        <span class="c1">//...</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Maze</span> <span class="nf">makeMaze</span><span class="o">(){</span>
+        <span class="k">return</span>  <span class="k">new</span> <span class="nf">Maze</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Room</span> <span class="nf">makeRoom</span><span class="o">(</span><span class="kt">int</span> <span class="n">roomNo</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Room</span><span class="o">(</span><span class="n">roomNo</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Wall</span> <span class="nf">makeWall</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Wall</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Door</span> <span class="nf">makeDoor</span><span class="o">(</span><span class="n">Room</span> <span class="n">r1</span><span class="o">,</span> <span class="n">Room</span> <span class="n">r2</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Door</span><span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>每一个工厂方法返回一个给定类型的迷宫构件。MazeGame提供一些缺省的实现，它们返回最简单的迷宫、房间、墙壁和门。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MazeGame</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Maze</span> <span class="nf">createMaze</span><span class="o">(){</span>
+        <span class="n">Maze</span> <span class="n">aMaze</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Maze</span><span class="o">();</span>
+
+        <span class="n">Room</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">makeRoom</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">Room</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">makeRoom</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+        <span class="n">Door</span> <span class="n">theDoor</span> <span class="o">=</span> <span class="n">makeDoor</span><span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">);</span>
+
+        <span class="n">aMaze</span><span class="o">.</span><span class="na">addRoom</span><span class="o">(</span><span class="n">r1</span><span class="o">);</span>
+        <span class="n">aMaze</span><span class="o">.</span><span class="na">addRoom</span><span class="o">(</span><span class="n">r2</span><span class="o">);</span>
+
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">makeWall</span><span class="o">());</span>
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">East</span><span class="o">,</span> <span class="n">theDoor</span><span class="o">);</span>
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">makeWall</span><span class="o">());</span>
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">West</span><span class="o">,</span> <span class="n">makeWall</span><span class="o">());</span>
+
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">makeWall</span><span class="o">());</span>
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">East</span><span class="o">,</span> <span class="n">makeWall</span><span class="o">());</span>
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">makeWall</span><span class="o">());</span>
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">West</span><span class="o">,</span> <span class="n">theDoor</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">aMaze</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//...</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>不同的游戏可以创建MazeGame的子类以特别指明一些迷宫的部件。MazeGame子类可以重定义一些或所有的工厂方法以指定产品中的变化。例如，一个BombedMazeGame可以重新定义产品Room和Wall以返回爆炸后的变体。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BombedMazeGame</span> <span class="kd">extends</span> <span class="n">MazeGame</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">BombedMazeGame</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Wall</span> <span class="nf">makeWall</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">BombedWall</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Room</span> <span class="nf">makeRoom</span><span class="o">(</span><span class="kt">int</span> <span class="n">roomNO</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">RoomWithABomb</span><span class="o">(</span><span class="n">roomNO</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<h4 id="11-已知应用">11. 已知应用</h4>
+<p>工厂方法主要用于工具包和框架中。</p>
+
+<h4 id="12-相关模式">12. 相关模式</h4>
+<p>Abstract Factory经常用工厂方法来实现。我们将在Abstract Factory模式的动机中说明。</p>
+
+<p>工厂方法通常在Template Methods中被调用。</p>
+
+<p>Prototype不需要创建Creator的子类。但是，它们通常要求一个针对Product类的Initialize操作。Creator使用Initialize来初始化对象。而Factory Method不需要这样的操作。</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 创建型模式 - 工厂方法 - /posts/design-pattern-creational-factory-method ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-creational-factory-method', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-creational-factory-method', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
