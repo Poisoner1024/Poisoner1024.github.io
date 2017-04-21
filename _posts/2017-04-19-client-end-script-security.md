@@ -81,29 +81,35 @@ Sandbox 的应用范围非常广泛。比如一个提供hosting 服务的共享�
 XSS 长期以来被列为客户端Web安全中的头号大敌。因为XSS 破坏力强大，且产生的场景复杂，难以一次性解决。现在业内达成的共识是：针对各种不同场景产生的XSS，需要区分情景对待。即便如此，复杂的应用环境仍然是XSS 滋生的温床。
 
 XSS 根据效果的不同可以分成如下几类：
-* 1. 反射型XSS
+* 反射型XSS
+
   反射型XSS 只是简单地把用户输入的数据“反射”给浏览器。也就是说，黑客往往需要诱使用户“点击”一个恶意链接，才能攻击成功。
 
   反射型XSS 也叫做“非持久型 XSS”（Non-persistent XSS）。
 
-* 2. 存储型XSS
+* 存储型XSS
+
   存储型XSS 会把用户输入的数据“存储”在服务器端。这种XSS 具有很强的稳定性。比较常见的一个场景就是，黑客写下一篇包含恶意JavaScript 代码的博客文章，文章发表后，所有访问该博客文章的用户，都会在他们的浏览器中执行这段恶意的JavaScript代码。黑客把恶意的脚本保存到服务器端，所以这种XSS 攻击就叫做“存储型 XSS”。
 
   存储型 XSS 通常也叫做“持久型 XSS”（Persistent XSS），因为从效果上来说，它存在的时间是比较长的。
 
-* 3. DOM Based XSS
+* DOM Based XSS
+
   实际上，这种类型的XSS 并非按照“数据是否保存在服务器端”来划分，DOM Based XSS 从效果上来说也是反射型XSS。单独划分出来，是因为DOM Based XSS的形成原因比较特别，发现它的安全专家专门提出了这种类型的XSS。出于历史原因，也就把它单独作为一个分类了。
 
   通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。
 
 ### XSS 攻击平台
 * [Attack API](http://pdp.soup.io/post/7429829/Bring-Back-the-Attack-to-the-API)
+
   Attack API 是安全研究中pdp所主导的一个项目，它总结了很多能够直接使用XSS Payload，归纳为API的方式
   
 * [BeEF](http://beefproject.com/)
+
   BeEF曾经是最好的XSS 演示平台。不同于Attack API，BeEF所演示的是一个完整的攻击过程。BeEF有一个控制后台，攻击者可以在后台控制前端的一切。每个被XSS 攻击的用户都将出现在后台，后台控制者就可以控制这些浏览器的行为，并可以通过XSS 向这些用户发送命令。
 
 * [XSS-Proxy](http://xss-proxy.sourceforge.net/)
+
   XSS-Proxy是一个轻量级的XSS 攻击平台，通过嵌套iframe的方式可以实时地远程控制被XSS 攻击的浏览器。
 
 这些XSS 攻击平台有助于深入理解XSS 的原理和危害。
@@ -119,7 +125,7 @@ http://blog.sohu.com/manage/entry.do?m=delete&id=156713012
 {% endhighlight %} 
 
 这个URL同时还存在CSRF 漏洞。我们将尝试利用CSRF 漏洞，删除编号为“156713012”的博客文章。
-* 1. 攻击者首先在自己的域构造一个页面：
+* 攻击者首先在自己的域构造一个页面：
 {% highlight URL %}
 http://www.a.com/csrf.html
 {% endhighlight %} 
@@ -129,7 +135,8 @@ http://www.a.com/csrf.html
 <img src="http://blog.sohu.com/manage/entry.do?m=delete&id=156713012" />
 {% endhighlight %} 
 
-* 2. 攻击者诱使目标用户，也就是博客主访问这个页面，已执行CSRF 攻击。
+* 攻击者诱使目标用户，也就是博客主访问这个页面，已执行CSRF 攻击。
+
 在博客主访问http://www.a.com/csrf.html时，图片标签向搜狐的服务器发送了一次GET请求，而这次请求，导致了搜狐博客上的一篇文章被删除。
 
 回顾下整个攻击过程，攻击者仅仅诱使用户访问了一个页面，就使该用户身份在第三方站点里执行了一次操作。试想：如果这张图片是展示在某个论坛、某个博客，甚至搜狐的一些用户控件中，会产生什么效果呢？只需要经过精心的设计，就能够起到更大的破坏作用。
