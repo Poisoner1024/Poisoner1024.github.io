@@ -7,6 +7,14 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Web应用程序渗透测试方法论 - 一般规范</title>
+        <description>当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项</description>
+        <pubDate>Fri, 05 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-general-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-general-guideline</guid>
+      </item>
+    
+      <item>
         <title>客户端脚本安全</title>
         <description>常见的客户端脚本安全问题描述</description>
         <pubDate>Wed, 19 Apr 2017 00:00:00 +0800</pubDate>
@@ -76,14 +84,6 @@
         <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
         <link>/posts/security-strategy-of-white-hat</link>
         <guid isPermaLink="true">/posts/security-strategy-of-white-hat</guid>
-      </item>
-    
-      <item>
-        <title>如何实施安全评估</title>
-        <description>安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案</description>
-        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/how-to-execute-security-evalution</link>
-        <guid isPermaLink="true">/posts/how-to-execute-security-evalution</guid>
       </item>
     
   </channel>
