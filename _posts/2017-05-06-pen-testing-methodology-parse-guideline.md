@@ -9,6 +9,7 @@ tags: [web, security, test]
 * 目录
 {:toc}
 
+{% include image.html path="documentation/pen-test/map-app-content.png" path-detail="documentation/pen-test/map-app-content.png" alt="map-app-content" %}
 ## 1. 搜索可见的内容
 (1) 配置浏览器，使用首选集成代理/抓取攻击。可以使用Burp与WebScarab监控和解析由代理服务器处理的Web内容，对站点实行被动抓取。
 

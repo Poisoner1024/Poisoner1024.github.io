@@ -11,7 +11,7 @@ tags: [web, security, test]
 
 ## 方法论
 Web应用程序渗透测试方法论探查的主要区域：
-{% include image.html path="documentation/pen-test/pen-testing-methodology.png" path-detail="documentation/pen-test/pen-testing-methodology.png" alt="chalk-intro" %}
+{% include image.html path="documentation/pen-test/pen-testing-methodology.png" path-detail="documentation/pen-test/pen-testing-methodology.png" alt="pen-testing-methodology" %}
 这个方法论中的一系列任务根据它们之间的逻辑依赖关系组织和排序。
 
 在渗透测试过程中，`渗透测试员往往需要发挥自己的想象，思考应采取的攻击方向，并根据所发现的有关目标应用程序的信息指导攻击方向`，如下所示：
