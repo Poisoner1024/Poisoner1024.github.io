@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Web应用程序渗透测试方法论 - 测试验证机制</title>
+        <description>验证机制是客户端向服务器证明其身份的特殊方法</description>
+        <pubDate>Mon, 08 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-auth-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-auth-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 分析应用程序</title>
+        <description>分析应用程序，为进一步的测试方向做指引</description>
+        <pubDate>Sun, 07 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-analyze-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-analyze-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 解析应用程序内容</title>
+        <description>尽可能地去发掘更多的与应用程序有关的内容</description>
+        <pubDate>Sat, 06 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-parse-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-parse-guideline</guid>
+      </item>
+    
+      <item>
         <title>Web应用程序渗透测试方法论 - 一般规范</title>
         <description>当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项</description>
         <pubDate>Fri, 05 May 2017 00:00:00 +0800</pubDate>
@@ -61,30 +85,6 @@
         <link>/posts/security-development-lifecycle-introduce</link>
         <guid isPermaLink="true">/posts/security-development-lifecycle-introduce</guid>
       </item>
-    
-      <item>
-        <title>SDL的开发与测试阶段</title>
-        <description>在SDL的开发与测试阶段的安全实践</description>
-        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/sdl-in-design-and-test-phases</link>
-        <guid isPermaLink="true">/posts/sdl-in-design-and-test-phases</guid>
-      </item>
-    
-      <item>
-        <title>SDL 需求分析阶段的Checklist</title>
-        <description>安全专家Lenny Zeltser的需求分析checklist</description>
-        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/sdl-checklist-in-the-requirement-analysis-phase</link>
-        <guid isPermaLink="true">/posts/sdl-checklist-in-the-requirement-analysis-phase</guid>
-      </item>
-    
-      <item>
-        <title>白帽子兵法</title>
-        <description>具体设计安全方案时的技巧</description>
-        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/security-strategy-of-white-hat</link>
-        <guid isPermaLink="true">/posts/security-strategy-of-white-hat</guid>
-      </item>
-    
+
   </channel>
 </rss>
