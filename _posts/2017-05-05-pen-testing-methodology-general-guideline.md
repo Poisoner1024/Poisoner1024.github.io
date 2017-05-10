@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Web应用程序渗透测试方法论 - 一般规范"
+title: "Web应用程序渗透测试方法论"
 description: "当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项"
 tags: [web, security, test]
 ---
