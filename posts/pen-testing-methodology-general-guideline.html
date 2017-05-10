@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | Web应用程序渗透测试方法论 - 一般规范</title>
+  <meta name="description" content="当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Web应用程序渗透测试方法论 - 一般规范">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/pen-testing-methodology-general-guideline">
+  <meta property="og:description" content="当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/pen-testing-methodology-general-guideline">
+  <meta name="twitter:title" content="Web应用程序渗透测试方法论 - 一般规范">
+  <meta name="twitter:description" content="当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>Web应用程序渗透测试方法论 - 一般规范</h1>
+            <p>当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                May 5, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+                  <a href="/tag/test">test</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>注：原文来自《黑客攻防技术宝典》</p>
+
+<ul id="markdown-toc">
+  <li><a href="#方法论" id="markdown-toc-方法论">方法论</a></li>
+  <li><a href="#一般规范" id="markdown-toc-一般规范">一般规范</a></li>
+</ul>
+
+<h2 id="方法论">方法论</h2>
+<p>Web应用程序渗透测试方法论探查的主要区域：
+<a href="/assets/documentation/pen-test/pen-testing-methodology.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/pen-test/pen-testing-methodology.png" alt="pen-testing-methodology" />
+</a></p>
+
+<p>这个方法论中的一系列任务根据它们之间的逻辑依赖关系组织和排序。</p>
+
+<p>在渗透测试过程中，<code class="highlighter-rouge">渗透测试员往往需要发挥自己的想象，思考应采取的攻击方向，并根据所发现的有关目标应用程序的信息指导攻击方向</code>，如下所示：</p>
+<ul>
+  <li>在某一个阶段收集到的信息有助于返回前一个阶段，以设计更有针对性的攻击。例如，渗透测试员可以利用访问控制漏洞获得所有用户的列表，针对验证功能实施有效地密码猜测攻击。</li>
+  <li>在应用程序的某个区域发现的一个关键漏洞可简化对另一个区域的攻击。例如，渗透测试员可以利用文件泄露漏洞对应用程序的关键功能进行代码审查，而不是盲目地探查这些功能。</li>
+  <li>一些区域的测试结果有助于确定在其他区域可立即探查出的重复出现的漏洞模式。例如，渗透测试员可以利用应用程序输入确认过滤常见的漏洞，迅速找到在几种不同的攻击中避开应用程序防御机制的方法。</li>
+</ul>
+
+<p><code class="highlighter-rouge">切记</code>：要对Web应用程序实施最有效地攻击，渗透测试员必须充分发挥自己的想象力。</p>
+
+<h2 id="一般规范">一般规范</h2>
+<p>这些注意事项适用于所有必须测试的区域以及需要采用的各种技巧。</p>
+<ul>
+  <li>记住，<code class="highlighter-rouge">一些字符在HTTP请求的不同部分具有特殊的含义</code>。当修改请求中的数据时，应该对这些字符进行URL编码，以确保应用程序按照想要的方式解释这些字符。
+    <ul>
+      <li>&amp;用于分隔URL查询字符串与消息主体中的参数。要插入一个字面量&amp;字符，必须将其编码为%26。</li>
+      <li>=用于分隔URL查询字符串与消息主体中每个参数的名称与值。要插入一个字面量=字符，必须将其编码为%3d。</li>
+      <li>？用于标记URL查询字符串的起始位置。要插入一个字面量?字符，必须将其编码为%3f。</li>
+      <li>空格用于在请求的第一行标记URL的结束位置，并可用于在Cookie消息头中表示一个cookie值结束。要插入一个字面量空格字符，必须将其编码为%20或+。</li>
+      <li>因为+表示一个编码的空格，要插入一个字面量+字符，必须将其编码为%2b。</li>
+      <li>;用于在Cookie消息头中分隔单个的cookie。要插入一个字面量;字符，必须将其编码为%3b。</li>
+      <li>#用于在URL中标记片段标识符。如果在浏览器的URL中输入这个字符，它会将传送给服务器的URL截断。要插入一个字面量#字符，必须将其编码为%23。</li>
+      <li>%在URL编码方案中作为前缀。要插入一个字面量%字符，必须将其编码为%25。</li>
+      <li>当然，空字节与换行符等非打印字符必须使用它们的ASCII字符代码进行URL编码。空字节与换行符的编码分别为%00和%0a。</li>
+    </ul>
+  </li>
+  <li>此外，需要注意，<code class="highlighter-rouge">在表单中输入URL编码的数据通常会导致浏览器执行另一层编码</code>。例如，在表单中提交%00可能会导致向服务器发送值%2500。为此，通常最好是在拦截代理服务器中查看最终请求。</li>
+  <li>
+    <ol>
+      <li>许多查找常见Web应用程序的测试需要发送各种专门设计的输入字符串，并监控应用程序的响应，从中搜索表示漏洞存在的反常现象。有时候，无论是否提交某个特定漏洞的触发器，应用程序对一个特殊请求的响应都将包含这个漏洞有关的行为（如一个特殊的错误消息），就应该重新核查，确定在相关参数中提交良性输入是否也会造成相同的行为。如果两种输入的行为相同，那么最初的发现可能是一个错误报警。</li>
+    </ol>
+  </li>
+  <li>通常，<code class="highlighter-rouge">应用程序会从前一个请求中手机一定量的状态，这会影响它们如何响应随后的请求</code>。有时，当调查一个尚未确定的漏洞并隔离某一个反常行为的根源时，必须避免任何收集到的状态信息造成的影响。通常，使用一个新的浏览器进程开始另一个会话，再使用良性请求导航至观测到发生反常的位置，然后重新提交专门设计的输入，就足以达到这个目的。还可以对请求中包含的cookie和缓存信息进行调整，重复利用这种方法。此外，还可以使用Burp Repeater等工具隔离一个请求，对它进行一些调整，然后根据需要重复多次发布这个请求。</li>
+  <li><code class="highlighter-rouge">一些应用程序使用一种负载平衡的配置</code>，其中连续的HTTP请求可能会被不同的后端服务器在Web层、展现层、数据层或其他层处理。不同服务器在配置上的细微差异可能会影响到处理结果。另外，一些成功地攻击将改变处理请求的某一台服务器的状态，例如在Web根目录上创建一个新的文件。为隔离特殊操作造成的影响，可能需要连续提交几个相同的请求，测试每个请求的结果，知道请求被相关服务器处理。
+假设需要自咨询工作中采用这种方法，渗透测试员应当首先确定测试范围，明确了解测试包含的主机名、URL与功能以及允许执行的测试类型是否存在任何限制。还应当向应用程序所有者告知对一个“黑盒”目标实施任何渗透测试包含的内在风险，并建议他们在开始测试前备份所有重要的数据。</li>
+</ul>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=Web应用程序渗透测试方法论 - 一般规范 - /posts/pen-testing-methodology-general-guideline ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/pen-testing-methodology-general-guideline', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/pen-testing-methodology-general-guideline', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

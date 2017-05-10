@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 如何实施安全评估</title>
+  <meta name="description" content="安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="如何实施安全评估">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/how-to-execute-security-evalution">
+  <meta property="og:description" content="安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/how-to-execute-security-evalution">
+  <meta name="twitter:title" content="如何实施安全评估">
+  <meta name="twitter:description" content="安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>如何实施安全评估</h1>
+            <p>安全评估过程的4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 11, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>注：原文来自《白帽子讲Web安全》</p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-资产等级划分" id="markdown-toc-1-资产等级划分">1. 资产等级划分</a></li>
+  <li><a href="#2-威胁分析" id="markdown-toc-2-威胁分析">2. 威胁分析</a></li>
+  <li><a href="#3-风险分析" id="markdown-toc-3-风险分析">3. 风险分析</a></li>
+  <li><a href="#4-安全设计方案" id="markdown-toc-4-安全设计方案">4. 安全设计方案</a></li>
+</ul>
+
+<p>一个安全评估的过程，可以简单地分为4个阶段：资产等级划分、威胁分析、风险分析、确认解决方案。</p>
+<div align="center">
+<a href="/assets/documentation/white-hat-web-security/procedure-of-security-evalution.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/procedure-of-security-evalution.png" alt="procedure-of-security-evalution" />
+</a>
+
+</div>
+<p>一般来说，按照这个过程来实施安全评估，在结果上不会出现较大的问题。这个实施的过程是层层递进的，前后之间有因为关系。</p>
+
+<p>如果面对的是一个尚未评估的系统，那么应该从第一个阶段开始实施；如果是由专职的安全团队长期维护的系统，那么有些阶段可以只实施一次。在这几个阶段中，上一个阶段将决定下一个阶段的目标，需要实施到什么程度。</p>
+
+<h3 id="1-资产等级划分">1. 资产等级划分</h3>
+<p>资产等级划分是所有工作的基础，这项工作能够帮助我们明确目标是什么，要保护什么。</p>
+
+<p>我们前面提到安全三要素时，机密性和完整性都是与数据相关的，在可用性的定义里，笔者则用到了“资源“一词。“资源”这个概念描述的范围比数据要更加广阔，但很多时候，资源的可用性也可以理解为数据可用性。</p>
+
+<p>在互联网的基础设施已经比较完善的今天，互联网的核心其实是由用户数据驱动的 – 用户产生业务，业务产生数据。互联网公司除了拥有一些固定资产，如服务器等死物外，最核心的价值就是其拥有的用户数据，所以：</p>
+<blockquote>
+  <p>互联网安全的核心问题，是数据安全的问题。</p>
+</blockquote>
+
+<p>这与我们做资产评估又有什么关系呢？有，因为对互联网公司拥有的资产进行等级划分，就是对数据做等级划分。有的公司最关心的是客户数据，有的公司最关心的是员工资料信息，根据各自业务的不同，侧重点也不同。做资产等级划分的过程，需要与各个业务部门的负责人一一沟通，了解公司最重要的资产是什么，他们最看重的数据是什么。通过访谈的形式，安全部门才能熟悉、了解公司的业务，公司所拥有的数据，以及不同数据的重要程度，为后续的安全评估过程指明方向。</p>
+
+<p>当<code class="highlighter-rouge">完成资产等级划分</code>后，对要保护的目标已经有了一个大概的了解，接下来就是要<code class="highlighter-rouge">划分信任域</code>和<code class="highlighter-rouge">信任边界</code>了。通常我们用一种最简单的划分方式，就是从网络逻辑上来划分。比如最重要的数据放在数据库里，那么把数据库的服务器圈起来；Web 应用可以从数据库中读/写数据，并对外提供服务，那再把Web服务器圈起来；最外面是不可信任的Internet。</p>
+<div align="center">
+<a href="/assets/documentation/white-hat-web-security/simple-trust-model.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/simple-trust-model.png" alt="simple-trust-model" />
+</a>
+
+</div>
+<p>这是最简单的例子，在实际中会遇到比这复杂许多的情况。比如同样是两个应用，互相之间存在数据交互业务，那么就要考虑这里的数据交互对于各自应用来说是否是可信的，是否应该在两个应用之间划一个边界，然后对流经边界的数据做安全检查。</p>
+
+<h3 id="2-威胁分析">2. 威胁分析</h3>
+<p>信任域划好之后，我们如何才能确定危险来自哪里呢？在安全领域里，我们把可能造成危害的来源称为<code class="highlighter-rouge">威胁（Threat）</code>，而把可能会出现的损失称为<code class="highlighter-rouge">风险（Risk）</code>。风险一定是和损失联系在一起的，很多专业的安全工程师也经常把这两个概念弄混，在写文档时张冠李戴。现在把这两个概念区分好，有助于我们接下来要提到的“威胁建模”和“风险分析”两个阶段，这两个阶段的联系是很紧密的。</p>
+
+<p>什么是<code class="highlighter-rouge">威胁分析</code>？威胁分析就是把所有的威胁都找出来。<strong>怎么找？</strong>一般是采用头脑风暴法。当然，也有一些比较科学的方法，比如使用一个模型，帮助我们去想，在哪些方面有可能会存在威胁，这个过程能够避免遗漏，这就是<code class="highlighter-rouge">威胁建模</code>。</p>
+
+<p>下面介绍一种威胁建模的方法 – <code class="highlighter-rouge">STRIDE</code>模型，它最早是由微软提出的。STRIDE 是6 个单词的首字母缩写，我们在分析威胁时，可以从以下6 个方面去考虑。</p>
+<div align="center">
+<a href="/assets/documentation/white-hat-web-security/stride-model.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/stride-model.png" alt="stride-model" />
+</a>
+
+</div>
+
+<p>在进行威胁分析时，要尽可能地不遗漏威胁，头脑风暴的过程可以<strong>确定攻击面（AttackSurface）</strong>。</p>
+
+<p>在维护系统安全时，最让安全工程师沮丧的事情就是花费很多的时间与精力实施安全方案，但是攻击者却利用了事先完全没有想到的漏洞（漏洞的定义：系统中可能被威胁利用以造成危害的地方）完成入侵。这往往就是由于在确定攻击面时，想的不够全面而导致的。</p>
+
+<p>以前有部老电影叫做《智取华山》，是根据真实事件改编的。1949年5月中旬，打响了“陕中战役”，国民党保安第6 旅旅长兼第8 区专员韩子佩率残部400余人逃上华山，企图凭借“自古华山一条道”的天险负隅顽抗。路东总队决定派参谋刘吉尧带侦察小分队前往侦察，刘吉尧率领小分队，在当地村民的带领下，找到了第二条路：爬悬崖！克服种种困难，最终顺利地完成了任务。战后，刘吉尧光荣地出席了全国英模代表大会，并被授予“全国特等战斗英雄”荣誉称号。</p>
+
+<p>我们用安全眼光来看这次战斗。国民党部队在进行“威胁分析”时，只考虑到“自古华山一条道”，所以在正路上布重兵，而完全忽略了其他的可能。他们“相信”其他道路是不存在的，这是他们实施安全方案的基础，而一旦这个信任基础不存在了，所有的安全方案都将化作浮云，从而被共产党的部队击败。</p>
+
+<p>所以威胁分析是非常重要的一件事情，很多时候还需要经常回顾和更新现有的模型。可能存在很多威胁，但并非每个威胁都会造成难以承受的损失。一个威胁到底能够造成多大的危害，如何去衡量它？这就要考虑到风险了。我们判断风险高低的过程，就是风险分析的过程。在“风险分析”这个阶段，也有模型可以帮助我们进行科学的思考。</p>
+
+<h3 id="3-风险分析">3. 风险分析</h3>
+<p>风险由以下因素组成：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">Risk = Probability * Damage Potential</code></pre></figure>
+
+<p>影响风险高低的因素，除了造成损失的大小外，还需要考虑到发生的可能性。地震的危害很大，但是地震、火山活动一般是在大陆板块边缘频繁出现，比如日本、印尼就处于这些地理位置，因此地震频发；而在大陆板块中心，若是地质结构以整块的岩石为主，则不太容易发生地震，因此地震的风险就要小很多。我们在考虑安全问题时，要结合具体情况，权衡事件发生的可能性，才能正确地判断出风险。</p>
+
+<p>如何更科学地衡量风险呢？这里再介绍一个<code class="highlighter-rouge">DREAD</code>模型，它也是由微软提出的。DREAD也是几个单词的首字母缩写，它指导我们应该从哪些方面去判断一个威胁的风险程度。</p>
+<div align="center">
+<a href="/assets/documentation/white-hat-web-security/dread-model.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/dread-model.png" alt="dread-model" />
+</a>
+
+</div>
+
+<p>在 DREAD模型里，每一个因素都可以分为高、中、低三个等级。在上表中，高、中、低三个等级分别以3、2、1 的分数代表其权重值，因此，我们可以具体计算出某一个威胁的风险值。</p>
+
+<p>以《智取华山》为例，如果国民党在威胁建模后发现存在两个主要威胁：第一个威胁是从正面入口强攻，第二个威胁是从后山小路爬悬崖上来。那么，这两个威胁对应的风险分别计算如下：</p>
+
+<p>走正面的入口：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">Risk = D(3) + R(3) + E(3) + A(3) + D(3) = 3+3+3+3+3=15</code></pre></figure>
+
+<p>走后山小路：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">Risk = D(3) + R(1) + E(1) + A(3) + D(1) = 3+1+1+3+1=9</code></pre></figure>
+
+<p>如果我们把风险高低定义如下：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">高危：12～15分 中危：8～11分 低危：0～7分</code></pre></figure>
+
+<p>那么，正面入口是最高危的，必然要派重兵把守；而后山小路竟然是中危的，因此也不能忽视。之所以会被这个模型判断为中危的原因，就在于一旦被突破，造成的损失太大，失败不起，所以会相应地提高该风险值。</p>
+
+<p>介绍完威胁建模和风险分析的模型后，我们对安全评估的整体过程应该有了一个大致的了解。在任何时候都应该记住——模型是死的，人是活的，再好的模型也是需要人来使用的，在确定攻击面，以及判断风险高低时，都需要有一定的经验，这也是安全工程师的价值所在。类似STRIDE 和DREAD 的模型可能还有很多，不同的标准会对应不同的模型，只要我们觉得这些模型是科学的，能够帮到我们，就可以使用。但模型只能起到一个辅助的作用，最终做出决策的还是人。</p>
+
+<h3 id="4-安全设计方案">4. 安全设计方案</h3>
+<p><strong>安全评估的产出物，就是安全解决方案。</strong>解决方案一定要有针对性，这种针对性是由资产等级划分、威胁分析、风险分析等阶段的结果给出的。</p>
+
+<p>设计解决方案不难，难的是如何设计一个好的解决方案。设计一个好的解决方案，是真正考验安全工程师水平的时候。</p>
+
+<p>很多人认为，安全和业务是冲突的，因为往往为了安全，要牺牲业务的一些易用性或者性能，笔者不太赞同这种观点。从产品的角度来说，安全也应该是产品的一种属性。一个从未考虑过安全的产品，至少是不完整的。</p>
+
+<p>比如，我们要评价一个杯子是否好用，除了它能装水，能装多少水外，还要思考这个杯子内壁的材料是否会溶解在水里，是否会有毒，在高温时会不会熔化，在低温时是否易碎，这些问题都直接影响用户使用杯子的安全性。</p>
+
+<p>对于互联网来说，安全是要为产品的发展与成长保驾护航的。我们不能使用“粗暴”的安全方案去阻碍产品的正常发展，所以应该形成这样一种观点：没有不安全的业务，只有不安全的实现方式。产品需求，尤其是商业需求，是用户真正想要的东西，是业务的意义所在，在设计安全方案时应该尽可能地不要改变商业需求的初衷。</p>
+
+<p>作为安全工程师，要想的就是如何通过简单而有效的方案，解决遇到的安全问题。安全方案必须能够有效抵抗威胁，但同时不能过多干涉正常的业务流程，在性能上也不能拖后腿。</p>
+
+<p>好的安全方案对用户应该是透明的，尽可能地不要改变用户的使用习惯。</p>
+
+<p>微软在推出Windows Vista 时，有一个新增的功能叫UAC，每当系统里的软件有什么敏感动作时，UAC 就会弹出来询问用户是否允许该行为。这个功能在Vista 众多失败的原因中是被人诟病最多的一个。如果用户能够分辨什么样的行为是安全的，那么还要安全软件做什么？同样的问题出现在很多主动防御的桌面安全保护软件中，它们动辄弹出个对话框询问用户是否允许目标的行为，这是非常荒谬的用户体验。</p>
+
+<p>好的安全产品或模块除了要兼顾用户体验外，还要易于持续改进。一个好的安全模块，同时也应该是一个优秀的程序，从设计上也需要做到高聚合、低耦合、易于扩展。比如Nmap的用户就可以自己根据需要写插件，实现一些更为复杂的功能，满足个性化需求。</p>
+
+<p>最终，一个优秀的安全方案应该具备以下特点：</p>
+<ul>
+  <li>能够有效解决问题；</li>
+  <li>用户体验好；</li>
+  <li>高性能；</li>
+  <li>低耦合；</li>
+  <li>易于扩展与升级。</li>
+</ul>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=如何实施安全评估 - /posts/how-to-execute-security-evalution ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/how-to-execute-security-evalution', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/how-to-execute-security-evalution', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

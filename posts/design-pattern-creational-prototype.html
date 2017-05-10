@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 创建型模式 - 原型</title>
+  <meta name="description" content="用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 创建型模式 - 原型">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-creational-prototype">
+  <meta property="og:description" content="用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-creational-prototype">
+  <meta name="twitter:title" content="设计模式 - 创建型模式 - 原型">
+  <meta name="twitter:description" content="用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 创建型模式 - 原型</h1>
+            <p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 30, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 id="对象创建型模式--原型prototype">对象创建型模式 – 原型（PROTOTYPE）</h3>
+
+<h4 id="1-意图">1. 意图</h4>
+<p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+
+<h4 id="2-动机">2. 动机</h4>
+<p>你可以通过定制一个通用的原形编辑器框架和增加一些表示音符、休止符和五线谱的新对象来构造一个乐谱编辑器。这个编辑器框架可能有一个工具选择板用于将这些音乐对象加到乐谱中。这个选择板可能还包括选择、移动和其他操纵音乐对象的工具。用户可以点击四分音符工具并使用它将四分音符加到乐谱中。或者他们可以使用移动工具在五线谱上上下移动一个音符，从而改变它的音调。</p>
+
+<p>我们假定该框架为音符和五线谱这样的图形构建提供了一个抽象的Graphics类。此外，为定义选择板中的那些工具，还提供一个抽象类Tool。该框架还为一些创建图形对象实例并将它们加入到文档中的工具预定义了一个GraphicTool子类。</p>
+
+<p>当GraphicTool给框架设计者带来一个问题。音符和五线谱的类特定于我们的应用，而GraphicTool类却属于框架。GraphicTool不知道如何创建我们的音乐类的实例，并将它们添加到乐谱中。我们可以为每一种音乐对象创建一个GraphicTool的子类，但这样会产生大量的子类，这些子类仅仅在它们所初始化的音乐对象的类别上有所不同。我们知道对象复合是比创建子类更灵活的一种选择。问题是，该框架怎么样用它来参数化GraphicTool的实例，而这些实例是由由Graphic类所支持创建的。</p>
+
+<p>解决办法是让GraphicTool通过拷贝或者“克隆”一个Graphic子类的实例来创建新的Graphic，我们称这个实例为一个<strong>原型</strong>。GraphicTool将它应该克隆和添加到文档中的原型作为参数。如果所有Graphic子类都支持一个Clone操作，那么GraphicTool可以克隆所有种类的Graphic，如下图所示：
+<a href="/assets/documentation/design-pattern/Prototype-Pattern-Demo.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Prototype-Pattern-Demo.png" alt="Prototype-Pattern-Demo" />
+</a></p>
+
+<p>因此在我们的音乐编辑器中，用于创建音乐对象的每一种工具都是一个用不同原型进行初始化的GraphicTool实例。通过克隆一个音乐对象的原型并将这个克隆添加到乐谱中，每个GraphicTool实例都会产生一个音乐对象。</p>
+
+<p>我们甚至可以进一步使用Prototype模型来减少类的数目。我们使用不同的类来表示全音符和半音符，但可能不需要这么做。它们可以是使用不同位图和时延初始化的相同的类的实例。一个创建全音符的工具就是这样的GraphicTool，它的原型是一个被初始化成全音符的MusicalNote。这可以极大的减少系统中类的数目，同时也更易于在音乐编辑器中增加新的音符。</p>
+
+<h4 id="3-适用性">3. 适用性</h4>
+<p>当一个系统应该独立于它的产品创建、构成和表示时，要使用Prototype模式；以及</p>
+<ul>
+  <li>当要实例化的类是在运行时刻指定时，例如，通过动态装载；或者</li>
+  <li>为了避免创建一个与产品类层次平行的工厂类层次时；或者</li>
+  <li>当一个类的实例只能有几个不同状态组合中的一种时。建立相应数目的原型并克隆它们可能比每次用合适的状态手工实例化该类更方便一些。</li>
+</ul>
+
+<h4 id="4结构">4.结构</h4>
+<p><a href="/assets/documentation/design-pattern/Prototype-Pattern-Structure.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Prototype-Pattern-Structure.png" alt="Prototype-Pattern-Structure" />
+</a></p>
+
+<h4 id="5-参与者">5. 参与者</h4>
+
+<h4 id="6-效果">6. 效果</h4>
+<p>Prototype有许多和Abstract Factory和Builder一样的效果：它对客户隐藏了具体的产品类，因此减少了客户知道的名字的数目。此外，这些模式使客户无需改变即可使用与特定应用相关的类。下面泪如Prototype模式的另外一些<code class="highlighter-rouge">优点</code>：</p>
+<ul>
+  <li>1）运行时刻增加和删除产品</li>
+  <li>2）改变值以指定新对象</li>
+  <li>3）改变结构以指定新对象</li>
+  <li>4）减少子类的构造</li>
+  <li>5）用类动态配置应用</li>
+</ul>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 创建型模式 - 原型 - /posts/design-pattern-creational-prototype ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-creational-prototype', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-creational-prototype', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
