@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>毒师1024的处方</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>Web应用程序核心防御机制</title>
+        <description>防御攻击者向应用程序发动有效攻击的重要前提是彻底了解这些机制</description>
+        <pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/web-sec-core-defense-mechanisms</link>
+        <guid isPermaLink="true">/posts/web-sec-core-defense-mechanisms</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 测试访问控件</title>
+        <description>访问控制是应用程序安全防范和保护的主要策略</description>
+        <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-acl-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-acl-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 测试会话管理机制</title>
+        <description>会话管理是保持用户的整个会话活动的互动与计算机系统跟踪过程</description>
+        <pubDate>Tue, 09 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-session-mgr-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-session-mgr-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 测试验证机制</title>
+        <description>验证机制是客户端向服务器证明其身份的特殊方法</description>
+        <pubDate>Mon, 08 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-auth-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-auth-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 分析应用程序</title>
+        <description>分析应用程序，为进一步的测试方向做指引</description>
+        <pubDate>Sun, 07 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-analyze-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-analyze-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 解析应用程序内容</title>
+        <description>尽可能地去发掘更多的与应用程序有关的内容</description>
+        <pubDate>Sat, 06 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-parse-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-parse-guideline</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论</title>
+        <description>当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项</description>
+        <pubDate>Fri, 05 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-methodology-general-guideline</link>
+        <guid isPermaLink="true">/posts/pen-testing-methodology-general-guideline</guid>
+      </item>
+    
+      <item>
+        <title>客户端脚本安全</title>
+        <description>常见的客户端脚本安全问题描述</description>
+        <pubDate>Wed, 19 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/client-end-script-security</link>
+        <guid isPermaLink="true">/posts/client-end-script-security</guid>
+      </item>
+    
+      <item>
+        <title>服务器端应用安全</title>
+        <description>常见的服务器端应用安全问题描述</description>
+        <pubDate>Fri, 14 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/application-security-on-server-end</link>
+        <guid isPermaLink="true">/posts/application-security-on-server-end</guid>
+      </item>
+    
+      <item>
+        <title>安全运营</title>
+        <description>俗话说，安全是‘三分技术，七分管理’</description>
+        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
+        <link>/posts/security-operations</link>
+        <guid isPermaLink="true">/posts/security-operations</guid>
+      </item>
+    
   </channel>
 </rss>
