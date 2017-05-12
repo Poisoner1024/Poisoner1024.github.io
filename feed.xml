@@ -7,8 +7,16 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Web应用程序核心防御机制</title>
+        <description>防御攻击者向应用程序发动有效攻击的重要前提是彻底了解这些机制</description>
+        <pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/web-sec-core-defense-mechanisms</link>
+        <guid isPermaLink="true">/posts/web-sec-core-defense-mechanisms</guid>
+      </item>
+    
+      <item>
         <title>Web应用程序渗透测试方法论 - 测试访问控件</title>
-        <description>访问控制是网络安全防范和保护的主要策略，它的主要任务是保证网络资源不被非法使用，它是保证网络安全最重要的核心策略之一</description>
+        <description>访问控制是应用程序安全防范和保护的主要策略</description>
         <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
         <link>/posts/pen-testing-methodology-acl-guideline</link>
         <guid isPermaLink="true">/posts/pen-testing-methodology-acl-guideline</guid>
@@ -47,7 +55,7 @@
       </item>
     
       <item>
-        <title>Web应用程序渗透测试方法论 - 一般规范</title>
+        <title>Web应用程序渗透测试方法论</title>
         <description>当执行攻击Web应用程序所需的详细步骤时，应始终记住基本的注意事项</description>
         <pubDate>Fri, 05 May 2017 00:00:00 +0800</pubDate>
         <link>/posts/pen-testing-methodology-general-guideline</link>
@@ -76,14 +84,6 @@
         <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
         <link>/posts/security-operations</link>
         <guid isPermaLink="true">/posts/security-operations</guid>
-      </item>
-    
-      <item>
-        <title>谈谈互联网企业安全的发展方向</title>
-        <description>我们今天做了什么，做得够不够，接下来我们还需要做什么</description>
-        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/security-of-web-enterprise-in-future</link>
-        <guid isPermaLink="true">/posts/security-of-web-enterprise-in-future</guid>
       </item>
     
   </channel>
