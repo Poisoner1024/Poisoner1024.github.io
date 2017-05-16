@@ -7,6 +7,22 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Web应用程序渗透测试方法论 - 测试特殊功能方面的输入漏洞</title>
+        <description>应用程序中有一系列漏洞只有在特殊功能中才会表现出来</description>
+        <pubDate>Sun, 14 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-meth-func-spec-input-vulners</link>
+        <guid isPermaLink="true">/posts/pen-testing-meth-func-spec-input-vulners</guid>
+      </item>
+    
+      <item>
+        <title>Web应用程序渗透测试方法论 - 测试基于输入的漏洞</title>
+        <description>应用程序很多重要的漏洞都是由无法预测的用户输入触发</description>
+        <pubDate>Sat, 13 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/pen-testing-meth-input-based-vulners</link>
+        <guid isPermaLink="true">/posts/pen-testing-meth-input-based-vulners</guid>
+      </item>
+    
+      <item>
         <title>Web应用程序核心防御机制</title>
         <description>防御攻击者向应用程序发动有效攻击的重要前提是彻底了解这些机制</description>
         <pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
@@ -68,22 +84,6 @@
         <pubDate>Wed, 19 Apr 2017 00:00:00 +0800</pubDate>
         <link>/posts/client-end-script-security</link>
         <guid isPermaLink="true">/posts/client-end-script-security</guid>
-      </item>
-    
-      <item>
-        <title>服务器端应用安全</title>
-        <description>常见的服务器端应用安全问题描述</description>
-        <pubDate>Fri, 14 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/application-security-on-server-end</link>
-        <guid isPermaLink="true">/posts/application-security-on-server-end</guid>
-      </item>
-    
-      <item>
-        <title>安全运营</title>
-        <description>俗话说，安全是‘三分技术，七分管理’</description>
-        <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
-        <link>/posts/security-operations</link>
-        <guid isPermaLink="true">/posts/security-operations</guid>
       </item>
     
   </channel>

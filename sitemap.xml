@@ -2,43 +2,43 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>/tag/code/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/design/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/develop/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/jekyll/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/pattern/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/rest/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/security/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/service/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/test/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/tag/web/</loc>
-<lastmod>2017-05-12T15:36:00+08:00</lastmod>
+<lastmod>2017-05-16T15:23:41+08:00</lastmod>
 </url>
 <url>
 <loc>/posts/chalk-sample-post-with-all-elements</loc>
@@ -224,7 +224,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> gh-pages
 =======
 >>>>>>> gh-pages
 =======
@@ -243,8 +246,11 @@
 <url>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> gh-pages
 =======
+=======
+>>>>>>> gh-pages
 =======
 >>>>>>> gh-pages
 <loc>/posts/pen-testing-methodology-session-mgr-guideline</loc>
@@ -256,10 +262,24 @@
 </url>
 <url>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> gh-pages
 =======
+=======
+>>>>>>> gh-pages
 <loc>/posts/web-sec-core-defense-mechanisms</loc>
 <lastmod>2017-05-12T00:00:00+08:00</lastmod>
+</url>
+<url>
+<<<<<<< HEAD
+>>>>>>> gh-pages
+=======
+<loc>/posts/pen-testing-meth-input-based-vulners</loc>
+<lastmod>2017-05-13T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>/posts/pen-testing-meth-func-spec-input-vulners</loc>
+<lastmod>2017-05-14T00:00:00+08:00</lastmod>
 </url>
 <url>
 >>>>>>> gh-pages
@@ -273,6 +293,12 @@
 </url>
 <url>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<loc>/posts/page/3/</loc>
+</url>
+<url>
+>>>>>>> gh-pages
 =======
 <loc>/posts/page/3/</loc>
 </url>
