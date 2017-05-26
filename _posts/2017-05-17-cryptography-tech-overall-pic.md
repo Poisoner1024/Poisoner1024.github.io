@@ -20,6 +20,7 @@ tags: [security, cryptography]
 | Trent | 第三方 | 可信的第三方 |
 | Victor | 验证者 | 证实一项事情是否有实际进行 |
 
+<br>
 ### 1.2 发送者、接受者和窃听者
 {% include image.html path="documentation/cryptography/send-receiver-eavasdropper.png" path-detail="documentation/cryptography/send-receiver-eavasdropper.png" alt="send-receiver-eavasdropper" %}
 
