@@ -20,7 +20,7 @@ tags: [security, cryptography]
 在现实世界中使用对称密码时，我们一定会遇到**密钥配送问题**（key distribution problem)。尽管一开始可能觉得这并不是什么大问题，但这个问题却是很难从根本上得到解决。
 
 在通信过程中，如果发送密钥，则窃听者Eve也能够完成解密：
-/************************** 图 *******************/
+{% include image.html path="documentation/cryptography/eavesdrop-key-and-ciphertext.png" path-detail="documentation/cryptography/eavesdrop-key-and-ciphertext.png" alt="eavesdrop-key-and-ciphertext" %}
 
 当然，如果Eve无法推测出通信中使用的是什么密码算法，那么即使得到密钥也是无法解密的。然而，密码算法本来就应该是以公开为前提的，隐蔽式安全性（security by obsecurity)是非常危险的。
 
@@ -101,9 +101,7 @@ tags: [security, cryptography]
 
 ### 3.3 公钥通信流程
 参考下面的通信流程图，看一看在Alice和Bob之间到底传输了哪些信息。其实他们之间所传输的信息只有两个：Bob的公钥以及用Bob的公钥加密的密文。由于Bob的私钥没有出现在通信内容中，因此窃听者Eve无法对密文进行解密。
-
-
-/********************* 图 *****************/
+{% include image.html path="documentation/cryptography/public-key-communication-process.png" path-detail="documentation/cryptography/public-key-communication-process.png" alt="public-key-communication-process" %}
 
 ### 3.4 各种术语
 公钥密码又称**非对称密码**(asymmetric cryptography)。
@@ -118,19 +116,149 @@ RSA的数学理论基础。
 ## 5. RSA
 RSA -- 使用最广泛的公钥密码算法。
 ### 5.1 什么是RSA
+RSA是一种公钥密码算法，它的名字是由它的三位开发者，即Ron Rivest,Adi Shamir,Leonard Adleman的姓氏的首字母组成的。详情请参照[RSA(cryprosystem)](https://en.wikipedia.org/wiki/RSA_(cryptosystem))
 
 ### 5.2 RSA 加密
+在RSA中，明文、密钥和密文都是数字。加密公式：
+{% highlight markdown %}
+密文 = (明文 ^ E) mod N 
+{% endhighlight %}
+也就是说，`RSA的密文是对代表明文的数字的*E*次方求mod *N*的结果`。换句话说，`就是将明文和自己做*E*次乘法，然后将其结果除以*N*求余数，这个余数就是密文。`
+
+加密共识中出现的两个数 -- E、N，到底是什么数字呢？
+
+RSA的加密是求明文*E*次方*mod N*，因此只要知道*E*和*N*这两个数，任何人都可以完成加密的运算。所以说，*E*和*N*是RSA加密的密钥，也就是说，**E和N的组合就是公钥**。
+
+*E*和*N*并不是随便什么数都可以的，它们是经过严密的计算得出的。*E*是加密(Encryption)的首字母，*N*是数字(Number)的首字母。
+
+有一个很容易引起误解的地方 -- `*E*和*N*这两个并不是密钥对(公钥和私钥的密钥对)`。*E*和*N*两个数组成一个公钥，因此我们一般会写成“公钥是(*E*,*N*)”或者“公钥是{*E*,*N*}”这样的形式，将*E*和*N*用括号括起来。
 
 ### 5.3 RSA 解密
+解密公式：
+{% highlight markdown %}
+明文 = (密文 ^ D) mod N 
+{% endhighlight %}
+也就是说，`对代表密文的数字的*D*次方求mod *N*就可以得到明文`。换句话说，`就是将密文和自己做*D*次乘法，然后将其结果除以*N*求余数，这个余数就是明文。`
+
+这里所使用的数字*N*和加密时使用的数字*N*是相同的。数*D*和数*N*组合起来就是RSA的解密密钥，因此**D和N的组合就是私钥**。只有知道*D*和*N*两个数的人才能够完成解密的运算。
+
+*D* 并不是随便什么数都可以的，作为解密密钥的*D*，和数字*E*有着相当紧密的联系。
+{% include image.html path="documentation/cryptography/RAS-Encryption-Decryption.png" path-detail="documentation/cryptography/RAS-Encryption-Decryption.png" alt="RAS-Encryption-Decryption" %}
 
 ### 5.4 生成密钥对
+RSA的加解密中需要用到三个数 - *E, D, N*到底应该如何生成呢？由于E和N是公钥，D和N是私钥，因此求*E, D, N*这三个数就是**生成密钥对**。RSA密钥对生成步骤如下。
+1. 求N
+2. 求L（L是仅在生成密钥对过程中使用的数）
+3. 求E
+4. 求D
+
+下面来逐一讲解。
+
+(1) 求N
+
+**首先准备两个很大的质数**，这两个很大的质数为p和q。p和q太小的话，密码会变得容易破译，但太大的话计算时间又会变得很长。例如，假设p和q的大小都是512 bit，相当于155位的十进制数字。要求出这样大的质数，需要通过**伪随机生成器**生成一个512 bit大小的数字。再判断这个数是不是质数。如果伪随机生成器生成的数不是质数，就需要用伪随机生成器重新生成另一个数。判断一个数是不是质数并不是看它能不能分解质因数，而是通过数学上的判断方法来完成，包括费马测试和米勒.拉宾测试等。
+
+准备好两个很大的质数后，我们将这两个数相乘，其结果就是数*N*。也就是说，数*N*可以用下列公式来表达。
+{% highlight markdown %}
+N = p * q (p,q 为大质数)
+{% endhighlight %}
+至于为什么是这样，需要一定的数学基础，我们暂且不论。🙃
+
+(2) 求L
+
+**L 这个数在RSA的加密和解密过程中都不出现，它只出现在生成密钥对的过程中**。*L*是 p - 1 和 q - 1的最小公倍数(least common multiple, lcm)。如果用lcm(X, Y)来表示“X和Y的最小公倍数”，则*L*可以写成下列形式：
+{% highlight markdown %}
+L = lcm(p - 1, q - 1) (L是 p - 1 和 q - 1的最小公倍数)
+{% endhighlight %}
+
+(3) 求E
+
+**E 是一个比1大、比L小的数，并且，E和L的最大公约数(greatest common divisor, gcd)必须为1。** 如果用gcd(X, Y)来表示“X和Y的最大公约数”，则*E*和*L*之间存在下列关系：
+{% highlight markdown %}
+1 < E < L
+gcd(E, L) = 1 (E和L的最大公约数为1, 即互质)
+{% endhighlight %}
+
+要找出满足gcd(E, L) = 1的数，还是要使用伪随机数生成器。通过伪随机数生成器生成在1 < E < L的范围内的E的候选数，然后再判断其是否满足gcd(E, L) = 1这个条件。求最大公约数可以使用欧几里得的辗转相除法。之所以要加上E和L的最大公约数为1这个条件，是为了保证一定存在解密时需要使用的数D。
+
+到目前为止，我们已经求出了E和N，也就是说我们已经生成了密钥对中的公钥。
+
+(4) 求D
+
+数D是由数E计算得到的。D,E,L之间必须具备下列关系：
+{% highlight markdown %}
+1 < D < L
+E * D mod L = 1 
+{% endhighlight %}
+
+只要数D满足上述条件，则通过E和N进行加密的密文，就可以通过D和N进行解密。要保证存在满足条件的D，就需要保证E和L的最大公约数为1，这也正是(3)中对E所要求的条件。简单来说，E * D mod L = 1保证了对密文进行解密时能够得到原来的明文。
+
+现在我们已经求出了D和N，也就是说我们也生成了密钥对中的私钥。
+{% include image.html path="documentation/cryptography/RSA-key-pair.png" path-detail="documentation/cryptography/RSA-key-pair.png" alt="RSA-key-pair" %}
 
 ### 5.5 具体实践一下
 
+|  p | q | N | L | E | D | 明文 | 加密运算 | 密文 | 解密运算 | 
+| :------: | :------: |:------: |:------: |:------: |:------: |:------: |:------: |:------: |:------: |
+| 17 | 19 |  | | | |123 | | | |
+
+<br>
 ## 6. 对RSA的攻击
+RSA的加密是求“E次方的mod N”, 解密是求“D次方的mod N”,原理非常简单。但是最为密码算法，机密性是很重要的，而RSA的机密性又如何呢？换句话说，密码破译者是不是也能够还原出明文呢？
+
+这个问题非常重要，我们先来整理下密码破译者知道的以及不知道的信息
+* `知道的信息`
+    - 密文：可以通过窃听来获取
+    - 数 E 和 N：公钥是公开的信息，因此密码破译者知道E 和 N
+* `不知道的信息`
+    - 明文： 需要破译的内容
+    - 数 D：私钥中至少D是不知道的信息
+    - 其他：密码破译者不知道生成密钥对时所使用p,q和L
+    
+### 6.1 通过密文来求明文
+{% highlight markdown %}
+密文 = (明文 ^ E) mod N 
+{% endhighlight %}
+这个公式里面求明文是求离散对数的问题，是非常困难的，因为人类还没有发现求离散对数的高效算法。
+
+### 6.2 通过暴力破解来找出D
+只要能知道数D，就能够对密文进行解密。因此，可以逐一尝试有可能作为D的数字来破译RSA，也就是暴力破解法。暴力破解的难度会随着D的长度增大而变大，当D足够长时，就不可能在现实的时间内通过暴力破解找到数D。
+
+### 6.3 通过E和N求出D
+D与E的关系：
+{% highlight markdown %}
+1 < D < L
+E * D mod L = 1 
+{% endhighlight %}
+
+出现的数字是L，而L是lcm(p - 1, q - 1)，因此由E计算D需要使用p和q。但是密码破译者并不知道p和q，因此不可能通过和生成密钥时相同的计算方法来求出D。
+
+对于RSA来说，有一点非常重要，那就是**质数p和q不能被密码破译者知道**。把p和q交给密码破译者与把私钥交个密码破译者是等价的。
+
+`可不可能通过N求出p和q？`也就是说**一旦发现了对大整数进行因式分解的高效算法，RSA就能够破解**。不过到目前还没有发现。
+
+`可不可能通过推出p和q进行攻击？`由于p和q是通过伪随机数生成器产生的，如果伪随机数生成器的算法很差，密码破译者就有可能推测出p和q，因此使用能够被推测出来的随机数是非常危险的。
+
+### 6.4 中间人攻击
+这种方法虽然不能破译RSA，但却是一种针对机密性的有效攻击。
+
+{% include image.html path="documentation/cryptography/man-in-middle-attack.png" path-detail="documentation/cryptography/man-in-middle-attack.png" alt="man-in-middle-attack" %}
+
+### 6.5 选择密文攻击
+在**选择密文攻击**（Chosen Ciphertext Attack)中，我们假设攻击者可以使用这样一种服务 - “发送任意数据，服务器都会将其当作密文来解密并返回解密结果”，这种服务被称为**解密提示**（Decryption Oracle)。当然，这里的“任意数据”并不包括攻击者试图攻击的那一段密文本身。攻击者可以利用这些解密提示获得想要攻击密文时使用的密钥以及明文有关的部分信息。反过来说，如果一种密码算法能够抵御选择密文攻击，则我们就可以认为这种算法的强度很高。
+
+RSA针对选择密文攻击的算法：RSA-OAEP（Optimal Asymmetric Encryption Padding,最优非对称加密填充）。这个算法中可以判定“这段密文不是由知道明文的人生成的”，并返回一条固定错误信息“decryption error”（这里的重点是，不能将具体的错误内容告知发送者）。
 
 ## 7. 其他公钥密码
+* ElGamal 方式
+* Rabin方式
+* 椭圆曲线方式
 
-## 8. 关于公钥密码的Q & A
-
-
+## 8. 关于公钥密码的提问
+1. 公钥密码比对称密码的机密性更高吗？
+2. 密钥长度为256比特的对称密码AES，与密钥长度为1024比特的公钥密码RSA相比，RSA的安全性更高吗？
+3. 因为已经有了公钥密码，今后对称密码会消失吗？
+4. 随着越来越多的人在不断生成RSA的密钥对，质数会不会被用光呢？
+5. RSA加密的过程中，需要对大质数进行因式分解吗？
+6. RSA的破译与大整数的质因数分解是等价的吗？
+7. 要抵御质因数分解，N的长度需要达到多少比特呢？
