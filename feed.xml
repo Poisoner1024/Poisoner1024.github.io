@@ -7,6 +7,22 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>密码技术 - 混合密码系统</title>
+        <description>用对称密码提高速度，用公钥密码保护会话密钥</description>
+        <pubDate>Sat, 27 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/cryptography-tech-mix-crypto-system</link>
+        <guid isPermaLink="true">/posts/cryptography-tech-mix-crypto-system</guid>
+      </item>
+    
+      <item>
+        <title>密码技术 - 对称密码</title>
+        <description>共享密钥密码，用相同的密钥进行加密和解密</description>
+        <pubDate>Sat, 20 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/cryptography-tech-symmetric-cipher</link>
+        <guid isPermaLink="true">/posts/cryptography-tech-symmetric-cipher</guid>
+      </item>
+    
+      <item>
         <title>密码技术 - 公钥密码</title>
         <description>用公钥加密，用私钥解密</description>
         <pubDate>Fri, 19 May 2017 00:00:00 +0800</pubDate>
@@ -68,22 +84,6 @@
         <pubDate>Tue, 09 May 2017 00:00:00 +0800</pubDate>
         <link>/posts/pen-testing-methodology-session-mgr-guideline</link>
         <guid isPermaLink="true">/posts/pen-testing-methodology-session-mgr-guideline</guid>
-      </item>
-    
-      <item>
-        <title>Web应用程序渗透测试方法论 - 测试验证机制</title>
-        <description>验证机制是客户端向服务器证明其身份的特殊方法</description>
-        <pubDate>Mon, 08 May 2017 00:00:00 +0800</pubDate>
-        <link>/posts/pen-testing-methodology-auth-guideline</link>
-        <guid isPermaLink="true">/posts/pen-testing-methodology-auth-guideline</guid>
-      </item>
-    
-      <item>
-        <title>Web应用程序渗透测试方法论 - 分析应用程序</title>
-        <description>分析应用程序，为进一步的测试方向做指引</description>
-        <pubDate>Sun, 07 May 2017 00:00:00 +0800</pubDate>
-        <link>/posts/pen-testing-methodology-analyze-guideline</link>
-        <guid isPermaLink="true">/posts/pen-testing-methodology-analyze-guideline</guid>
       </item>
     
   </channel>
