@@ -1,0 +1,216 @@
+---
+layout: post
+title: "密码技术 - 对称密码"
+description: "共享密钥密码，用相同的密钥进行加密和解密"
+tags: [security, cryptography]
+---
+
+* 目录
+{:toc}
+
+## 1. 炒鸡蛋与对称密码
+你做过炒鸡蛋吗？炒鸡蛋是将鸡蛋打到平底锅里，然后将蛋液炒匀。鸡蛋炒好之后就完全分不清原来的蛋黄和蛋白了，也不再是原来的形状了，而是变成了一团混合物。
+
+使用对称密码进行加密，和炒鸡蛋有异曲同工之妙。为了使原来的明文无法被推测出来，就要尽可能地打乱密文，这样才能达到加密的目的。
+
+炒鸡蛋搅拌的是鸡蛋，而密文打乱的则是比特序列。无论是文本、图像还是音乐，只要能够将数据转换成比特序列，也就能够对其进行加密了。
+
+然而，炒鸡蛋与对称加密有一个很大的不同，那就是`炒鸡蛋无法还原成原来的鸡蛋，但密文却必须能够让接受者正确解密才行`。因此，如果只是随便地搅拌和混合，则不能称之为加密而必须仔细设计出一种能够还原的混合方式。
+
+## 2. 从文字密码到比特序列密码
+### 2.1 编码
+将现实世界中的东西映射为比特序列的操作称为**编码(encoding)**。
+{% highlight markdown %}
+m -> 01101101
+i -> 01101001
+d -> 01100100
+n -> 01101110
+i -> 01101001
+g -> 01100111
+h -> 01101000
+t -> 01100100
+{% endhighlight %}
+
+### 2.2 XOR
+{% highlight markdown %}
+1个比特的XOR:
+0 XOR 0 = 0 -- 没有翻转
+0 XOR 1 = 1 -- 翻转了一次
+1 XOR 0 = 1 -- 翻转了一次
+1 XOR 1 = 1 -- 翻转了两次，就等于没有翻转
+
+比特序列的XOR:
+    0 1 0 0 1 1 0 0 - A
+XOR 1 0 1 0 1 0 1 0 - B
+------------------------
+    1 1 1 0 0 1 1 0 - A XOR B
+{% endhighlight %}
+
+* 将明文A用密钥B进行加密，得到密文A XOR B
+* 将密文A XOR B用密钥B进行解密，得到明文A
+
+**实际上，只要选择一个合适的B，仅仅使用XOR就可以实现一个高强度的密码。但是对于密码技术来说，`是否可以预测`是至关重要的一点，也就是说必要要保证B不可以被推测出来，这种不可预测的比特序列就称为`随机数`**
+
+## 3. 一次性密码本
+### 3.1 一次性密码本加解密
+一次性密码本是一种非常简单地密码，它的加密原理是**将明文与一串随机的比特序列进行XOR运算**。如果将硬币的正面设为0，反面设为1，则通过不断抛硬币就能够产生这样一串随机比特序列。
+
+解密局势加密的反向运算。
+
+### 3.2 一次性密码本是无法破译的
+我们假设对一次性密码本的密文尝试进行暴力破解，那么总有一天我们会尝试到和机密相同的密钥，这是毋庸置疑的事实。然后，即便我们能够解密出明文字符，我们也`无法判定它是否是正确的明文`。
+
+一次性密码本是由G.S.Vernam于1917年提出的，并获得了专利，因此又称为Vernam cipher。一次性密码本无法破译这一特性有香农(C.E.Shannon)于1949年通过数学方法加以证明的。一次性密码本是**无条件安全的(Unconditional Secure),在理论上是无法破译的(Theoretically Unbreakable)。**
+
+### 3.3 一次性密码本为什么没有被使用
+* 密钥的配送：密钥的长度与密文是相等的，如果能够有一种方法将密钥安全的送出去，那么岂不是也可以用同样的方法安全地发送明文了吗？
+* 密钥的保存：密钥的长度必须和明文的长度相等，如果有办法安全保存密钥，那不也有办法安全保存明文本身吗？
+* 密钥的重用：绝不能重用过去用过的随机比特序列。
+* 密钥的同步：当明文很长时，密钥也会跟着变长，难以同步。
+* 密钥的生成：密钥是必须是无重现性的真正随机数。
+
+综上所述，一次性密码本是一种几乎没有实用性的密码。但是，一次性密码本的思路却孕育出流密码(stream cipher)。
+## 4. DES
+DES(Data Encryption Standard)是1977年美国联邦信息处理标准(FIPS)中所采用的一种对称密码。DES一直以来被美国以及其他国家的政府和银行等广泛使用。随着计算机的进步，现在DES已经能够被暴力破解，强度大不如前了。20世纪末，RSA公司举办过破译DES密钥的比赛(DES Challenge)，在1977年DES Challenge I中用了96天破译密钥，1998年DES Challenge II-1中用了41天，1998年DES Challenge II-2中用了56个小时，1999年DES Challenge III 中用了22小时15分钟。由于DES的密文可以在短时间内被破译，因此除了用它来解密以前的密文以外，现在不应该再使用DES了。
+
+### 4.1 DES 加密与解密
+DES是一种将64比特的明文加密成64比特的密文的对称密码算法，它的密钥长度是56比特。尽管从规格上来说，DES的密钥长度是64比特，但由于每隔7比特会设置一个用于错误检查的比特，因此实质上其密钥长度是56比特。
+
+DES是以64比特的明文（比特序列）为一个单位来进行加密的，这个64比特的单位称为**分组**。一般来说，以分组单位进行处理的密码算法称为**分组密码(block cipher)**，DES就是分组密码的一种。
+
+DES每次只能加密64比特的数据，如果要加密的明文比较长，就需要对DES加密进行迭代（反复），而迭代的具体方案就称为**模式(mode)**。
+<div align='center'>
+{% include image.html path="documentation/cryptography/DES-Encrypt-Decrypt.png" path-detail="documentation/cryptography/DES-Encrypt-Decrypt.png" alt="DES-Encrypt-Decrypt" %}
+</div>
+
+### 4.2 DES 结构 - Feistel网络
+DES的基本结构是由Horst Feistel设计的，因此也称为Feistel网络、Feistel结构、或Feistel密码。这一结构不仅用于DES中，在其它很多密码算法中也有应用。
+
+在Feistel网络中，加密的各个步骤称为**轮(round)**,整个加密过程就是进行若干次轮的循环。下图展现的是Feistel网络中一轮的计算流程。DES是一种16轮循环的Feistel网络。
+<div align='center'>
+{% include image.html path="documentation/cryptography/One-Round-In-Feistel-Network.png" path-detail="documentation/cryptography/One-Round-In-Feistel-Network.png" alt="One-Round-In-Feistel-Network" %}
+</div>
+上图中，输入的数据被等分为左右两半分别进行处理，输出的左半部分是密文，而右半部分依然是明文。中间的"子密钥"指的是本轮加密所使用的密码。`在Feistel网络中，每一轮都需要使用一个不同的子密钥。`由于子密钥只在一轮中使用，它只是一个局部密钥，因此才称为**子密钥**。
+
+`轮函数`的作用是根据“右侧”和子密钥生成对“左侧”进行加密的比特序列，它是密码系统的核心。将轮函数的输出与“左侧”进行XOR运算，其结果就是“加密后的左侧”。也就是说，我们用XOR将轮函数的输出与“左侧”进行了合并。而输入的“右侧”则会直接成为输出的“右侧”。
+
+下图展示了一个3轮的Feistel网络，3轮加密计算需要进行两次左右对调。对调只在两轮之间进行，最后一轮结束后不需要进行对调。
+<div align='center'>
+{% include image.html path="documentation/cryptography/Three-Round-In-Feistel-Network.png" path-detail="documentation/cryptography/Three-Round-In-Feistel-Network.png" alt="Three-Round-In-Feistel-Network" %}
+</div>
+
+Feistel网络应该如何进行解密？`Feistel网络的解密操作只要按照相反的顺序来使用子密钥就可以完成了，而Feistal网络本身的机构，在加密和解密时都是完全相同的，有多轮也是一样。关于这一点，我们可以从XOR的性质进行思考。`
+<div align='center'>
+{% include image.html path="documentation/cryptography/feistal-network-decryption.png" path-detail="documentation/cryptography/feistal-network-decryption.png" alt="feistal-network-decryption" %}
+</div>
+
+`**Feistel网络的性质：**`
+* 轮数可以任意增加。
+* 加密时无论使用任何函数作为轮函数都可以正确解密。也就是说，即使使用轮函数的输出结果无法逆向计算出输入的值（即该函数不存在反函数）也没有问题。
+* 加密和解密可以用完全相同的结构来实现。因此用于实现DES算法的硬件设备的设计也变得很容易。
+
+正是由于Feistel网络具有如此方便的特性，它才能够被许多分组密码算法使用。
+
+### 4.3 差分分析与线性分析
+**差分分析**是一种针对分组密码的分析方法，这种方法有Biham和Shamir提出，其思路是`改变一部分明文并分析密文如何随之改变`。理论上说，即便明文只改变一个比特，密文的比特排列也应该发送彻底的改变。于是通过分析密文改变中所产生的偏差，可以获得破译密码的线索。
+
+**线性分析**也是一种密码分析方法，有松井充提出，其思路是`将明文和密文的一些对应比特进行XOR并计算其结果为0的概率`。如果密文具备足够的随机性，则任选一些明文和密文的对应比特进行XOR结果为0的概率应该是1/2。如果能够找到大幅偏离1/2的部分，则可以借此获得一些与密钥有关的信息。使用线性分析法，对于DES只需要2^47组明文和密文就能够完成破解，相比需要尝试2^56个密钥的暴力破解来说，所需要的计算量得到了大幅减少。
+
+差分分析和线性分析都有一个前提，那就是假设密码破译者可以选择任意明文并得到加密的结果，这种攻击方式称为**选择明文攻击(Chosen Plaintext Attack, CPA)**。以AES为代表的现代分组密码算法，在设计上已经考虑了针对差分分析和线性分析的安全性。
+
+## 5. 三重DES
+现在DES已经可以在现实的时间内被暴力破解，因此我们需要一种用来替代DES的分组密码，三重DES就是出于这个目的被开发出来的。**三重DES（triple-DES)**是为了增加DES的强度，将DES重复3次所得到的一种密码算法，也称为TDEA(Triple Data Encryption Algorithm)，通常缩写为3DES。
+
+### 5.1 三重DES的加密
+<div align='center'>
+{% include image.html path="documentation/cryptography/3DES-Encryption.png" path-detail="documentation/cryptography/3DES-Encryption.png" alt="3DES-Encryption" %}
+</div>
+明文经过三次DES处理才能变成最后的密文，由于DES密钥的长度实质上是56比特，因此三重DES的密钥长度就是56 * 3 = 168比特。
+
+从上图中可以看到，三重DES并不是进行三次DES加密，而是加密 -> **解密** -> 加密的过程。在加密算法中加入解密操作让人感觉很不可思议，实际上这个方法是IBM公司设计出来的，目的是为了让三重DES能够兼容普通的DES。`当三重DES中所有的密钥都相同时，三重DES就等同于普通的DES了`。这是因为前两步加密 -> 解密之后，就得到最初的英文。因此，以前用DES加密的密文，就可以通过这种方式用三重DES进行解密，这样三重DES对DES具备了向下兼容性。
+
+### 5.2 三重DES的解密
+<div align='center'>
+{% include image.html path="documentation/cryptography/3DES-Decryption.png" path-detail="documentation/cryptography/3DES-Decryption.png" alt="3DES-Decryption" %}
+</div>
+
+尽管三重DES目前还被银行机构使用，但其处理速度不高，除了特别重视向下兼容性情况以外，很少被用于新的用途。
+
+## 6. AES
+### 6.1 什么是AES
+AES(Advanced Encryption Standard)是取代其前任标准DES而成为新标准的一种对称密码算法。全世界的企业和密码学家提交了多个对称密码算法作为AES的候选，最终在2000从这些候选算法中选出了一种名为Rijindael的对称密码算法，并将其确定了AES。下表是AES最终的候选算法名单，排名不分先后。
+
+|  名称 | 提交者 | 
+| :------: | :------: |
+| MARS | IBM公司 |
+| RC6 | RSA公司 |
+| Rijindael | Daemen,Rijmen |
+| Serpent | Anderson,Biham,Knudsen |
+| Twofish | Counterpane公司 |
+
+</br>
+### 6.2 Rijndael
+Rijndael是由比利时密码学家Joan Daemen和Vincent Rijmen设计的分组密码算法，与2000年被选为新一代的标准密码算法-AES。今后会有越来越多的密码软件支持这种算法。
+
+Rijndael的分组长度和密钥长度可以分别以32比特为单位在128比特到256比特的范围内进行选择。不过在AES的规格中，分组长度固定为128比特，密钥长度只有128、192和256比特三种。
+
+### 6.3 Rijindael的加密和解密
+和DES一样，Rijndael算法也是由多个轮构成的，其中每一轮分为SubBytes、ShiftRows、MixColumns和AddRoundKey共四个步骤。DES使用Feistel网络作为其基本结构，而Rijndael没有使用Feistel网络，而是使用了**SPN结构**。
+
+Rijndael的输入分组为128比特，也就是16字节。首先，需要逐个字节地对16字节的输入数据进行SubBytes处理。所谓`SubBytes`，就是以每个字节的值（0 ~ 255的任意值)为索引，从一张拥有256个值的替换表(S-Box)中查找出对应值的处理。也就是说，要将一个1字节的值替换成另一个1字节的值。下图所示为4 * 4 = 16字节的数据通过S-Box替换1字节的情形。
+<div align='center'>
+{% include image.html path="documentation/cryptography/Rijindael-SubBytes.png" path-detail="documentation/cryptography/Rijindael-SubBytes.png" alt="Rijindael-SubBytes" %}
+</div>
+
+SubBytes之后需要尽心`ShiftRows`处理。这一步是将以4字节为单位的行按照一定的规则向左平移，且每一行平移的字节数是不同的。下图所示为ShiftRows中对其中一行进行处理的情况。
+<div align='center'>
+{% include image.html path="documentation/cryptography/Rijindael-ShiftRows.png" path-detail="documentation/cryptography/Rijindael-ShiftRows.png" alt="Rijindael-ShiftRows" %}
+</div>
+
+ShiftRows之后需要进行`MixColumns`处理。这一步是对一个4字节的值进行比特运算，将其变为另外一个4字节值。下图所示为MixColumns中对一列进行处理的情形。
+<div align='center'>
+{% include image.html path="documentation/cryptography/Rijindael-MixColumns.png" path-detail="documentation/cryptography/Rijindael-MixColumns.png" alt="Rijindael-MixColumns" %}
+</div>
+
+最后，需要将MixColumns的输出与轮密钥进行XOR，即进行AddRoundKey处理。下图所示为AddRoundKey中对其中1个字节进行处理的情形。到这里，Rijindael的一轮就结束了。实际上，在Rijindael中需要重复进行10~14轮计算。
+<div align='center'>
+{% include image.html path="documentation/cryptography/Rijindael-AddRoundKey.png" path-detail="documentation/cryptography/Rijindael-AddRoundKey.png" alt="Rijindael-AddRoundKey" %}
+</div>
+
+通过上面的结构我们可以发现输入的所有比特在一轮中都会被加密。和每一轮都只加密一半输入的比特的Feistel网络相比，这种方式的优势在于加密所需要的轮数更少。此外，这种方法还有一个优势，即SubBytes、ShiftRows和MixColumn可以分别以字节、行、和列为单位进行并行计算。
+
+**Rijindael加密与解密过程如下：**
+{% highlight markdown %}
+在Rijindael的加密过程中，每一轮所进行的处理为：
+SubBytes -> ShiftRows -> MixColumns -> AddRoundKey
+
+解密时，则是按照相反的顺序来进行，即：
+AddRoundKey -> InvMixColumns -> InvShiftRows -> InvSubBytes
+{% endhighlight %}
+其中，AddRoundKey是与轮密钥进行XOR运算，因此这一步在加密和解密时是完全相同的，剩下的步骤中名字前面都带有Inv，这表示与原始步骤相对应的逆运算。
+
+### 6.4 Rijindael的破译
+对于Rijindael来说，可能会出现以前并不存在的新的攻击方式。文中没有提及，大家可以自行上网补脑。但是`Rijindael的算法背后有着严谨的数学结构，也就是说从明文到密文的计算过程可以全部用公式来表达，这是以前任何密码算法都不具备的性质`。如果Rijindael的公式能够通过数学运算来求解，那也就意味着Rijindael能够通过数学方法进行破译，而这也就为新的攻击方式的产生提供了可能。
+
+不过，这也只是一种假设而已，实际上到现在为止还没有出现针对Rijindael的有效攻击。
+
+### 6.5 应该使用哪种对称密码呢
+* 首先，DES不应再用于任何新的用途。
+* 第二，三重DES也不应用于任何新的用途，尽管在一些重视兼容性的环境中还会继续使用，但它会逐渐被AES所取代。
+* 第三，`应该用AES(Rijindael)`。
+* 第四，AES最终候选算法应该可以作为AES的备份。
+* 最后，`不应该使用任何自制的密码算法`。
+
+PS: `本文中所介绍的所有密码算法，都只能对一个固定长度的分组进行加密。当需要加密的明文长度超过分组长度时，就需要对密码算法进行迭代。`
+
+
+
+
+
+
+
+
+
+
+
+
