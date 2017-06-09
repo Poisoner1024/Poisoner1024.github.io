@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 单元测试代码指导规范</title>
+  <meta name="description" content="如何写出优美而实效的单元测试代码">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="单元测试代码指导规范">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/unit-testing-guidelines">
+  <meta property="og:description" content="如何写出优美而实效的单元测试代码">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/unit-testing-guidelines">
+  <meta name="twitter:title" content="单元测试代码指导规范">
+  <meta name="twitter:description" content="如何写出优美而实效的单元测试代码">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>单元测试代码指导规范</h1>
+            <p>如何写出优美而实效的单元测试代码</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 10, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/code">code</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>大家在写代码的时候，很多人很多时候都一直在提及关于测试，关于单元测试之于产品质量的重要性，我一直也想找个机会给自己做个关于Unit Testing方面的总结，在网上看到了一篇自己觉得质量很高，也很符合自己期望的文章，翻译在这里供有志趣的同路人们一起把玩。</p>
+
+<h3 class="no_toc" id="什么是单元测试unit-testing">什么是单元测试（Unit Testing）？</h3>
+<blockquote>
+  <p>单元测试又称为模块测试, 是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程
+序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向
+对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。</p>
+</blockquote>
+
+<h3 class="no_toc" id="单元测试代码指导规范">单元测试代码指导规范</h3>
+
+<ul id="markdown-toc">
+  <li><a href="#1-保持单元测试代码短小而快速" id="markdown-toc-1-保持单元测试代码短小而快速">1. 保持单元测试代码短小而快速</a></li>
+  <li><a href="#2-单元测试代码应该全自动化并且没有相互影响" id="markdown-toc-2-单元测试代码应该全自动化并且没有相互影响">2. 单元测试代码应该全自动化并且没有相互影响</a></li>
+  <li><a href="#3-单元测试必须很简单就能运行" id="markdown-toc-3-单元测试必须很简单就能运行">3. 单元测试必须很简单就能运行</a></li>
+  <li><a href="#4-测试结果能够衡量" id="markdown-toc-4-测试结果能够衡量">4. 测试结果能够衡量</a></li>
+  <li><a href="#5-立即修复失败的测试" id="markdown-toc-5-立即修复失败的测试">5. 立即修复失败的测试</a></li>
+  <li><a href="#6-保持测试是在单元级别" id="markdown-toc-6-保持测试是在单元级别">6. 保持测试是在单元级别</a></li>
+  <li><a href="#7-从简单开始" id="markdown-toc-7-从简单开始">7. 从简单开始</a></li>
+  <li><a href="#8-保持单元测试代码的独立性" id="markdown-toc-8-保持单元测试代码的独立性">8. 保持单元测试代码的独立性</a></li>
+  <li><a href="#9-保证测试代码接近于被测试的类" id="markdown-toc-9-保证测试代码接近于被测试的类">9. 保证测试代码接近于被测试的类</a></li>
+  <li><a href="#10-恰当的命名测试" id="markdown-toc-10-恰当的命名测试">10. 恰当的命名测试</a></li>
+  <li><a href="#11-测试开发的应用程序接口" id="markdown-toc-11-测试开发的应用程序接口">11. 测试开发的应用程序接口</a></li>
+  <li><a href="#12-黑盒思考" id="markdown-toc-12-黑盒思考">12. 黑盒思考</a></li>
+  <li><a href="#13-白盒思考" id="markdown-toc-13-白盒思考">13. 白盒思考</a></li>
+  <li><a href="#14-琐碎的cases同样需要测试" id="markdown-toc-14-琐碎的cases同样需要测试">14. 琐碎的cases同样需要测试</a></li>
+  <li><a href="#15-首先专注于执行的覆盖率" id="markdown-toc-15-首先专注于执行的覆盖率">15. 首先专注于执行的覆盖率</a></li>
+  <li><a href="#16-覆盖边缘cases" id="markdown-toc-16-覆盖边缘cases">16. 覆盖边缘cases</a></li>
+  <li><a href="#17-提供一个随机值生成器" id="markdown-toc-17-提供一个随机值生成器">17. 提供一个随机值生成器</a></li>
+  <li><a href="#18-每次测试一个功能" id="markdown-toc-18-每次测试一个功能">18. 每次测试一个功能</a></li>
+  <li><a href="#19-使用明确的断言" id="markdown-toc-19-使用明确的断言">19. 使用明确的断言</a></li>
+  <li><a href="#20-提供反面测试" id="markdown-toc-20-提供反面测试">20. 提供反面测试</a></li>
+  <li><a href="#21-在设计代码的时候就要考虑测试" id="markdown-toc-21-在设计代码的时候就要考虑测试">21. 在设计代码的时候就要考虑测试</a></li>
+  <li><a href="#22-不要连接提前定义的外面资源" id="markdown-toc-22-不要连接提前定义的外面资源">22. 不要连接提前定义的外面资源</a></li>
+  <li><a href="#23-了解测试的花费" id="markdown-toc-23-了解测试的花费">23. 了解测试的花费</a></li>
+  <li><a href="#24-给测试排优先级" id="markdown-toc-24-给测试排优先级">24. 给测试排优先级</a></li>
+  <li><a href="#25-准备失败的测试代码" id="markdown-toc-25-准备失败的测试代码">25. 准备失败的测试代码</a></li>
+  <li><a href="#26-写可以重现bugs的测试" id="markdown-toc-26-写可以重现bugs的测试">26. 写可以重现bugs的测试</a></li>
+  <li><a href="#27-了解单元测试的局限性" id="markdown-toc-27-了解单元测试的局限性">27. 了解单元测试的局限性</a></li>
+</ul>
+
+<h4 id="1-保持单元测试代码短小而快速">1. 保持单元测试代码短小而快速</h4>
+<p>理想情况下，在每次代码迁入之前都要执行整个测试集。保持测试代码能够快速跑完以减少代码开发的周转期</p>
+
+<h4 id="2-单元测试代码应该全自动化并且没有相互影响">2. 单元测试代码应该全自动化并且没有相互影响</h4>
+<p>测试集一般在一个定期执行的系统里面，必须是全自动化的，并且是有用的。如果执行的结构需要人工审查，那个这些测试不应该出现在单元测试里面。</p>
+
+<h4 id="3-单元测试必须很简单就能运行">3. 单元测试必须很简单就能运行</h4>
+<p>配置开发环境使得单一的测试和测试集能通通过一个单一的命令或者按一个按键就能跑起来。</p>
+
+<h4 id="4-测试结果能够衡量">4. 测试结果能够衡量</h4>
+<p>将覆盖率分析应用到单元测试上，这样可以看到测试执行的精确结果并且可以调查哪部分的代码有没有执行到。</p>
+
+<h4 id="5-立即修复失败的测试">5. 立即修复失败的测试</h4>
+<p>每个开发人员都要保证新的测试能够，并且所有的已有的测试在你的代码迁入后能跑成功。</p>
+
+<h4 id="6-保持测试是在单元级别">6. 保持测试是在单元级别</h4>
+<p>单元测试是用来测试类。每个普通的类都应该有一个测试类，这个类的行为应该被独立的测试。避免通过单元测试的框架去测试整个工作流程的尝试，这样的测试是很慢并且难以维护。工作流程的测试应该放在它们应该出现的地方，但是绝不是单元测试，它们必须独立的设置与执行。</p>
+
+<h4 id="7-从简单开始">7. 从简单开始</h4>
+<p>一个简单的测试毫无疑问的好于完全没有测试。一个简单的测试类可以建立起目标类的测试架构，它能去验证构建环境，单元测试环境，执行环境以及覆盖率分析工具的表现和正确性。它能够证实目标类是整个装载的一部分并且能够访问。Hello，World！的单元测试可以是这样的：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">     void testDefaultConstruction()
+     {
+       Foo foo = new Foo();
+       assertNotNull(foo);
+     }</code></pre></figure>
+
+<h4 id="8-保持单元测试代码的独立性">8. 保持单元测试代码的独立性</h4>
+<p>为了保证测试的简化性和维护起来简单，测试代码绝不应该依赖其他测试代码或者是测试代码执行的顺序。</p>
+
+<h4 id="9-保证测试代码接近于被测试的类">9. 保证测试代码接近于被测试的类</h4>
+<p>如果被测试的类是<em>Foo</em>,那么测试类应该叫<em>FooTest</em>（不是<em>TestFoo</em>），与<em>Foo</em>的包结构也保持一致。保持测试代码类在一个分离的目录结构中使它们访问与维护起来更难。确保构建环境是可配置的，这样测试类就不会进行产品代码库或者在产品代码中执行。</p>
+
+<h4 id="10-恰当的命名测试">10. 恰当的命名测试</h4>
+<p>保证每一个测试方法测试类的一个区域的功能，并且给测试方法相应的命名。典型的命名惯例是测试【什么】，如：<em>testSaveAs()</em>, <em>testAddListener()</em>, <em>testDeleteProperty()</em>等等。</p>
+
+<h4 id="11-测试开发的应用程序接口">11. 测试开发的应用程序接口</h4>
+<p>单元测试可以通过它们的公共的API定义成测试类。一个测试工具使得类的私有内容的测试变成可能，但是这个应该避免当它把测试变得更加冗余和维护起来更加困难时。如有有一些私有内容看上去需要明确的测试，可以考虑把它们重构成公共方法放到公用的类里面去。但是做这个的目的是提升设计的通用性，而不是为了辅助测试。</p>
+
+<h4 id="12-黑盒思考">12. 黑盒思考</h4>
+<p>把自己当做第三方类的消费者，测试这个类是否满足它的需求，始终找出问题。</p>
+
+<h4 id="13-白盒思考">13. 白盒思考</h4>
+<p>毕竟，测试程序员同样写被测试的类，额外的努力应该放到去测试最复杂的逻辑。</p>
+
+<h4 id="14-琐碎的cases同样需要测试">14. 琐碎的cases同样需要测试</h4>
+<p>有时推荐所有的重要的cases都需要测试，而一些琐碎的方法像什么简单的<em>setters</em>和<em>getters</em>可以忽略。然后，这里有若干个原因说明为什么琐碎的cases也需要测试：首先，琐碎很难去界定，不同的东西对不同的人是不同的。从黑盒的角度看，没办法知道代码的哪个部分是琐碎的。同样，琐碎的代码中也包含错误，经常由<em>copy-paste</em>所导致。</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">     private double weight_;
+     private double x_, y_;
+     public void setWeight(int weight)
+     {
+       weight = weight_;  // error
+     }
+     public double getX()
+     {
+       return x_;
+     }
+    public double getY()
+     {
+       return x_;  // <span class="sb">`error`</span>
+     }</code></pre></figure>
+
+<p>因此建议所有的代码都要测试，毕竟，琐碎的代码很好测试。</p>
+
+<h4 id="15-首先专注于执行的覆盖率">15. 首先专注于执行的覆盖率</h4>
+<p>将执行覆盖率与实际的测试覆盖率区分开。一个测试的最基本的目标应该保证好的执行覆盖率。这将保证代码在一些输入参数下确实是被执行了。如果做个了这个，那么测试覆盖率就会提升。注意，实际的测试覆盖率很难去衡量（并且总是接近0%）。考虑下面的公共方法：</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">     void setLength(double length);</code></pre></figure>
+
+<p>调用<em>setLength(1.0)</em>你可以获得100%的执行覆盖率。为了获得100%的实际测试覆盖率，这个方法必须在输入每一个可能的<em>double</em>值时被调用，并且这些输入后的每一次调用结果都要验证通过。这绝对不可能办到！</p>
+
+<h4 id="16-覆盖边缘cases">16. 覆盖边缘cases</h4>
+<p>确保参数的边缘cases被覆盖到。对于数字，要测试负数，0，正数，最小值，最大值，NaN，无穷，等等。对于字符串，要测试空字符串，单个字符字符串，non-ACSII字符串，multi-MB字符串，等等。对于集合，测试空集合，一个，第一个，最后一个，等等。对于日期，测试1月1日，2月29日，12月31日，等等。被测试的类需要建议每个具体case的边缘cases。这样是为了确保尽可能多的这些case能够被恰当的测试到，一般错误就在这是cases中。</p>
+
+<h4 id="17-提供一个随机值生成器">17. 提供一个随机值生成器</h4>
+<p>当边缘cases被覆盖到了，一个简单的进一步提升测试覆盖率的办法是生成随机值参数，这样测试每次执行的时候有不同的输入。为了达到这个目的，提供一个简单的工具类来这生成这些基本类型的随机值，像<em>double</em>，<em>integers</em>, <em>strings</em>,<em>date</em>等等。生成器能够生成整个域中的每一个类型。</p>
+
+<p>如果测试跑起来很快的话，可以考虑把它们放在一个循环里面跑，这样可以跑尽可能多的输入组合。下面的例子验证了在小的和大的元组排列之间做两次转换，然后把值重新设回去后比较值是否相等。因为这个测试跑的很快，所有每次可以执行一百万个不同的值。</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    void testByteSwapper()
+    {
+      for (int i = 0; i &lt; 1000000; i++) {
+        double v0 = Random.getDouble();
+        double v1 = ByteSwapper.swap(v0);
+        double v2 = ByteSwapper.swap(v1);
+        assertEquals(v0, v2);
+      }
+    }</code></pre></figure>
+
+<h4 id="18-每次测试一个功能">18. 每次测试一个功能</h4>
+<p>在测试模式下，有时会试着在每一个测试里面断言“所有的事情”。这是应该避免的，它会让测试变得难以维护。就只测试安装测试方法名所指示的功能。对一般的代码来说，目标是保持测试代码数量尽可能的少。</p>
+
+<h4 id="19-使用明确的断言">19. 使用明确的断言</h4>
+<p>总是习惯用assertEquals(a, b)而不是ssertTrue(a == b)（反之亦然）作为前者能够提供更加有用的信息，在测试失败时更容易判断到底是哪里出错了。这个在上面类似的例子中，用随机值做参数时并且不知道这些参数是什么时候输入的时候显得尤为重要。</p>
+
+<h4 id="20-提供反面测试">20. 提供反面测试</h4>
+<p>反面测试故意错用代码来验证系统的健壮性和错误是否处理恰当。看下面的方法，如果输入负数作为参数来请求这个方法会抛出异常来：</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">  void setLength(double length) throws IllegalArgumentException;</code></pre></figure>
+
+<p>测试这个特殊case的正确行为可以这样做：</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">  try {
+    setLength(-1.0);
+    fail();  // If we get here, something went wrong
+  }
+  catch (IllegalArgumentException exception) {
+    // If we get here, all is fine
+  }</code></pre></figure>
+
+<h4 id="21-在设计代码的时候就要考虑测试">21. 在设计代码的时候就要考虑测试</h4>
+<p>单元测试的写与维护都是有代价的，最小化公共API和减少圈复杂度都是能降低代价、做出快速运行高覆盖率的测试代码的办法，同时也能让测试代码更易维护。
+一些建议：</p>
+<ul>
+  <li>在构建是通过建立状态使得类成员不可改变。这个可以减少setter方法的需要。</li>
+  <li>限制过度继承的使用以及纯虚公共方法。</li>
+  <li>通过利用友元类或者包范围限制来减少公共API。</li>
+  <li>避免不必要的分支。</li>
+  <li>在分支里保持尽可能少的代码。</li>
+  <li>多使用exceptions和assertion来验证公共或私有API中的参数。</li>
+  <li>验证简便方法的使用。从黑盒的角度来看，每个方法必须做同等的测试。下面的一个小的实例：</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">  public void scale(double x0,double y0,double scaleFactor)
+  {
+      // scaling logic
+  }
+  public void scale(double x0, double y0)
+  {
+        scale(x0, y0, 1.0);
+  }</code></pre></figure>
+
+<p>后面一个方法的测试很简单，但给客户端调用的留下了额外的负担。</p>
+
+<h4 id="22-不要连接提前定义的外面资源">22. 不要连接提前定义的外面资源</h4>
+<p>单元测试不应该依赖于某些确定的环境上下文，它们可执行的条件也不应该被限制在这些确定的环境中。它们应该是在任何时候任何环境下都可以跑的。为了提供测试必须的资源，这些资源应该由测试自身来保证它们的可用性。比如，一个用来解析特定类型文件的类，不是从某些提前定义的位置取一个示例文件，而是把文件内容放到测试里面，在测试设置过程中，把它写到一个临时的文件里面，测试跑完了再把它删掉。</p>
+
+<h4 id="23-了解测试的花费">23. 了解测试的花费</h4>
+<p>不写单元测试的是有代价的，但是写单元测试也是有代价的。两者之间需要一个平衡，就执行覆盖率来说，一般的业界标准是80%。
+一般很难做到100%执行覆盖的地方是在与外部资源相关的错误与一次处理。要模拟在一次事务执行中间的一次database中断还是很可能的，相比较来说这个可能代价太高以至于用另一个办法-额外的代码审查来应对这个问题。</p>
+
+<h4 id="24-给测试排优先级">24. 给测试排优先级</h4>
+<p>单元测试是一个典型的自下而上的过程，如果没有足够的资源来测试系统的各个方面，优先权应该给予更加底层的东西。</p>
+
+<h4 id="25-准备失败的测试代码">25. 准备失败的测试代码</h4>
+<p>比如：</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">  Handle handle = manager.getHandle();
+  assertNotNull(handle);
+
+  String handleName = handle.getName();
+  assertEquals(handleName, "handle-01");</code></pre></figure>
+
+<p>如果第一个assertion是false, 在随后的声明里面代码会中断，剩下的测试都不会执行。总是准备测试失败的代码，这样一个单一测试的失败不会带来整个测试集的失败。一般来说可以像下面这样重写：</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">  Handle handle = manager.getHandle();
+  assertNotNull(handle);
+  if (handle == null) return;
+
+  String handleName = handle.getName();
+  assertEquals(handleName, "handle-01");</code></pre></figure>
+
+<h4 id="26-写可以重现bugs的测试">26. 写可以重现bugs的测试</h4>
+<p>当发现了一个bug,写个测试来重现这个bug(如，一个失败的测试)，用这个测试来作为这个bug被成功解决的标准。</p>
+
+<h4 id="27-了解单元测试的局限性">27. 了解单元测试的局限性</h4>
+<p>单元测试不能用来证明代码的正确性！
+一个失败的单元测试可以意味着代码中有错误，但是一个成功的测试什么也证明不了。</p>
+
+<p>单元测试最为有用的应用是验证和底层需求的记录，以及回归测试中：确保代码在演进和重构的过程中保证实现的逻辑稳定。</p>
+
+<p>因此单元测试不能取代恰当的预先设计和开发流程。单元测试应该被用做对已经建立起来的开发方法论的有价值的补充。</p>
+
+<p><a href="http://geosoft.no/development/unittesting.html"><code class="highlighter-rouge">原文:</code>Unit Testing Guidelines</a></p>
+
+<p>References</p>
+
+<p>[1] Unit test definition from Wikipedia:
+http://en.wikipedia.org/wiki/Unit_testing</p>
+
+<p>[2] A short description of white-box and black-box testing
+http://www.faqs.org/faqs/software-eng/testing-faq/section-13.html</p>
+
+<p>[3] Our favourite test framework for C++: CxxTest
+http://cxxtest.sourceforge.net/</p>
+
+<p>[4] Our favourite test framework for Java: TestNG
+http://testng.org/</p>
+
+<p>[5] Our favourite coverage analysis tool for C++: LCOV
+http://ltp.sourceforge.net/coverage/lcov.php</p>
+
+<p>[6] Our favourite coverage analysis tool for Java: Cobertura
+http://cobertura.sourceforge.net/</p>
+
+<p>[7] More arguments for not connecting to external resources:
+http://www.artima.com/weblogs/viewpost.jsp?thread=126923</p>
+
+<p>[8] A few unit testing recommendations from Apple:
+http://developer.apple.com/documentation/DeveloperTools/Conceptual/UnitTesting/Articles/UTGuidelines.html</p>
+
+<p>[9] Some JUnit best practices:
+http://www.javaworld.com/javaworld/jw-12-2000/jw-1221-junit_p.html</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=单元测试代码指导规范 - /posts/unit-testing-guidelines ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/unit-testing-guidelines', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/unit-testing-guidelines', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

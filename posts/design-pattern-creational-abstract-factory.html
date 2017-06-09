@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 创建型模式 - 抽象工厂</title>
+  <meta name="description" content="提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 创建型模式 - 抽象工厂">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-creational-abstract-factory">
+  <meta property="og:description" content="提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-creational-abstract-factory">
+  <meta name="twitter:title" content="设计模式 - 创建型模式 - 抽象工厂">
+  <meta name="twitter:description" content="提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 创建型模式 - 抽象工厂</h1>
+            <p>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 15, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 class="no_toc" id="对象创建型模式--抽象工厂abstract-factory">对象创建型模式 – 抽象工厂（Abstract Factory）</h3>
+
+<ul id="markdown-toc">
+  <li><a href="#1-意图" id="markdown-toc-1-意图">1. 意图</a></li>
+  <li><a href="#2-别名" id="markdown-toc-2-别名">2. 别名</a></li>
+  <li><a href="#3-动机" id="markdown-toc-3-动机">3. 动机</a></li>
+  <li><a href="#4-适用性" id="markdown-toc-4-适用性">4. 适用性</a></li>
+  <li><a href="#5-结构" id="markdown-toc-5-结构">5. 结构</a></li>
+  <li><a href="#6-参与者" id="markdown-toc-6-参与者">6. 参与者</a></li>
+  <li><a href="#7-协作" id="markdown-toc-7-协作">7. 协作</a></li>
+  <li><a href="#8-效果" id="markdown-toc-8-效果">8. 效果</a></li>
+  <li><a href="#9-实现" id="markdown-toc-9-实现">9. 实现</a></li>
+  <li><a href="#10-代码示例" id="markdown-toc-10-代码示例">10. 代码示例</a></li>
+  <li><a href="#11-已知应用" id="markdown-toc-11-已知应用">11. 已知应用</a></li>
+  <li><a href="#12-相关模式" id="markdown-toc-12-相关模式">12. 相关模式</a></li>
+</ul>
+
+<h4 id="1-意图">1. 意图</h4>
+<p>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。</p>
+
+<h4 id="2-别名">2. 别名</h4>
+<p>Kit</p>
+
+<h4 id="3-动机">3. 动机</h4>
+<p>考虑一个支持多种视感（look-and-feel）标准的用户界面工具包，例如Motif和Presentation Manager。不同的视感风格为诸如滚动条、窗口和按钮等用户界面“窗口组件”定义不同的外观和行为。为保证视感风格标准间的可移植性，一个应用不应该为一个特定的视感外观硬编码它的窗口组件。在整个应用中实例化特定视感风格的窗口组件类将使得以后很难改变视感风格。</p>
+
+<p>为解决这一问题我们可以定义一个抽象的WidgetFactory类，这个类声明了一个用来创建每一类基本窗口组件的接口。对于每一个抽象窗口组件类，WidgetFactory接口都有一个返回新窗口组件对象的操作。客户调用这些操作以获得窗口组件实例，但客户并不知道他们正在使用的哪些具体类。这样客户就不依赖于一般的视感风格，如下图所示：
+<a href="/assets/documentation/design-pattern/Demo-Abstract-Factory.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Demo-Abstract-Factory.png" alt="Demo-Abstract-Factory" />
+</a></p>
+
+<p>每一个视感标准都对应于一个具体的WidgetFactory子类。每一个子类实现那些用于创建合适视感风格的窗口组件的操作。例如，MotifWidgetFactory的CreateScrollBar操作实例化并返回一个Motif滚动条，而相应的PMWidgetFactory操作返回一个Presentation Manager的滚动条。客户仅与抽象类定义的接口交互，而不使用特定的具体类的接口。</p>
+
+<p>WidgetFactory也增强了具体窗口组件类之间的依赖关系。一个Motif的滚动条应该与Motif的按钮、Motif正文编辑器一起使用，这一约束条件作为使用MotifWidgetFactory的结果被自动加上。</p>
+
+<h4 id="4-适用性">4. 适用性</h4>
+<p>在以下情况可以使用Abstract Factory模式</p>
+<ul>
+  <li>一个系统要独立于它的产品的创建、组合和表示时。</li>
+  <li>一个系统要由多个产品系列中的一个来配置时。</li>
+  <li>当你要强调一系列相关的产品对象的设计以便进行联合使用时。</li>
+  <li>当你提供一个产品类库，而只想显示他们的接口而不是实现时。</li>
+</ul>
+
+<h4 id="5-结构">5. 结构</h4>
+<p><a href="/assets/documentation/design-pattern/Abstract-Factory-Structure.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Abstract-Factory-Structure.png" alt="Abstract-Factory-Structure" />
+</a></p>
+
+<h4 id="6-参与者">6. 参与者</h4>
+<ul>
+  <li>AbstractFactory（WidgetFactory)
+    <ul>
+      <li>声明一个创建抽象产品对象的操作接口</li>
+    </ul>
+  </li>
+  <li>ConcreteFactory（MotifWidgetFactory，PMWidgetFactory）
+    <ul>
+      <li>实现创建具体产品对象的操作</li>
+    </ul>
+  </li>
+  <li>AbstractProduct（Windows，ScrollBar）
+    <ul>
+      <li>为一类产品对象声明一个接口</li>
+    </ul>
+  </li>
+  <li>ConcreteProduct（MotifWindow， MotifScrollBar）
+    <ul>
+      <li>定义一个将被相应的具体工厂创建的产品对象</li>
+      <li>实现AbstractProduct接口</li>
+    </ul>
+  </li>
+  <li>Client
+    <ul>
+      <li>仅适用由AbstractFactory和AbstractProduct类声明接口</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="7-协作">7. 协作</h4>
+<ul>
+  <li>通常在运行时刻创建一个ConcreteFactory类的实例。这一具体的工厂创建具有特定实现的产品对象。为创建不同的产品对象，客户应使用不同的具体工厂。</li>
+  <li>AbstractFactory将产品对象的创建延迟到它的ConcreteFactory子类。</li>
+</ul>
+
+<h4 id="8-效果">8. 效果</h4>
+<p>AbstractFactory模式有下面的一些优点和缺点：</p>
+<ul>
+  <li>
+    <p>它分离了具体的类</p>
+
+    <p>Abstract Factory模式帮助你控制一个应用创建的对象的类。因为一个工厂封装创建产品对象的责任和过程，它将客户与类的实现分离。客户通过它们的抽象接口操作实例。产品的类名也在具体工厂的实现中被分离；它们不出现在客户代码中。</p>
+  </li>
+  <li>
+    <p>它使得易于交互产品系列</p>
+
+    <p>一个具体工厂类在一个应用中仅出现一次–即在它初始化的时候。这使得改变一个应用的具体的具体工厂变得很容易。它只需改变具体的工厂即可使用不同的产品配置，这是因为一个抽象工厂创建了一个完整的产品系列，所以整个产品系列会立刻改变。在我们的用户界面的例子中，我们仅需转换到对应的工厂对象并重新创建接口，就可以实现从Motif窗口组件转换为Presentation Manager窗口组件。</p>
+  </li>
+  <li>
+    <p>它有利于产品的一致性</p>
+
+    <p>当一个系列中的产品对象呗设计成一起工作时，一个应用一次只能使用同一个系列中的对象，这一点很重要。而AbstractFactory很容易实现这一点。</p>
+  </li>
+  <li>
+    <p>难以支持新种类的产品</p>
+
+    <p>难以扩展抽象工厂以生产新种类的产品。这是因为AbstractFactory接口确定了可以被创建的产品集合。支持新种类的产品就需要扩展该工厂接口，这将涉及AbstractFactory类及其所有子类的改变。<strong>我们会在实现一节讨论这个问题的一个解决办法。</strong></p>
+  </li>
+</ul>
+
+<h4 id="9-实现">9. 实现</h4>
+<p>下面是实现Abstract Factory模式的一些有用技术：</p>
+<ul>
+  <li>
+    <p>将工厂作为单件</p>
+
+    <p>一个应用中一般每个产品系列只需要一个ConcreteFactory的实例。因此工厂通常最好实现为一个Singleton。</p>
+  </li>
+  <li>
+    <p>创建产品</p>
+
+    <p>AbstractFactory仅声明一个创建产品的<em>接口</em>，真正创建产品是由ConcreteProduct子类实现的。最通常的一个办法是为每一个产品定义一个工厂方法（参见Factory Method）。一个具体的工厂将为每个产品重定义该工厂方法以指定产品。虽然这样的实现很简单，但它却要求每个产品系类都要有一个新的具体工厂子类，即使这些产品系列的差别很小。</p>
+
+    <p>如果有多个可能的产品系列，具体工厂也可以使用Prototype模式来实现。具体工厂使用产品系列中每一个产品的原型实例来初始化，且它通过复制它的原型来创建新的产品。在基于原型的方法中，使得不是每个新的产品系列都需要一个新的具体工厂类。</p>
+  </li>
+  <li>
+    <p>定义可扩展的工厂</p>
+
+    <p>AbstractFactory通常为每一种它可以生产的产品定义一个操作。产品的种类被编码在操作型构中。增加一种新的产品要求改变AbstractFactory的接口以及所有与它相关的类。一个更灵活但不太安全的设计是给创建对象的操作增加一个参数。该参数指定了将被创建的对象的种类。它可以是一个类标识符、一个整数、一个字符串，或其他任何可以标识这种产品的东西。实际上使用这种方法，AbstractFactory只需要一个“Make”操作和一个指示要创建对象的种类的参数。这是前面已经讨论过的基于原型的和基于类的抽象工厂的技术。</p>
+
+    <p>该方法即使不需要类型强制转换，但仍有一个本质的问题：所有的产品将返回类型所给定的<em>相同</em>的抽象接口返回给客户。客户将不能区分或对一个产品的类型进行安全的假定。如果一个客户需要进行与特定子类相关的操作，而这些操作却不能通过抽象接口得到。虽然客户可以实施一个向下类型转换（downcast），但这并不总是可行或安全的，因为向下类型转换可能会失败。这是一个典型的高度灵活和可扩展接口的权衡折中。</p>
+  </li>
+</ul>
+
+<h4 id="10-代码示例">10. 代码示例</h4>
+<p>我们将使用Abstract Factory模式创建我们在开篇中所讨论的迷宫。</p>
+
+<p>类MazeFactory可以创建迷宫的组件。它建造房间、墙壁和房间之间的门。它可以用于一个从文件中读取迷宫说明图并建造相应的迷宫程序。或者它可以被用于一个随机建造迷宫的程序。建造迷宫的程序将MazeFactory作为一个参数，这样程序员就能知道要创建的房间、墙壁和门等类。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MazeFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">MazeFactory</span><span class="o">(){</span>
+
+    <span class="o">};</span>
+
+    <span class="kd">public</span> <span class="n">Maze</span> <span class="nf">makeMaze</span><span class="o">(){</span>
+        <span class="k">return</span>  <span class="k">new</span> <span class="nf">Maze</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Room</span> <span class="nf">makeRoom</span><span class="o">(</span><span class="kt">int</span> <span class="n">roomNo</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Room</span><span class="o">(</span><span class="n">roomNo</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Wall</span> <span class="nf">makeWall</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Wall</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Door</span> <span class="nf">makeDoor</span><span class="o">(</span><span class="n">Room</span> <span class="n">r1</span><span class="o">,</span> <span class="n">Room</span> <span class="n">r2</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Door</span><span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>回想一下建立一个有两个房间和它们之间的门组成的小迷宫的成员函数CreateMaze。CreateMaze对类名进行硬编码，这是的很难用不同的组件创建迷宫。这里是一个以MazeFactory为参数的新版本的CreateMaze，它修改了这个缺点：</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MazeGame</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Maze</span> <span class="nf">createMaze</span><span class="o">(</span><span class="n">MazeFactory</span> <span class="n">factory</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Maze</span> <span class="n">aMaze</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeMaze</span><span class="o">();</span>
+        <span class="n">Room</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeRoom</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">Room</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeRoom</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+        <span class="n">Door</span> <span class="n">aDoor</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeDoor</span><span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">);</span>
+
+        <span class="n">aMaze</span><span class="o">.</span><span class="na">addRoom</span><span class="o">(</span><span class="n">r1</span><span class="o">);</span>
+        <span class="n">aMaze</span><span class="o">.</span><span class="na">addRoom</span><span class="o">(</span><span class="n">r2</span><span class="o">);</span>
+
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeWall</span><span class="o">());</span>
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">East</span><span class="o">,</span> <span class="n">aDoor</span><span class="o">);</span>
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeWall</span><span class="o">());</span>
+        <span class="n">r1</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">West</span><span class="o">,</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeWall</span><span class="o">());</span>
+
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeWall</span><span class="o">());</span>
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">East</span><span class="o">,</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeWall</span><span class="o">());</span>
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">North</span><span class="o">,</span> <span class="n">factory</span><span class="o">.</span><span class="na">makeWall</span><span class="o">());</span>
+        <span class="n">r2</span><span class="o">.</span><span class="na">setSides</span><span class="o">(</span><span class="n">Direction</span><span class="o">.</span><span class="na">West</span><span class="o">,</span> <span class="n">aDoor</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">aMaze</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>我们创建MazeFactory的子类EnchantedMazeFactory，这是一个创建施了魔法的迷宫的工厂。EnchantedMazeFactory将重新定义不同的成员函数并返回Room，Wall等不同的子类。</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnchantedMazeFactory</span> <span class="kd">extends</span> <span class="n">MazeFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">EnchantedMazeFactory</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Room</span> <span class="nf">makeRoom</span><span class="o">(</span><span class="kt">int</span> <span class="n">roomNo</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">EnchantedRoom</span><span class="o">(</span><span class="n">roomNo</span><span class="o">,</span> <span class="n">castSpell</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Spell</span> <span class="nf">castSpell</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Spell</span> <span class="n">spell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Spell</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">spell</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Door</span> <span class="nf">makeDoor</span><span class="o">(</span><span class="n">Room</span> <span class="n">r1</span><span class="o">,</span> <span class="n">Room</span> <span class="n">r2</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">DoorNeedingSpell</span><span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>现在假设我们想生成一个迷宫游戏，在这个游戏里，每个房间中可以有一个炸弹。如果这个炸弹爆炸，它将（至少）毁坏墙壁。我们可以生成一个Room的子类以明了是否有一个炸弹在房间中已经该炸弹是否已经爆炸了。我们也将需要一个Wall的子类以明了对墙壁的损害。我们将称这些类为RoomWithABomb和BombedWall。我们将定义的最后一个类是BombedMazeFactory，它是MazeFactory的子类，保证了墙壁是BombedWall类的而房间是RoomWithABomb的。BombedMazeFactory仅需重定义两个函数：</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BombedMazeFactory</span> <span class="kd">extends</span> <span class="n">MazeFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">BombedMazeFactory</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Room</span> <span class="nf">makeRoom</span><span class="o">(</span><span class="kt">int</span> <span class="n">roomNo</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">RoomWithABomb</span><span class="o">(</span><span class="n">roomNo</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Wall</span> <span class="nf">makeWall</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">BombedWall</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>CreateMaze可以接受不同的Factory来建造相应的迷宫。</p>
+
+<p>注意MazeFactory仅是工厂方法的一个集合。这是最通常的实现Abstract Factory模式的方式。同事注意MazeFactory不是一个抽象类；因为它既作为AbstractFactory也作为ConcreteFactory。这是Abstract Factory模式的简单应用的另一个通常的实现。因为MazeFactory是一个完全由工厂方法组成的具体类，通过生成一个子类并重定义需要改变的操作，它很容易生成一个新的MazeFactory。</p>
+
+<p>CreateMaze使用房间的SetSide操作以指定它们的各面。如果它用一个BombedMazeFactory创建房间，那么该迷宫将由有BombedWall面的RoomWithABomb对象组成。如果RoomWithABomb必须访问一个BombedWall的与特定子类相关的成员，那么它将不得不对它的墙壁引用进行从Wall到BombedWall的转换。只要该参数确实是一个BombedWall，这个向下转换就是安全的，而如果墙壁仅由一个BombedMazeFactory创建就可以保证这一点。</p>
+
+<h4 id="11-已知应用">11. 已知应用</h4>
+
+<h4 id="12-相关模式">12. 相关模式</h4>
+<p>AbstractFactory类通常用工厂方法（Factory Method）实现，但它们也可以用Prototype实现。一个具体的工厂通常是一个单件（Singleton)。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 创建型模式 - 抽象工厂 - /posts/design-pattern-creational-abstract-factory ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-creational-abstract-factory', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-creational-abstract-factory', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

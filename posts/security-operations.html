@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 安全运营</title>
+  <meta name="description" content="俗话说，安全是‘三分技术，七分管理’">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="安全运营">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/security-operations">
+  <meta property="og:description" content="俗话说，安全是‘三分技术，七分管理’">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/security-operations">
+  <meta name="twitter:title" content="安全运营">
+  <meta name="twitter:description" content="俗话说，安全是‘三分技术，七分管理’">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>安全运营</h1>
+            <p>俗话说，安全是‘三分技术，七分管理’</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 13, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>注：原文来自《白帽子讲Web安全》</p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-把安全运营起来" id="markdown-toc-1-把安全运营起来">1. 把安全运营起来</a></li>
+  <li><a href="#2漏洞修补流程" id="markdown-toc-2漏洞修补流程">2.漏洞修补流程</a></li>
+  <li><a href="#3安全监护" id="markdown-toc-3安全监护">3.安全监护</a></li>
+  <li><a href="#4入侵检测" id="markdown-toc-4入侵检测">4.入侵检测</a></li>
+  <li><a href="#5紧急响应流程" id="markdown-toc-5紧急响应流程">5.紧急响应流程</a></li>
+</ul>
+
+<p>安全是一个持续的过程。而“安全运营”的目的，就是把这个“持续的过程”执行起来。健康的企业安全，需要依靠“安全运营”来保持新陈代谢，保持活力。</p>
+
+<h3 id="1-把安全运营起来">1. 把安全运营起来</h3>
+<p>互联网公司如何规划自己的安全蓝图呢？从<strong>战略层面</strong>上来说，Aberdeen Group提到了三句话：</p>
+<ul>
+  <li><code class="highlighter-rouge">Find and Fix</code>;</li>
+  <li><code class="highlighter-rouge">Defend and Defer</code>;</li>
+  <li><code class="highlighter-rouge">Secure at the Source</code>.</li>
+</ul>
+<div align="center">
+<a href="/assets/documentation/white-hat-web-security/wireframes-of-safety-work.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/wireframes-of-safety-work.png" alt="wireframes-of-safety-work" />
+</a>
+
+</div>
+<p>一个安全评估的过程，就是一个“Find and Fix”的过程。通过漏洞扫描、渗透测试、代码审计等方式，可以发现系统中已知的安全问题；然后再通过设计安全方案，实施安全方案，最终解决这些问题。</p>
+
+<p>而像入侵检测系统、Web应用防火墙、反DDOS设备等则是一些防御性工作，这也是保证安全必不可少的一部分。它们能防范问题于未然，或者当安全事件发生后，快速地响应和处理问题。这些防御性工作，是一个“Defend and Defer”的过程。</p>
+
+<p>最后的“Secure at the Source”指的则是“安全开发流程（SDL）”，它能从源头降低安全风险，提高产品的安全质量。</p>
+
+<p>这三者的关系是互补的，当SDL出现差错时，可以通过周期性的扫描、安全评估等工作将问题及时解决；而入侵检测、WAF等系统，则可以在安全事件发生后的第一时间进行响应，并有助于事后定损。如果三者只剩其一，都可能使得公司的安全体系出现短板，出现可乘之机。</p>
+
+<p>安全运营贯穿在整个体系之中。安全运营需要让端口扫描、漏洞扫描、代码白盒扫描等发现问题的方式变成一种周期性的任务。</p>
+
+<p>因为<strong>安全是一个持续的过程</strong>，我们永远无法保证在下一刻网络管理员是否会因为工作疏忽而把SSH端口开放到Internet，或者是某个小项目逃过了安全检查私自发布上线了。这些管理上的疏忽随时都有可能打破之前辛辛苦苦建立起来的防线。假设管理工作和流程是不可靠的，就需要通过安全运营不断地去发现问题，周期性地做安全健康检查，才能让我们放心。这个工作，则是安全运营需要做的“Find”的工作。</p>
+
+<p>“Fix”的工作分为两种：1）例行的扫描任务发现了漏洞，需要及时修补；2）安全事件发生时，或者0day漏洞被公布时，需要进行紧急响应。这些工作需要建立制度和流程，并有专门的人对此负责。</p>
+
+<p>SDL的工作也是可以看成是安全运营的一部分，但由于其与软件工程结合紧密，独立出来也无不可。</p>
+
+<p>在安全运营的过程中，必然会与各种安全产品、安全工具打交道。有的安全产品是商业产品，有的则是开源工具，甚至安全团队还需要自主研发一些安全工具，这些安全产品都会产生大量的日志，这些日志对于安全运营来说是非常有价值的。通过事件之间的关联，可以全面地分析出企业的安全现状，并对未来的安全趋势做出一些预警，为决策提供参考意见。</p>
+
+<p>将各种安全日志、安全事件关联起来的系统我们称之为SOC（Security Operation Center）。建立SOC可以算是安全运营的一个重要目标。</p>
+
+<h3 id="2漏洞修补流程">2.漏洞修补流程</h3>
+<p>建立漏洞修补流程，是在“Fix”阶段要做的第一件事情。</p>
+
+<p>在制定补丁时，首先应该由安全工程师对漏洞进行分析，然后再和开发团队一起制定技术方案，并由安全工程师review补丁的代码，最后才能发布上线。</p>
+
+<p>对于“安全运营”的工作来说，建立漏洞修补流程，意味着需要完成这几件事情：</p>
+<ul>
+  <li>1）建立类似<em>bugtracker</em>的漏洞跟踪机制，并为漏洞的紧急程度选择优先级；</li>
+  <li>2）建立漏洞分析机制，并与程序员一起制定修补方案，同时review补丁的代码实现；</li>
+  <li>3）对曾经出现的漏洞进行归档，并定期统计漏洞修补情况。</li>
+</ul>
+
+<p>对<code class="highlighter-rouge">存在过的漏洞进行归档</code>，是公司安全经验的一种积累。历年来曾经出现过的漏洞，是公司成长的宝贵财富。对漏洞数量、漏洞类型、产生原因进行统计，也可以从全局的角度看到系统的短板在什么地方，为决策提供依据。</p>
+
+<h3 id="3安全监护">3.安全监护</h3>
+<p>安全监控与报警，是“Defend and Defer”的一种有效手段。</p>
+
+<p>监控能使公司在发生任何异常时第一时间就做出反应。下图为一个开源的监控系统<a href="https://www.nagios.com/">Nagios</a></p>
+<div align="center">
+<a href="/assets/documentation/white-hat-web-security/nagios-demo.jpg" class="fluidbox-trigger">
+  <img src="/assets/documentation/white-hat-web-security/nagios-demo.jpg" alt="nagios-demo" />
+</a>
+
+</div>
+
+<p>网站的安全性同样需要监控。安全监控的主要目的，是探测网站或者网站的用户是否被攻击，是否发生了DDOS，从而可以做出反应。</p>
+
+<p>安全监控与安全扫描的关系是什么？是否有了安全扫描就可以不用安全监控了？</p>
+
+<p>理论上说，如果一切都是完美的，所有漏洞都可以通过扫描器发现的话，那么可以不需要安全监控。但现实是扫描器难以覆盖到所有漏洞，有时候由于扫描器规则或一些其他的问题，还可能导致漏报。因此安全监控是对网站安全的有力补充。安全监控就像一双眼睛，能够时刻捕捉到发生的异常情况。</p>
+
+<h3 id="4入侵检测">4.入侵检测</h3>
+<p>常见的安全监控产品有IDS（入侵检测系统）、IPS（入侵防御系统）、DDOS监控设备等。在IDS这个大家族中，Web应用防火墙（WAF）又是近年来兴起的一种产品。相对于传统的IDS来说，WAF专注于应用层攻击的检测和防御。</p>
+
+<p>IDS、WAF等设备一般的部署方式是串联或并联在网络出口处，对网站的所有流量进行监控。在开源的软件中，也有一些优秀的IDS， 如<a href="https://modsecurity.org/">ModSecurity</a>，<a href="https://github.com/PHPIDS/PHPIDS">PHPIDS</a>。</p>
+
+<p>在实际使用IDS产品时，需要根据具体情况调整规则，避免误报。规则的优化是一个相对较长的过程，需要经过实践的检验。因此IDS在很多时候仅仅是报警，而不会由程序直接处理报告的攻击。人工处理报警，会带来运营成本的提升。</p>
+
+<p>除了部署入侵检测产品外，在应用中也可以实现代码级的安全监控功能。比如在实施CSRF方案时，采取的办法是对比用户提交表单中的token与当前用户Session中的token是否一致，当比对失败时，可以由应用记录下当前请求的IP地址、时间、URL、用户名等相关信息。这些安全日志汇总后，可以酌情发出安全警告。</p>
+
+<p>在应用代码中输出安全日志，需要执行IO的写操作，对性能会有一些影响。在设计方案时，要考虑到这种写日志的动作是否会频繁发生。在正常情况下，应用也会频繁地执行写日志动作，那么这个日志不适合启用。安全日志也属于机密信息，应该实时地保存到远程服务器。</p>
+<h3 id="5紧急响应流程">5.紧急响应流程</h3>
+<p>常见的报警方式有三种：邮件、IM、短信。</p>
+
+<p>监控与报警都建立后，就可以建立紧急响应流程。</p>
+
+<p>在处理安全问题时，有两个需要注意的地方：</p>
+<ul>
+  <li>1）保护安全事件现场；</li>
+  <li>2）以最快的速度处理完问题。</li>
+</ul>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=安全运营 - /posts/security-operations ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/security-operations', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/security-operations', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
