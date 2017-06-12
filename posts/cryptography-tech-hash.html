@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 认证 - 单向散列函数</title>
+  <meta name="description" content="获取消息的‘指纹’">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="认证 - 单向散列函数">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/cryptography-tech-hash">
+  <meta property="og:description" content="获取消息的‘指纹’">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/cryptography-tech-hash">
+  <meta name="twitter:title" content="认证 - 单向散列函数">
+  <meta name="twitter:description" content="获取消息的‘指纹’">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>认证 - 单向散列函数</h1>
+            <p>获取消息的‘指纹’</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                May 28, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/security">security</a>
+                
+                  <a href="/tag/cryptography">cryptography</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <ul id="markdown-toc">
+  <li><a href="#1-什么是单向散列函数" id="markdown-toc-1-什么是单向散列函数">1. 什么是单向散列函数</a>    <ul>
+      <li><a href="#11-这个文件是不是真的呢" id="markdown-toc-11-这个文件是不是真的呢">1.1 这个文件是不是真的呢</a></li>
+      <li><a href="#12-什么是单向散列函数" id="markdown-toc-12-什么是单向散列函数">1.2 什么是单向散列函数</a></li>
+      <li><a href="#13-单向散列函数的性质" id="markdown-toc-13-单向散列函数的性质">1.3 单向散列函数的性质</a></li>
+      <li><a href="#14-关于术语" id="markdown-toc-14-关于术语">1.4 关于术语</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-单向散列函数的实际应用" id="markdown-toc-2-单向散列函数的实际应用">2. 单向散列函数的实际应用</a>    <ul>
+      <li><a href="#21-检验软件是否被篡改" id="markdown-toc-21-检验软件是否被篡改">2.1 检验软件是否被篡改</a></li>
+      <li><a href="#22-基于口令的加密" id="markdown-toc-22-基于口令的加密">2.2 基于口令的加密</a></li>
+      <li><a href="#23-消息认证码" id="markdown-toc-23-消息认证码">2.3 消息认证码</a></li>
+      <li><a href="#24-数字签名" id="markdown-toc-24-数字签名">2.4 数字签名</a></li>
+      <li><a href="#25-伪随机数生成器" id="markdown-toc-25-伪随机数生成器">2.5 伪随机数生成器</a></li>
+      <li><a href="#26-一次性口令" id="markdown-toc-26-一次性口令">2.6 一次性口令</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-单向散列函数的具体例子" id="markdown-toc-3-单向散列函数的具体例子">3. 单向散列函数的具体例子</a></li>
+  <li><a href="#4-应该使用哪种单向散列函数呢" id="markdown-toc-4-应该使用哪种单向散列函数呢">4. 应该使用哪种单向散列函数呢</a></li>
+  <li><a href="#5-对单向散列函数的攻击" id="markdown-toc-5-对单向散列函数的攻击">5. 对单向散列函数的攻击</a></li>
+  <li><a href="#6-单向散列函数无法解决的问题" id="markdown-toc-6-单向散列函数无法解决的问题">6. 单向散列函数无法解决的问题</a></li>
+</ul>
+
+<h2 id="1-什么是单向散列函数">1. 什么是单向散列函数</h2>
+<p>首先，我们先通过Alice的一段故事，介绍一个可能要到单向散列函数的场景。然后，我们再来介绍单向散列函数需要具备的性质。</p>
+
+<h3 id="11-这个文件是不是真的呢">1.1 这个文件是不是真的呢</h3>
+<p>Alice在公司里从事软件开发。一天结束了，她保存了新开发的软件在电脑中。第二天来上班的时候，她忽然有个疑问：“今天打开的文件和昨天生成的文件是一样的吗？”。Alice需要知道从昨天到今天的这段时间内，<strong>Mallory是否篡改了文件的内容。</strong></p>
+
+<p>现在，Alice想知道自己手上的文件是不是真的。这种“是真的”的性质称为<code class="highlighter-rouge">完整性(integrity)</code>，也称<strong>一致性</strong>。</p>
+<div align="center">
+<a href="/assets/documentation/cryptography/integrity-validation.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/integrity-validation.png" alt="integrity-validation" />
+</a>
+
+</div>
+
+<p>稍微想一想我们就能找到一种确认文件完整性的简单方法 – 事先将文件保存在安全的地方随后进行对比。</p>
+<div align="center">
+<a href="/assets/documentation/cryptography/integrity-validate-pre-save.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/integrity-validate-pre-save.png" alt="integrity-validate-pre-save" />
+</a>
+
+</div>
+<p>不过，这种确认完整性的方法其实是毫无意义的。</p>
+<ul>
+  <li>如果事先能见文件保存在安全的地方，那根本就不需要确认完整性。</li>
+  <li>效率问题。如果需要确定完整性的文件非常巨大，那么文件的复制，保存以及比较都非常耗时。</li>
+</ul>
+
+<p>是该“单向散列函数”出场了。</p>
+<div align="center">
+<a href="/assets/documentation/cryptography/integrity-validation-hash.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/integrity-validation-hash.png" alt="integrity-validation-hash" />
+</a>
+
+</div>
+<p><code class="highlighter-rouge">单向散列函数所生成的散列值，就相当于消息的“指纹”。</code></p>
+
+<h3 id="12-什么是单向散列函数">1.2 什么是单向散列函数</h3>
+<p><strong>单向散列函数(one-way hash function)</strong>有一个输入和一个输出，其中输入称为<strong>消息(message)</strong>，输出称为<strong>散列值(hash value)</strong>。单向散列函数可以根据消息的内容计算出散列值，而散列值就可以被用来检查消息的完整性。</p>
+
+<p>这里的消息不一定是人类能够读懂的文件，也可以是图像文件或者声音文件。单向散列函数不需要知道消息实际代码的含义。无论任何消息，单向散列函数都会将它作为单纯的比特序列来处理，即根据比特序列计算出散列值。</p>
+
+<p><code class="highlighter-rouge">散列值的长度和消息的长度无关。</code>无论消息是1比特，还是100MB，甚至是100GB，单向散列函数都会计算出固定长度的散列值。以SHA-256单向散列函数为例，它所计算出的散列值的长度永远是256比特(32字节)。</p>
+
+<p>由于散列值很短，因此很容易处理和使用。<code class="highlighter-rouge">用散列值处理完整性问题，关键点在于，我们不需要对比消息本身，只要对比单向散列函数计算出的散列值就可以了。</code></p>
+
+<h3 id="13-单向散列函数的性质">1.3 单向散列函数的性质</h3>
+<ul>
+  <li>根据任意长度的消息计算出固定长度的散列值。</li>
+  <li>能够快速计算出散列值。</li>
+  <li>消息不同散列值不同。哪怕只有1个比特的改变，所产生的散列值完全不同。</li>
+  <li>具备单向性。无法通过散列值反算出消息。</li>
+</ul>
+
+<h3 id="14-关于术语">1.4 关于术语</h3>
+<p><strong>单向散列函数</strong>也称为<strong>消息摘要函数(message digest function)、哈希函数</strong>或者<strong>杂凑行数</strong>。</p>
+
+<p>输入单向散列函数的<strong>消息</strong>也称为<strong>原像(pre-image)</strong>。</p>
+
+<p>单向散列函数输出的<strong>散列值</strong>也称为<strong>消息摘要(message digest)</strong>或者<strong>指纹(fingerprint)</strong>。</p>
+
+<p><strong>完整性</strong>也称为<strong>一致性</strong>。</p>
+
+<p>顺便说一句，单向散列函数中的“散列”的英文“hash”一词，原意是古法语中的“斧子”，后来被引申为“剁碎的肉末”，也许是用斧子一通乱剁再搅在一起的那种感觉吧。单向散列函数的作用，实际上就是将很长的消息剁碎，然后再混合成固定长度的散列值。</p>
+
+<h2 id="2-单向散列函数的实际应用">2. 单向散列函数的实际应用</h2>
+
+<h3 id="21-检验软件是否被篡改">2.1 检验软件是否被篡改</h3>
+<p>很多软件，尤其是安全相关的软件都会把通过单向散列函数计算出的散列值公布在自己的官方网站上。用户在下载到软件之后，可以自行计算散列值，然后与官网上公布的散列值进行对比。通过散列值，用户可以确认自己所下载到的文件与软件作者所提供的文件是否一致。</p>
+
+<h3 id="22-基于口令的加密">2.2 基于口令的加密</h3>
+<p>基于口令加密(Password Based Encryption, PBE)的原理是将口令和盐(salt，通过伪随机数生成器产生的随机数)混合后计算其散列值，然后将这个散列值用作加密的密钥。通过这样的方法能够防御针对口令的字典攻击。</p>
+
+<h3 id="23-消息认证码">2.3 消息认证码</h3>
+<p>使用单向散列函数可以构造消息认证码。消息认证码是将“发送者和接受者之间的共享密钥”和“消息”进行混合后计算出的散列值。使用消息认证码可以检测并防止通信过程中的错误、篡改以及伪装。</p>
+
+<h3 id="24-数字签名">2.4 数字签名</h3>
+<p>数字签名是显示社会中的签名和盖章这样的行为在数字世界中的实现。数字签名的处理过程非常耗时，因此一般不会对整个消息内容直接施加数字签名，而是先通过单向散列函数计算出消息的散列值，然后再对这个散列值施加数字签名。</p>
+
+<h3 id="25-伪随机数生成器">2.5 伪随机数生成器</h3>
+<p>密码技术中所使用的随机数需要具备“事实上不可能根据过去的随机数列预测未来的随机数列”这样的性质。为了保证不可预测性，可以利用单向散列函数的单向性。</p>
+
+<h3 id="26-一次性口令">2.6 一次性口令</h3>
+<p>一次性口令(one-time password)经常被用于服务器对客户端的合法性认证。在这种方式中，通过单向散列函数可以保证口令只在通信链路上传送一次(one-time)，因此即使窃听者窃取了口令，也无法使用。</p>
+
+<h2 id="3-单向散列函数的具体例子">3. 单向散列函数的具体例子</h2>
+<ol>
+  <li>MD4、MD5</li>
+  <li>SHA-1、SHA-256、SHA-384、SHA-512</li>
+  <li>RIPEMD-160</li>
+  <li>SHA-3（Keccak）</li>
+</ol>
+
+<h2 id="4-应该使用哪种单向散列函数呢">4. 应该使用哪种单向散列函数呢</h2>
+<ul>
+  <li>首先，<code class="highlighter-rouge">MD5是不安全的，也不应该使用</code>。</li>
+  <li><code class="highlighter-rouge">SHA-1除了用于对过去生成的散列值进行校验之外，不应该被用于新的用途，而是应该迁移到SHA-2</code>。</li>
+  <li>SHA-2有效应对了针对SHA-1的攻击方法，因此是安全的，可以使用。</li>
+  <li>SHA-3是安全的，可以使用。</li>
+</ul>
+
+<p><code class="highlighter-rouge">和对称密码算法一样，我们不应该使用任何自制算法。</code></p>
+
+<h2 id="5-对单向散列函数的攻击">5. 对单向散列函数的攻击</h2>
+<ol>
+  <li><code class="highlighter-rouge">暴力破解</code>，利用文件的冗余性生成具有相同散列值的另一个文件。这相当于一种试图破解单向散列函数的<strong>“弱抗碰撞性”</strong>的攻击。</li>
+  <li><code class="highlighter-rouge">生日攻击</code>，攻击者Mallory所进行的攻击不是寻找生成特定散列值的消息，而是要找到散列值相同的两条消息，而散列值则可以使任意的。这是一种试图破解单向散列函数的<strong>“强抗碰撞性”</strong>的攻击。</li>
+</ol>
+
+<h2 id="6-单向散列函数无法解决的问题">6. 单向散列函数无法解决的问题</h2>
+<p>单向散列函数<code class="highlighter-rouge">能够辨别出“篡改”，但无法辨别出“伪装”</code>。</p>
+
+<p>当我们不仅需要确认文件的完整性，同时还需要确认这个文件是否真的属于Alice时，仅靠完整性检查是不够的，我们还需要进行<code class="highlighter-rouge">认证</code>。</p>
+
+<p>用于认证的技术包括<code class="highlighter-rouge">消息验证码</code>和<code class="highlighter-rouge">数字签名</code>。消息认证码能够向通信对象保证消息没有被篡改，而数字签名不仅能够向通信对象保证消息没有被篡改，还能够向所有第三方做出这样的保证。</p>
+
+<p>认证需要使用密钥，也就是通过对消息附加Alice的密钥（只有Alice才知道的秘密消息）来确保消息真的属于Alice。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=认证 - 单向散列函数 - /posts/cryptography-tech-hash ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/cryptography-tech-hash', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/cryptography-tech-hash', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

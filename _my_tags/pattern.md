@@ -1,4 +1,0 @@
----
-slug: pattern
-name: Pattern
----
