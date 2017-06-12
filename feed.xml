@@ -7,6 +7,14 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>认证 - 单向散列函数</title>
+        <description>获取消息的‘指纹’</description>
+        <pubDate>Sun, 28 May 2017 00:00:00 +0800</pubDate>
+        <link>/posts/cryptography-tech-hash</link>
+        <guid isPermaLink="true">/posts/cryptography-tech-hash</guid>
+      </item>
+    
+      <item>
         <title>密码技术 - 混合密码系统</title>
         <description>用对称密码提高速度，用公钥密码保护会话密钥</description>
         <pubDate>Sat, 27 May 2017 00:00:00 +0800</pubDate>
@@ -76,14 +84,6 @@
         <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
         <link>/posts/pen-testing-methodology-acl-guideline</link>
         <guid isPermaLink="true">/posts/pen-testing-methodology-acl-guideline</guid>
-      </item>
-    
-      <item>
-        <title>Web应用程序渗透测试方法论 - 测试会话管理机制</title>
-        <description>会话管理是保持用户的整个会话活动的互动与计算机系统跟踪过程</description>
-        <pubDate>Tue, 09 May 2017 00:00:00 +0800</pubDate>
-        <link>/posts/pen-testing-methodology-session-mgr-guideline</link>
-        <guid isPermaLink="true">/posts/pen-testing-methodology-session-mgr-guideline</guid>
       </item>
     
   </channel>
