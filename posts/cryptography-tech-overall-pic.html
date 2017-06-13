@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 密码技术 - 环游密码世界</title>
+  <meta name="description" content="安全技术的核心竞争力">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="密码技术 - 环游密码世界">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/cryptography-tech-overall-pic">
+  <meta property="og:description" content="安全技术的核心竞争力">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/cryptography-tech-overall-pic">
+  <meta name="twitter:title" content="密码技术 - 环游密码世界">
+  <meta name="twitter:description" content="安全技术的核心竞争力">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>密码技术 - 环游密码世界</h1>
+            <p>安全技术的核心竞争力</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                May 17, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/security">security</a>
+                
+                  <a href="/tag/cryptography">cryptography</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <ul id="markdown-toc">
+  <li><a href="#1-密码" id="markdown-toc-1-密码">1. 密码</a>    <ul>
+      <li><a href="#11-alice与bob" id="markdown-toc-11-alice与bob">1.1 Alice与Bob</a></li>
+      <li><a href="#12-发送者接受者和窃听者" id="markdown-toc-12-发送者接受者和窃听者">1.2 发送者、接受者和窃听者</a></li>
+      <li><a href="#13-加密与解密" id="markdown-toc-13-加密与解密">1.3 加密与解密</a></li>
+      <li><a href="#14-密码保证了消息的机密性" id="markdown-toc-14-密码保证了消息的机密性">1.4 密码保证了消息的机密性</a></li>
+      <li><a href="#15-破译" id="markdown-toc-15-破译">1.5 破译</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-对称密码与公钥密码" id="markdown-toc-2-对称密码与公钥密码">2. 对称密码与公钥密码</a>    <ul>
+      <li><a href="#21-密码算法" id="markdown-toc-21-密码算法">2.1 密码算法</a></li>
+      <li><a href="#22-密钥" id="markdown-toc-22-密钥">2.2 密钥</a></li>
+      <li><a href="#23-对称密码与公钥密码" id="markdown-toc-23-对称密码与公钥密码">2.3 对称密码与公钥密码</a></li>
+      <li><a href="#24-混合密码系统" id="markdown-toc-24-混合密码系统">2.4 混合密码系统</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-其他的密码技术" id="markdown-toc-3-其他的密码技术">3. 其他的密码技术</a>    <ul>
+      <li><a href="#31-单项散列函数" id="markdown-toc-31-单项散列函数">3.1 单项散列函数</a></li>
+      <li><a href="#32-消息认证码" id="markdown-toc-32-消息认证码">3.2 消息认证码</a></li>
+      <li><a href="#33-数字签名" id="markdown-toc-33-数字签名">3.3 数字签名</a></li>
+      <li><a href="#34-伪随机数生成器" id="markdown-toc-34-伪随机数生成器">3.4 伪随机数生成器</a></li>
+    </ul>
+  </li>
+  <li><a href="#4-密码学家的工具箱" id="markdown-toc-4-密码学家的工具箱">4. 密码学家的工具箱</a></li>
+  <li><a href="#5-密码与信息安全常识" id="markdown-toc-5-密码与信息安全常识">5. 密码与信息安全常识</a></li>
+</ul>
+
+<h2 id="1-密码">1. 密码</h2>
+<h3 id="11-alice与bob">1.1 Alice与Bob</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">名称</th>
+      <th style="text-align: center">角色</th>
+      <th style="text-align: center">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Alice</td>
+      <td style="text-align: center">女主角</td>
+      <td style="text-align: center">通信的一方</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Bob</td>
+      <td style="text-align: center">男主角</td>
+      <td style="text-align: center">通信的一方</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Eve</td>
+      <td style="text-align: center">窃听者</td>
+      <td style="text-align: center">可窃听通信的内容</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Mallory</td>
+      <td style="text-align: center">攻击者</td>
+      <td style="text-align: center">可妨碍通信、伪造消息等</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Trent</td>
+      <td style="text-align: center">第三方</td>
+      <td style="text-align: center">可信的第三方</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Victor</td>
+      <td style="text-align: center">验证者</td>
+      <td style="text-align: center">证实一项事情是否有实际进行</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+<h3 id="12-发送者接受者和窃听者">1.2 发送者、接受者和窃听者</h3>
+<p><a href="/assets/documentation/cryptography/send-receiver-eavasdropper.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/send-receiver-eavasdropper.png" alt="send-receiver-eavasdropper" />
+</a></p>
+
+<h3 id="13-加密与解密">1.3 加密与解密</h3>
+<p><a href="/assets/documentation/cryptography/encrypt-decrypt.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/encrypt-decrypt.png" alt="encrypt-decrypt" />
+</a></p>
+
+<h3 id="14-密码保证了消息的机密性">1.4 密码保证了消息的机密性</h3>
+<p>在上述场景中，Alice将邮件进行加密，而Bob则进行解密，这样做的目的，是为了不让窃听者Eva读取邮件中的内容。Alice与Bob通过运用密码技术，保证了邮件的<strong>机密性</strong>。</p>
+
+<h3 id="15-破译">1.5 破译</h3>
+<p>正当的接受者将密文还原成明文称为“解密”，但接受者以外的其他人试图将密文还原为明文，则称为<strong>密码破译（cryptanalysis)</strong>,简称<strong>破译</strong>，有时也称为<strong>密码分析</strong>。</p>
+
+<p>进行破译的人称为<strong>破译者（cryptanalyzer)</strong>。破译者并不一定是坏人，密码学研究者为了研究密码强度（即破译密码的困难程度），也经常需要对密码进行破译。</p>
+
+<h2 id="2-对称密码与公钥密码">2. 对称密码与公钥密码</h2>
+<h3 id="21-密码算法">2.1 密码算法</h3>
+<p>用于解决复杂问题的步骤，通常称为<strong>算法</strong>。从明文生成密文的步骤，也就是加密的步骤，称为“加密算法”，而解密的步骤则称为“解密算法”。加密、解密的算法合在一起统称为<strong>密码算法</strong>。</p>
+
+<h3 id="22-密钥">2.2 密钥</h3>
+<p>密码算法中需要<strong>密钥</strong>。现实世界中的“钥”，是像🔑这样形状微妙而复杂的金属片。然而，密码算法中的密钥，则是像20345778083277859859425485400566275485458205这样的一串非常大的数字。</p>
+
+<p>无论是在加密还是在解密时，都需要知道密钥。</p>
+
+<h3 id="23-对称密码与公钥密码">2.3 对称密码与公钥密码</h3>
+<p>根据密钥的使用方法，可以将密码分为对称密码和公钥密码两种。</p>
+<ul>
+  <li><strong>对称密码</strong>是指在加密和解密时使用同一密钥的方式</li>
+  <li><strong>公钥密码</strong>则是指在加密和解密时使用不同密钥的方式，也称为<strong>非对称密码</strong>。</li>
+</ul>
+
+<p><a href="/assets/documentation/cryptography/asym-sym-cryptography.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/asym-sym-cryptography.png" alt="asym-sym-cryptography" />
+</a></p>
+
+<h3 id="24-混合密码系统">2.4 混合密码系统</h3>
+<p>将对称密码和公钥密码结合起来的密码方式称为<strong>混合密码系统</strong>，这种系统结合了对称密码和公钥密码两者的优势。</p>
+
+<h2 id="3-其他的密码技术">3. 其他的密码技术</h2>
+<p>密码技术所提供的并不仅仅是基于密码的机密性，用于检测消息是否被篡改的完整性以及用于确认对方是否是本人的认证都是密码技术的重要部分。</p>
+
+<h3 id="31-单项散列函数">3.1 单项散列函数</h3>
+<p>我们想象一下通过互联网下载免费软件的场景。我们所下载的软件，是否和软件的作者所制作的东西一模一样？会不会有坏人在软件里植入了一些恶意程序呢？</p>
+
+<p>为了防止软件被篡改，有安全意识的软件发布者会在发布软件的同时发布该软件的<strong>散列值</strong>。散列值就是用<strong>单向散列函数</strong>计算出来的数值。</p>
+
+<p>下载该软件的人可以自行计算所下载文件的散列值，然后与软件发布者公布的散列值进行对比。如果两个散列值一致，就说明下载的文件与发布者所发布的文件是相同的。</p>
+
+<p>单向散列函数所保证的并不是机密性，而是<strong>完整性</strong>。完整性指的是“数据是正牌的而不是伪造的”这一性质。使用单向散列函数，就可以检测出数据是否被<strong>篡改</strong>过。</p>
+
+<h3 id="32-消息认证码">3.2 消息认证码</h3>
+<p>为了确认消息是否来自所期望的通信对象，可以使用<strong>消息认证码</strong>技术。</p>
+
+<p>通过使用消息认证码，不但能够确认消息是否被篡改，而且能够确认消息是否来自所期待的通信对象。也就是说，消息认证码不仅能够保证完整性，还能够提供<strong>认证</strong>机制。</p>
+
+<h3 id="33-数字签名">3.3 数字签名</h3>
+<p>Bob刚刚收到一封来自Alice的邮件，内容是“以100万元的价格购买该商品”。</p>
+
+<p>不过，这封邮件到底是不是Alice本人写的呢？Bob仅通过阅读邮件内容，是否能够判断该邮件确实来自Alice呢？邮件的发送者（From：一栏的内容）很容易被伪装，因此确实存在别人<strong>伪装</strong>成Alice的风险。</p>
+
+<p>假设Alice真的发出过邮件，但是Alice当初写的内容真的是“以100万元的价格购买该商品”吗？是否存在这样一种风险，即Alice原本写的是“1万元”，而在邮件传输的过程中被某些别有用心的人进行了<strong>篡改</strong>，将1万元改成了100万元呢？</p>
+
+<p>反过来说，还有这样一种风险，即Alice真的向Bob发送了内容为“以100万元的价格购买该商品”的邮件，但后来Alice又不想买了，于是便谎称“我当初根本没有发过那封邮件”。像这样事后推翻自己先前主张的行为，称为<strong>否认</strong>。</p>
+
+<p>能够防止上述伪装、篡改和否认等威胁的技术，就是<strong>数字签名</strong>。数字签名就是一种将现实世界中的签名和盖章移植到数字世界中的技术，它也是一种重要的密码技术。</p>
+
+<h3 id="34-伪随机数生成器">3.4 伪随机数生成器</h3>
+<p><strong>伪随机数生成器</strong>是一种能够模拟产生随机数列的算法。随机数和密码技术有关，这样说大家可能会感到意外，但实际上随机数确实承担着<strong>密钥生成</strong>的重要职责。例如在Web中进行SSL/TLS通信时，会生成一个仅用于当前通信的临时密钥（会话密钥），这个密钥就是基于伪随机数生成器生成的。如果生成随机数的算法不好，窃听者就能够推测出密钥，从而带来通信机密性下降的风险。</p>
+
+<h2 id="4-密码学家的工具箱">4. 密码学家的工具箱</h2>
+<p><a href="/assets/documentation/cryptography/cryptographer-toolkit.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/cryptographer-toolkit.png" alt="cryptographer-toolkit" />
+</a></p>
+
+<h2 id="5-密码与信息安全常识">5. 密码与信息安全常识</h2>
+<ul>
+  <li>不要使用保密的密码算法
+    <ul>
+      <li>密码算法的秘密早晚会公诸于世</li>
+      <li>开发高强度的密码算法是非常困难的</li>
+    </ul>
+  </li>
+  <li>使用低强度的密码比不进行任何加密更危险</li>
+  <li>任何密码总有一天都会被破解</li>
+  <li>密码只是信息安全的一部分</li>
+</ul>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=密码技术 - 环游密码世界 - /posts/cryptography-tech-overall-pic ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/cryptography-tech-overall-pic', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/cryptography-tech-overall-pic', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
