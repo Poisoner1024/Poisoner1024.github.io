@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | Web应用程序渗透测试方法论 - 测试会话管理机制</title>
+  <meta name="description" content="会话管理是保持用户的整个会话活动的互动与计算机系统跟踪过程">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Web应用程序渗透测试方法论 - 测试会话管理机制">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/pen-testing-methodology-session-mgr-guideline">
+  <meta property="og:description" content="会话管理是保持用户的整个会话活动的互动与计算机系统跟踪过程">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/pen-testing-methodology-session-mgr-guideline">
+  <meta name="twitter:title" content="Web应用程序渗透测试方法论 - 测试会话管理机制">
+  <meta name="twitter:description" content="会话管理是保持用户的整个会话活动的互动与计算机系统跟踪过程">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>Web应用程序渗透测试方法论 - 测试会话管理机制</h1>
+            <p>会话管理是保持用户的整个会话活动的互动与计算机系统跟踪过程</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                May 9, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+                  <a href="/tag/test">test</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>注：原文来自《黑客攻防技术宝典》</p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-了解会话管理机制" id="markdown-toc-1-了解会话管理机制">1. 了解会话管理机制</a></li>
+  <li><a href="#2-测试令牌的含义" id="markdown-toc-2-测试令牌的含义">2. 测试令牌的含义</a></li>
+  <li><a href="#3-测试令牌的可预测性" id="markdown-toc-3-测试令牌的可预测性">3. 测试令牌的可预测性</a></li>
+  <li><a href="#4-检查不安全的令牌传输" id="markdown-toc-4-检查不安全的令牌传输">4. 检查不安全的令牌传输</a></li>
+  <li><a href="#5-检查日志中泄露的令牌" id="markdown-toc-5-检查日志中泄露的令牌">5. 检查日志中泄露的令牌</a></li>
+  <li><a href="#6-测试令牌---会话映射" id="markdown-toc-6-测试令牌---会话映射">6. 测试令牌 - 会话映射</a></li>
+  <li><a href="#7-测试会话终止" id="markdown-toc-7-测试会话终止">7. 测试会话终止</a></li>
+  <li><a href="#8-测试会话固定" id="markdown-toc-8-测试会话固定">8. 测试会话固定</a></li>
+  <li><a href="#9-检查csrf" id="markdown-toc-9-检查csrf">9. 检查CSRF</a></li>
+  <li><a href="#10-检查cookie范围" id="markdown-toc-10-检查cookie范围">10. 检查Cookie范围</a></li>
+</ul>
+
+<p><a href="/assets/documentation/pen-test/test-session-mgr.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/pen-test/test-session-mgr.png" alt="test-session-mgr" />
+</a></p>
+
+<h2 id="1-了解会话管理机制">1. 了解会话管理机制</h2>
+<p>(1) 分析应用程序用于管理会话与状态的机制。确定应用程序是否使用会话令牌或其他方法处理每一名用户提交的各种请求。<code class="highlighter-rouge">请注意</code>，用户通过验证后，一些验证技术（如HTTP验证）并不需要使用完整的会话机制重新确定用户的身份。同时，一些应用程序采用一种无会话状态机制，通常使用一个加密或模糊处理的表单，通过客户端传送所有状态信息。</p>
+
+<p>(2) 如果应用程序使用会话令牌，确定它到底使用哪些数据重新确认用户的身份。HTTP cookie、查询字符串参数以及隐藏表单字段均可用于传送令牌。可使用不同的数据共同重新确认用户身份，不同的数据可能被不同的后端组件使用。有时，看似为会话令牌的数据实际并未被应用程序使用，例如，Web服务器生成的默认cookie。</p>
+
+<p>(3) 为确认应用程序到底使用哪些数据作为令牌，找到一个确信依赖会话的页面（如某一名用户的“用户资料”页面）或功能，并向它提出几个请求，系统性地删除怀疑被用作令牌的数据项。如果删除某个数据项后，应用程序不再返回依赖会话的页面，即可确定该数据项为会话令牌。Burp Repeater是执行这些测试的有用工具。</p>
+
+<p>(4) 确定应用程序使用哪些数据重新确认用户的身份后，确定它是否对每个令牌进行完整的确认，或者是否忽略令牌的某些组成部分。修改令牌的值，一次修改一个字节，并确定修改后的值是否仍然被应用程序接受。如果发现令牌的某些部分并未被用于保持会话的状态，就不必再深入分析它们。</p>
+
+<h2 id="2-测试令牌的含义">2. 测试令牌的含义</h2>
+<p>(1) 在不同时间以几个不同的用户登陆，记录服务器发布的令牌。如果应用程序允许自我注册，就可以选择自己的用户名，用一系列存在细微差别的相似用户名登陆，如A、AA、AAA、AAAA、AAAB、AAAC、AABA等。如果其他与某一名用户有关的数据（如电子邮件地址）在登陆阶段提交或保存在用户资料中，对其进行与前面类似的系统化修改，并截获令牌。</p>
+
+<p>(2) 分析收到的令牌，查找所有与用户名和其他用户可控制的数据有关的内容。</p>
+
+<p>(3) 分析令牌，查找所有明显的编码或模糊处理方案。查找用户名长度与令牌长度之间的所有相互关系；这种关系表示应用程序明显使用了<code class="highlighter-rouge">某种模糊处理或编码方案</code>。如果用户名包含一组相同的字符，在令牌中寻找表示可能使用XOR模糊处理的对应字符序列；在令牌中虚招仅包含十六进制字符的序列，它表示应用程序可能对ASCII字符进行了十六进制编码处理，或者披露其他信息。寻找以等号（=）结尾的字符序列或仅包含其他有效Base64字符的序列，如a-z、A-Z、0-9、+和/。</p>
+
+<p>(4) 如果可以从会话令牌样本中获得任何有意义的数据，确定这些信息是否足以帮助发动攻击，猜测出最近发布给其他应用程序用户的令牌。找到一个依赖会话的应用程序页面，使用自动化技术生成和测试可能的令牌。</p>
+
+<h2 id="3-测试令牌的可预测性">3. 测试令牌的可预测性</h2>
+<p>(1) 使用一个可使服务器返回一个新令牌的请求（例如一个成功登陆请求），生成并截获大量紧密相连的会话令牌。</p>
+
+<p>(2) 设法确定令牌样本中的所有模式。在所有情况下，都使用Burp Sequtncer对应用程序令牌的随机特性进行详细的统计分析测试。然而，根据自动扫描结果，仍然需要进行一些手动分析。</p>
+<ul>
+  <li>
+    <p>理解应用程序重新确认用户身份的令牌和子序列。忽略并未用于确定用户身份的所有数据，即使样本中的这些数据发生变化。</p>
+  </li>
+  <li>
+    <p>如果不清楚令牌或者令牌的所有组成成分使用何种类型的数据，尝试使用各种解码的方法（例如Base64），看能否得到更有意义的数据。有时可能有必要连续使用几种解码方法。</p>
+  </li>
+  <li>
+    <p>设法确定解码后的令牌或组成成分数据中存在的所有模式。计算连续值之间的差距。即使这些值看似杂乱无章，但是它们之间任然有可能存在固定的差距，允许渗透测试员显著缩小蛮力攻击的范围。</p>
+  </li>
+  <li>
+    <p>等待几分钟后，截取列斯的一组令牌样本，重复进行上述分析。设法确定令牌的内容是否具有时间依赖性。</p>
+  </li>
+</ul>
+
+<p>(3) 如果已经确定了所有模式，使用一个不同的IP地址与用户名截获另一组令牌样本，确定是否可以探查到相同的模式，或者是否可以对第一组令牌进行推导，猜测出第二组令牌。</p>
+
+<p>(4) 如果能够确定可利用的序列或时间依赖关系，考虑这些信息是否足以帮助发动攻击，猜测出最近发布给其他应用程序用户的令牌。使用自动化技巧生成和测试可能的令牌。除最简单的序列外，可能需要在攻击中使用某些定制脚本。</p>
+
+<h2 id="4-检查不安全的令牌传输">4. 检查不安全的令牌传输</h2>
+<p>(1) 以正常方式访问应用程序，从“起始”URL中的未通过验证的内容开始，到登陆过程，再到应用程序的全部功能。留意发布新会话令牌的每一种情况，确定哪些部分使用HTTP通信，哪些部分使用HTTPS通信。可以使用拦截代理器的日志功能记录这些信息。</p>
+
+<p>(2) 如果应用程序使用HTTP Cookie传送会话令牌，应确认其是否设置了安全标记，防止通过HTTP连续传送令牌。</p>
+
+<p>(3) 在正常使用应用程序的情况下，确定会话令牌是否通过HTTP连接传送。如果是这样，它们就很容易被拦截。</p>
+
+<p>(4) 如果应用程序在未通过验证的区域使用HTTP，然后在登陆或通过验证的区域转换到HTTPS，那么确认应用程序是否为HTTPS通信发布一个新的令牌，或者应用程序在转换到HTTPS后是否仍然使用HTTP阶段的令牌。如果是这样，它们就很容易被拦截。</p>
+
+<p>(5) 如果应用程序的HTTPS区域包含指向HTTP URL的链接，访问这些链接，确认在访问过程中是否有会话令牌被提交；如果是这样，该令牌或者继续有效，或者立即被服务器终止。</p>
+
+<h2 id="5-检查日志中泄露的令牌">5. 检查日志中泄露的令牌</h2>
+<p>(1) 如果在应用程序解析过程中能确定任何日志、监控或诊断功能，应仔细检查这些功能，确定它们是否泄漏任何会话令牌。确定在正常情况下哪些人有权访问这些功能；如果只有管理员能够使用这些功能，那么确定低权限用户是否可以利用任何其他漏洞访问它们。</p>
+
+<p>(2) 确定所有在URL中传送会话令牌的情况。可能应用程序通常以更加安全的方式传送令牌，而开发者在特定情况下使用URL来解决特殊难题。如果是这样，当用户访问站外链接时，这个令牌将在Referer消息头中传送。确定所有允许在其他用户可查看的页面中插入任意站外链接的功能。</p>
+
+<p>(3) 如果能够收集到发布给其他用户的有效会话令牌，就对每个令牌进行测试，确定它是否授予管理用户（例如，尝试使用令牌访问某个特权功能）。</p>
+
+<h2 id="6-测试令牌---会话映射">6. 测试令牌 - 会话映射</h2>
+<p>(1) 用同一个用户账户从不同的浏览器进程或从不同的计算机两次登录应用程序。确定这两个会话是否都处于活动状态。是就表示应用程序支持并行会话，可让攻破其他用户证书的攻击者能够利用这些证书，而不会由被检测出来的风险。</p>
+
+<p>(2) 使用同一个用户账户从不同的浏览器进程或从不同的计算机登录并退出应用程序几次。确定应用程序在每次登录时是发布一个新会话令牌，还是发布相同的令牌。如果每次发布相同的令牌，那么应用程序根本没有正确使用令牌，而是使用唯一持久性字符串重新确认用户身份。在这种情况下，应用程序就没有办法防止并行登陆或正确实施会话超时。</p>
+
+<p>(3) 如果令牌明显包含某种结构和意义，设法将标识用户身份的成分与无法辨别的成分区分开来。尝试修改与用户有关的所有令牌成分，使其指向其他已知的应用程序用户，并确定修改后的令牌是否被应用程序接受，以及能够让攻击者伪装成该用户。</p>
+
+<h2 id="7-测试会话终止">7. 测试会话终止</h2>
+<p>(1) 当测试会话超时与退出漏洞时，主要测试服务器如何处理会话与令牌，而不是客户端发生的任何事件。在客户端浏览器内对令牌执行的操作并不能终止会话。</p>
+
+<p>(2) 检查服务器是否执行会话终止。</p>
+<ul>
+  <li>登陆应用程序获得一个有效令牌。</li>
+  <li>不适用这个令牌，等待一段时间后，用这个令牌提交一个访问受保护页面（如，“我的资料”页面）的请求。</li>
+  <li>如果该页面正常显示，那么令牌仍然处于活动状态。</li>
+  <li>使用反复试验的方法确定会话终止超时时间为多久，或者一个令牌在前一次使用它提交请求几天后是否仍被使用。可配置Burp Intruder递增连续请求之间的时间间隔，自动完成这项任务。</li>
+</ul>
+
+<p>(3) 检查退出功能是否存在。如果应用程序使用退出功能，测试它是否能够在服务器上有效确认用户会话。退出后，尝试重新使用原因的令牌，使用它请求一个受保护的页面，确定其是否仍然有效。如果令牌仍然有效，那么即使用户已经“退出”，他们依然易于受到会话劫持攻击。可以使用Burp Repeater从代理历史记录中不断发送一个特殊的请求，观察退出后应用程序是否做出不同的响应。</p>
+
+<h2 id="8-测试会话固定">8. 测试会话固定</h2>
+<p>(1) 如果应用程序向未通过验证的用户发布令牌，获取令牌并登录。如果应用程序在登录后并不发布一个新令牌，就表示它易于受到会话固定攻击。</p>
+
+<p>(2) 即使应用程序并不向未通过验证的用户发布会话令牌，也可通过登录获取一个令牌，然后返回登录页面。如果应用程序“愿意”返回这个页面，即使已经通过验证，也可以使用相同的令牌以另一名用户的身份提交另一次登录。如果应用程序在第二次登录后并不发布一个新令牌，就表示它易于受到会话固定攻击。</p>
+
+<p>(3) 确定应用程序会话令牌的格式。用一个捏造的、格式有效地值修改令牌，然后尝试使用它登录。如果应用程序允许使用一个捏造的令牌建立通过验证的会话，就表示它易于受到会话固定攻击。</p>
+
+<p>(4) 如果应用程序并不支持登录功能，但处理敏感数据（如个人信息和支付细节），并在提交后显示这些信息（如在“确认订单”页面上），那么可以使用前面三种测试方法尝试访问显示敏感数据的页面。如果在匿名使用应用程序期间生成的令牌可用于获取用户的敏感信息，那么应用程序就易于遭受会话固定攻击。</p>
+
+<h2 id="9-检查csrf">9. 检查CSRF</h2>
+<p>(1) 如果应用程序完全依靠HTTP Cookie传送会话令牌，它很可能容易受到跨站点请求伪造（CSRF）攻击。</p>
+
+<p>(2) 分析应用程序的关键功能，确定用于执行敏感操作的特定请求。如果这些请求中的参数完全可由攻击者事先决定（也就是说，其中并不包含任何会话令牌、无法预测的数据或其他机密），那么几乎可以肯定应用程序易于受到攻击。</p>
+
+<p>(3) 创建一个HTML页面，它不需要进行任何用户交互，即可提交想要的请求。对于GET请求，可以使用一个“img”标签，并通过src参数设置易受攻击的URL。对于POST请求，可以建立一个表单，其中包含实施攻击所需全部相关参数的隐藏字段，并将其目标设为易受攻击的URL。可以使用JavaScript在页面加载时自动提交该表单。登陆应用程序后，使用同一个浏览器加载前面创建的HTML页面。确定应用程序是否执行响应的操作。</p>
+
+<p>(4) 如果应用程序为阻止CSRF攻击，在请求中使用其他令牌，<code class="highlighter-rouge">则应以与测试会话令牌相同的方式测试这些令牌的可靠性</code>。还应<code class="highlighter-rouge">测试应用程序是否易于受到UI伪装攻击</code>，以突破CSRF防御。</p>
+
+<h2 id="10-检查cookie范围">10. 检查Cookie范围</h2>
+<p>(1) 如果应用程序使用HTTP Cookie传送会话令牌（或任何其他敏感数据），那么检查相关的Set-Cookie消息头，寻找用于控制cookie范围的所有<code class="highlighter-rouge">域</code>或<code class="highlighter-rouge">路径</code>属性。</p>
+
+<p>(2) 如果一个应用程序明确放宽它的cookie范围限制，将其设定为一个父域或父目录，那么攻击者可以通过以上<code class="highlighter-rouge">父域或父目录中的其他Web应用程序向该应用程序发动攻击</code>。</p>
+
+<p>(3) 如果一个应用程序以它自己的域名为它的Cookie域范围（或并未制定“域”属性），那么它仍然可能受到在子域上运行的应用程序的威胁。这是设定cookie范围造成的后果，只有不再安全敏感的应用程序子域上运行其他应用程序，才能避免这种后果。</p>
+
+<p>(4) 确定对按路径（如/site/main和/site/demo）隔离的任何依赖情况，跨站点脚本攻击能够破坏这种隔离。</p>
+
+<p>(5) 确定所有可能收到应用程序发布的cookie的域名和路径。确定是否可以通过这些域名或路径访问其他Web应用程序，以及是否可利用它们获得发布给目标应用程序用户的cookie。</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=Web应用程序渗透测试方法论 - 测试会话管理机制 - /posts/pen-testing-methodology-session-mgr-guideline ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/pen-testing-methodology-session-mgr-guideline', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/pen-testing-methodology-session-mgr-guideline', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

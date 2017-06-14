@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | SDL 需求分析阶段的Checklist</title>
+  <meta name="description" content="安全专家Lenny Zeltser的需求分析checklist">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="SDL 需求分析阶段的Checklist">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/sdl-checklist-in-the-requirement-analysis-phase">
+  <meta property="og:description" content="安全专家Lenny Zeltser的需求分析checklist">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/sdl-checklist-in-the-requirement-analysis-phase">
+  <meta name="twitter:title" content="SDL 需求分析阶段的Checklist">
+  <meta name="twitter:description" content="安全专家Lenny Zeltser的需求分析checklist">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>SDL 需求分析阶段的Checklist</h1>
+            <p>安全专家Lenny Zeltser的需求分析checklist</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 12, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  5 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>注：原文来自《白帽子讲Web安全》
+<a href="https://zeltser.com/">Lenny Zeltser的个人主页</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-buissness-requirements" id="markdown-toc-1-buissness-requirements">1. Buissness Requirements</a>    <ul>
+      <li><a href="#business-model" id="markdown-toc-business-model">Business Model</a></li>
+      <li><a href="#data-essentials" id="markdown-toc-data-essentials">Data Essentials</a></li>
+      <li><a href="#end-users" id="markdown-toc-end-users">End-Users</a></li>
+      <li><a href="#partners" id="markdown-toc-partners">Partners</a></li>
+      <li><a href="#administrators" id="markdown-toc-administrators">Administrators</a></li>
+      <li><a href="#regulations" id="markdown-toc-regulations">Regulations</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-infrastructure-requirements" id="markdown-toc-2-infrastructure-requirements">2. Infrastructure Requirements</a>    <ul>
+      <li><a href="#network" id="markdown-toc-network">Network</a></li>
+      <li><a href="#systems" id="markdown-toc-systems">Systems</a></li>
+      <li><a href="#infrastructure-monitoring" id="markdown-toc-infrastructure-monitoring">Infrastructure Monitoring</a></li>
+      <li><a href="#virtualization-and-externalization" id="markdown-toc-virtualization-and-externalization">Virtualization and Externalization</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-application-requirements" id="markdown-toc-3-application-requirements">3. Application Requirements</a>    <ul>
+      <li><a href="#environment" id="markdown-toc-environment">Environment</a></li>
+      <li><a href="#data-processing" id="markdown-toc-data-processing">Data Processing</a></li>
+      <li><a href="#access" id="markdown-toc-access">Access</a></li>
+      <li><a href="#application-monitoring" id="markdown-toc-application-monitoring">Application Monitoring</a></li>
+      <li><a href="#application-design" id="markdown-toc-application-design">Application Design</a></li>
+    </ul>
+  </li>
+  <li><a href="#4-security-program-requirements" id="markdown-toc-4-security-program-requirements">4. Security Program Requirements</a>    <ul>
+      <li><a href="#operations" id="markdown-toc-operations">Operations</a></li>
+      <li><a href="#change-management" id="markdown-toc-change-management">Change Management</a></li>
+      <li><a href="#software-development" id="markdown-toc-software-development">Software Development</a></li>
+      <li><a href="#corporate" id="markdown-toc-corporate">Corporate</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="1-buissness-requirements">1. Buissness Requirements</h3>
+
+<h4 id="business-model">Business Model</h4>
+<ul>
+  <li>What is the application’s primary business purpose?</li>
+  <li>How will the application make money?</li>
+  <li>What are the planned business milestones for developing or improving the application?</li>
+  <li>How is the application marketed?</li>
+  <li>What key benefits does the application offer users?</li>
+  <li>What business continuity provisions have been defined for the application?</li>
+  <li>What geographic areas does the application service?</li>
+</ul>
+
+<h4 id="data-essentials">Data Essentials</h4>
+<ul>
+  <li>What data does the application receive, produce, and process?</li>
+  <li>How can the data be classified into categories according to its sensitivity?</li>
+  <li>How might an attacker benefit from capturing or modifying the data?</li>
+  <li>What data backup and retention requirements have been defined for the application?</li>
+</ul>
+
+<h4 id="end-users">End-Users</h4>
+<ul>
+  <li>Who are the application’s end-users?</li>
+  <li>How do the end-users interact with the application?</li>
+  <li>What security expectations do the end-users have?</li>
+</ul>
+
+<h4 id="partners">Partners</h4>
+<ul>
+  <li>Which third parties supply data to the application?</li>
+  <li>Which third parties receive data from the applications?</li>
+  <li>Which third parties process the application’s data?</li>
+  <li>What mechanisms are used to share data with third parties besides the application itself?</li>
+  <li>What security requirements do the partners impose?</li>
+</ul>
+
+<h4 id="administrators">Administrators</h4>
+<ul>
+  <li>Who has administrative capabilities in the application?</li>
+  <li>What administrative capabilities does the application offer?</li>
+</ul>
+
+<h4 id="regulations">Regulations</h4>
+<ul>
+  <li>In what industries does the application operate?</li>
+  <li>What security-related regulations apply?</li>
+  <li>What auditing and compliance regulations apply?</li>
+</ul>
+
+<h3 id="2-infrastructure-requirements">2. Infrastructure Requirements</h3>
+
+<h4 id="network">Network</h4>
+<ul>
+  <li>What details regarding routing, switching, firewalling, and load-balancing have been defined?</li>
+  <li>What network design supports the application?</li>
+  <li>What core network devices support the application?</li>
+  <li>What network performance requirements exist?</li>
+  <li>What private and public network links support the application?</li>
+</ul>
+
+<h4 id="systems">Systems</h4>
+<ul>
+  <li>What operation systems support the application?</li>
+  <li>What hardware requirements have been defined?</li>
+  <li>What details regarding required OS components and lock-down needs have been defined?</li>
+</ul>
+
+<h4 id="infrastructure-monitoring">Infrastructure Monitoring</h4>
+<ul>
+  <li>What network and system performance monitoring requirements have been defined?</li>
+  <li>What mechinisms exist to detect malicious code or compromised application components?</li>
+  <li>What network and system security monitoring requirements have been defined?</li>
+</ul>
+
+<h4 id="virtualization-and-externalization">Virtualization and Externalization</h4>
+<ul>
+  <li>What aspects of the application lend themselves to virtualization?</li>
+  <li>What virtualization requirements have been defined for the application?</li>
+  <li>What aspects of the product may or may not be hosted via the cloud computing model?</li>
+</ul>
+
+<h3 id="3-application-requirements">3. Application Requirements</h3>
+
+<h4 id="environment">Environment</h4>
+<ul>
+  <li>What frameworks and programming languages have been used to create the application?</li>
+  <li>What process, code, or infrastructure dependencies have been defined for the application?</li>
+  <li>What database and application servers support the application?</li>
+</ul>
+
+<h4 id="data-processing">Data Processing</h4>
+<ul>
+  <li>What data entry paths does the applications support?</li>
+  <li>What data output paths does the application support?</li>
+  <li>How does data flow across the application’s internal components?</li>
+  <li>What data input validation requirements have been defined?</li>
+  <li>What data does the application store and how?</li>
+  <li>What data is or may need to be encrypted and what key management requirements have been defined?</li>
+  <li>What capabilities exist to detect the leakage of sensitive data?</li>
+  <li>What encryption requirements have been defined for data in transit over WAN and LAN links?</li>
+</ul>
+
+<h4 id="access">Access</h4>
+<ul>
+  <li>What user identification and authentication requirement have been defined?</li>
+  <li>What session management requirements have been defined?</li>
+  <li>What access requirements have been defined for URI and service calls?</li>
+  <li>What user authorization requirements have been defined?</li>
+  <li>How are user identities maintained throughout transaction calls?</li>
+  <li>What user access retrictions have been defined?</li>
+  <li>What user privilege levels does the application support?</li>
+</ul>
+
+<h4 id="application-monitoring">Application Monitoring</h4>
+<ul>
+  <li>What application performance monitoring requirements have been defined?</li>
+  <li>What application security monitoring requirements have been defined?</li>
+  <li>What application error handling and logging requirements have been defined?</li>
+  <li>How are audit and debug logs accessed, stored, and secured?</li>
+  <li>What application auditing requirements have been defined?</li>
+</ul>
+
+<h4 id="application-design">Application Design</h4>
+<ul>
+  <li>How many logical tiers group the application’s components?</li>
+  <li>How is intermediate or in-process data stored in the application components’ memory and in cache?</li>
+  <li>What application design review practices have been defined and executed?</li>
+  <li>What staging, testing, and Quality Assurance requirements have been defined?</li>
+</ul>
+
+<h3 id="4-security-program-requirements">4. Security Program Requirements</h3>
+
+<h4 id="operations">Operations</h4>
+<ul>
+  <li>What access to system and network administrators have to the application’s sensitive data?</li>
+  <li>What security incident requirements have been defined?</li>
+  <li>What physical controls restrict access to the application’s components and data?</li>
+  <li>What is the process for granting access to the environment hosting the application?</li>
+  <li>What is the process for identifying and addressing vulnerabilities in network and system components?</li>
+  <li>How do administrators access production infrastructure to manage it?</li>
+  <li>What is the process for identifying and addressing vulnerabilities in the application?</li>
+</ul>
+
+<h4 id="change-management">Change Management</h4>
+<ul>
+  <li>What mechanisms exist to detect violationof change management practices?</li>
+  <li>How are changes to the infrastructure controlled?</li>
+  <li>How are changes to the code controlled?</li>
+  <li>How is code deployed to production?</li>
+</ul>
+
+<h4 id="software-development">Software Development</h4>
+<ul>
+  <li>How do developers assist with troubleshooting and debugging the application?</li>
+  <li>What requirements have been defined for controlling access to the application source code?</li>
+  <li>What data is available to developers for testing?</li>
+  <li>What secure coding processes have been established?</li>
+</ul>
+
+<h4 id="corporate">Corporate</h4>
+<ul>
+  <li>Which personnel oversees security processes and requirements related to the application?</li>
+  <li>What employee initiation and termination procedures have been defined?</li>
+  <li>What controls exist to protect a compromised in the corporate environment from affecting production?</li>
+  <li>What security governance requirements have been defined?</li>
+  <li>What security training do developers and administartors undergo?</li>
+  <li>What application requirements impose the need to enforce the principle of separation of duties?</li>
+  <li>What corporate security program requirements have been defined?</li>
+</ul>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=SDL 需求分析阶段的Checklist - /posts/sdl-checklist-in-the-requirement-analysis-phase ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/sdl-checklist-in-the-requirement-analysis-phase', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/sdl-checklist-in-the-requirement-analysis-phase', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

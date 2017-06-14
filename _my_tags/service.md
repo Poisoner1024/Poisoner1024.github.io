@@ -1,4 +1,0 @@
----
-slug: service
-name: Service
----

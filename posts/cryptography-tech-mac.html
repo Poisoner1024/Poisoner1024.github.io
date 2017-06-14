@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 认证 - 消息认证码</title>
+  <meta name="description" content="消息被正确传送了吗">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="认证 - 消息认证码">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/cryptography-tech-mac">
+  <meta property="og:description" content="消息被正确传送了吗">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/cryptography-tech-mac">
+  <meta name="twitter:title" content="认证 - 消息认证码">
+  <meta name="twitter:description" content="消息被正确传送了吗">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>认证 - 消息认证码</h1>
+            <p>消息被正确传送了吗</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                May 29, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/security">security</a>
+                
+                  <a href="/tag/cryptography">cryptography</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <ul id="markdown-toc">
+  <li><a href="#1-消息认证码" id="markdown-toc-1-消息认证码">1. 消息认证码</a>    <ul>
+      <li><a href="#11-汇款请求是正确的吗" id="markdown-toc-11-汇款请求是正确的吗">1.1 汇款请求是正确的吗</a></li>
+      <li><a href="#12-什么是消息认证码" id="markdown-toc-12-什么是消息认证码">1.2 什么是消息认证码</a></li>
+      <li><a href="#13-消息认证码的使用步骤" id="markdown-toc-13-消息认证码的使用步骤">1.3 消息认证码的使用步骤</a></li>
+      <li><a href="#14-消息认证码的密钥配送问题" id="markdown-toc-14-消息认证码的密钥配送问题">1.4 消息认证码的密钥配送问题</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-消息认证码的应用实例" id="markdown-toc-2-消息认证码的应用实例">2. 消息认证码的应用实例</a></li>
+  <li><a href="#3-消息认证码的实现方法" id="markdown-toc-3-消息认证码的实现方法">3. 消息认证码的实现方法</a></li>
+  <li><a href="#4-认证加密" id="markdown-toc-4-认证加密">4. 认证加密</a></li>
+  <li><a href="#5-hmac" id="markdown-toc-5-hmac">5. HMAC</a>    <ul>
+      <li><a href="#51-什么是hmac" id="markdown-toc-51-什么是hmac">5.1 什么是HMAC</a></li>
+      <li><a href="#52-hmac的步骤" id="markdown-toc-52-hmac的步骤">5.2 HMAC的步骤</a></li>
+    </ul>
+  </li>
+  <li><a href="#6-对消息认证码的攻击" id="markdown-toc-6-对消息认证码的攻击">6. 对消息认证码的攻击</a></li>
+  <li><a href="#7-消息认证码无法解决的问题" id="markdown-toc-7-消息认证码无法解决的问题">7. 消息认证码无法解决的问题</a></li>
+</ul>
+
+<h2 id="1-消息认证码">1. 消息认证码</h2>
+<p>使用消息认证码可以确认自己受到的消息是否就是发送者的本意，也就是说，使用消息认证码可以判断消息是否被篡改，以及是否有人伪装成发送者发送了该消息。</p>
+
+<h3 id="11-汇款请求是正确的吗">1.1 汇款请求是正确的吗</h3>
+<p>Alice银行通过网络向Bob银行发送了一条汇款请求：从账户A-5374向账户B-6671汇款1000万元。</p>
+
+<p>当然，Bob银行所收到的汇款请求内容必须与Alice银行所发送的内容是完全一致的。主动攻击者Mallory可能在中间对消息进行<strong>篡改</strong>或者<strong>伪装</strong>成Alice银行发送的。现在我们需要关注的问题是<code class="highlighter-rouge">汇款请求（消息）的完整性和认证这两个性质</code>。</p>
+
+<p>通过消息认证码，我们可以同时识别出篡改和伪装，也就是既可以确认消息的完整性，也可以进行认证。</p>
+
+<h3 id="12-什么是消息认证码">1.2 什么是消息认证码</h3>
+<p><strong>消息认证码(Message Authentication Code)</strong>是一种确认完整性并进行认证的技术，简称<code class="highlighter-rouge">MAC</code>。</p>
+
+<p>消息认证码的输入包括任意长度的<strong>消息</strong>和一个发送者与接受者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据成为<strong>MAC值</strong>。</p>
+
+<p>要计算MAC必须持有共享密钥，没有共享密钥的人就无法计算MAC值，消息认证码正是利用这一性质来完成认证的。此外，和单向散列函数的散列值一样，哪怕消息中发生1比特的变化，MAC值也会产生变化，消息认证码正是利用这一性质来确认完整性的。</p>
+
+<h3 id="13-消息认证码的使用步骤">1.3 消息认证码的使用步骤</h3>
+<p>Alice银行和Bob银行的故事为例。</p>
+<div align="center">
+<a href="/assets/documentation/cryptography/mac-process.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/mac-process.png" alt="mac-process" />
+</a>
+
+</div>
+
+<p><strong>关键操作 - 事先共享密钥</strong></p>
+
+<h3 id="14-消息认证码的密钥配送问题">1.4 消息认证码的密钥配送问题</h3>
+<p>在消息认证码中，需要发送者和接收者之间共享密钥，而这个密钥绝对不能被Mallory获取。要解决密钥配送的问题，我们需要像对称密钥一样使用一些共享密钥的方法，例如公钥密码、Diffie-Hellman密钥交换、密钥分配中心，或者使用其他安全的方式发送密钥等。至于使用哪种配送方法，则需要根据具体的目的来选择了。</p>
+
+<h2 id="2-消息认证码的应用实例">2. 消息认证码的应用实例</h2>
+<ul>
+  <li>SWIFT,全称Security for Worldwide Interbank Financial Telecommunication（环球银行金融协会），成立于1973年，其目的是为国际银行间的交易保驾护航。成立时15个成员国，2008年时已经发展到208个成员国。银行之间是通过SWIFT来传递消息的，SWIFT中使用了MAC。</li>
+  <li>IPsec,是滴互联网基本通信协议–IP协议增加安全性的一种方式。在IPsec中，对通信内容的认证和完整性校验都是采用MAC来完成的。</li>
+  <li>SSL/TLS，通信内容的认证和完整性校验使用MAC。</li>
+</ul>
+
+<h2 id="3-消息认证码的实现方法">3. 消息认证码的实现方法</h2>
+<ul>
+  <li>使用单向散列函数实现。使用SHA-2之类的单向散列函数可以实现消息认证码，其中一种实现方法称为<strong>HMAC</strong>。</li>
+  <li>使用分组密码实现。使用AES之类的分组密码可以实现消息认证码。</li>
+  <li>其他实现。使用流密码和公钥密码等也可以实现消息认证码。</li>
+</ul>
+
+<h2 id="4-认证加密">4. 认证加密</h2>
+<p>认证加密是一种将对称密码与消息认证码相结合，同时满足机密性、完整性和认证三大功能的机制。</p>
+
+<p>认证加密方式有：Encrypt-then-Mac，Encypt-and-MAC，MAC-then-Encypt，GCM，GMAC等。</p>
+
+<h2 id="5-hmac">5. HMAC</h2>
+
+<h3 id="51-什么是hmac">5.1 什么是HMAC</h3>
+<p>HMAC是一种使用单向散列函数来构造消息认证码的方法(RFC2014)，其中HMAC的H就是Hash的意思。</p>
+
+<p>HMAC中所使用的单向散列函数并不仅限于一种，任何高强度的单向散列函数都可以被用于HMAC，如果将来设计出新的单向散列函数，也同样可以使用。</p>
+
+<h3 id="52-hmac的步骤">5.2 HMAC的步骤</h3>
+<div align="center">
+<a href="/assets/documentation/cryptography/hmac-process.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cryptography/hmac-process.png" alt="hmac-process" />
+</a>
+
+</div>
+
+<ul>
+  <li>密钥填充：当密钥比单向散列函数的分组长度要短时，需要在末尾填充0，使其长度达到单向散列函数的分组长度为止。如果密钥比分组长度要长，则要用单向散列函数求出密钥的散列值，然后用这个散列值作为HMAC的密钥。</li>
+  <li><strong>ipad</strong>是将00110110这一比特序列(即16进制的36)不断循环反复直到达到分组长度所形成的比特序列，其中ipad的i是inner的意思。</li>
+  <li><strong>opad</strong>是将01011100这一比特序列(即16进制的5C)不断循环反复直到达到分组长度所形成的比特序列，其中opad的o是outer的意思。</li>
+</ul>
+
+<h2 id="6-对消息认证码的攻击">6. 对消息认证码的攻击</h2>
+<ul>
+  <li>重放攻击。Mallory没有破解消息认证码，而是将Alice银行的正确MAC保存下来重放利用。</li>
+  <li>密钥推测攻击。对消息认证码的暴力破解以及生日攻击。</li>
+</ul>
+
+<h2 id="7-消息认证码无法解决的问题">7. 消息认证码无法解决的问题</h2>
+<ul>
+  <li>对第三方的证明。</li>
+  <li>防止否认。</li>
+</ul>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=认证 - 消息认证码 - /posts/cryptography-tech-mac ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/cryptography-tech-mac', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/cryptography-tech-mac', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
