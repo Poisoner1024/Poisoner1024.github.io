@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 安全测试Checklist</title>
+  <meta name="description" content="保证安全测试的系统性，避免漏测与测试结果的随机性">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="安全测试Checklist">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/pen-testing-meth-checklist">
+  <meta property="og:description" content="保证安全测试的系统性，避免漏测与测试结果的随机性">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/pen-testing-meth-checklist">
+  <meta name="twitter:title" content="安全测试Checklist">
+  <meta name="twitter:description" content="保证安全测试的系统性，避免漏测与测试结果的随机性">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>安全测试Checklist</h1>
+            <p>保证安全测试的系统性，避免漏测与测试结果的随机性</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                June 7, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  6 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/security">security</a>
+                
+                  <a href="/tag/test">test</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <ul id="markdown-toc">
+  <li><a href="#0-前戏---为什么需要安全测试checklist" id="markdown-toc-0-前戏---为什么需要安全测试checklist">0. 前戏 - 为什么需要安全测试Checklist</a></li>
+  <li><a href="#1-收集信息" id="markdown-toc-1-收集信息">1. 收集信息</a></li>
+  <li><a href="#2-配置与部署管理测试" id="markdown-toc-2-配置与部署管理测试">2. 配置与部署管理测试</a></li>
+  <li><a href="#3-身份管理测试" id="markdown-toc-3-身份管理测试">3. 身份管理测试</a></li>
+  <li><a href="#4-认证测试" id="markdown-toc-4-认证测试">4. 认证测试</a></li>
+  <li><a href="#5-授权测试" id="markdown-toc-5-授权测试">5. 授权测试</a></li>
+  <li><a href="#6-session管理测试" id="markdown-toc-6-session管理测试">6. Session管理测试</a></li>
+  <li><a href="#7-数据验证测试" id="markdown-toc-7-数据验证测试">7. 数据验证测试</a></li>
+  <li><a href="#8-错误处理" id="markdown-toc-8-错误处理">8. 错误处理</a></li>
+  <li><a href="#9-密码学" id="markdown-toc-9-密码学">9. 密码学</a></li>
+  <li><a href="#10-业务逻辑测试" id="markdown-toc-10-业务逻辑测试">10. 业务逻辑测试</a></li>
+  <li><a href="#11-客户端测试" id="markdown-toc-11-客户端测试">11. 客户端测试</a></li>
+  <li><a href="#12-实践" id="markdown-toc-12-实践">12. 实践</a></li>
+</ul>
+
+<h2 id="0-前戏---为什么需要安全测试checklist">0. 前戏 - 为什么需要安全测试Checklist</h2>
+
+<p>从战略层面上来说，互联网公司如何规划自己的安全蓝图呢？我们可以把安全蓝图分为三个部分：</p>
+<ul>
+  <li><code class="highlighter-rouge">Find and Fix</code>;</li>
+  <li>Defend and Defer;</li>
+  <li>Secure at the Source</li>
+</ul>
+
+<p>其中的第一个部分就是需要我们发现并解决当前产品中的安全问题。在“Find and Fix”的过程中，可以通过漏洞扫描、渗透测试、代码审计等方式，发现系统中已知的安全问题；然后再通过设计安全方案，实施安全方案，最终解决这些问题。</p>
+
+<p>本文主要是针对渗透测试开出的Checklist。在给产品做渗透测试的过程中，我们发现一个十分苦恼的问题 – 有着不同的知识背景以及不同经验的安全测试人员发现的安全问题往往大相径庭。换句话来说，同样的产品，不同的人来做测试，测试结果往往相差很大。甚至是同一个人，给相同的产品做两轮渗透测试，测试的结果可能也有很大的不同。这其中就反应出测试的系统性不一致的问题，而此时我们就需要一个安全测试Checklist，基于这个系统的Checklist来帮我们规划安全测试，避免漏测，避免测试中发现问题的随机性，以达到规范化产品的渗透测试过程。</p>
+
+<p>这不仅仅是一个Checklist，它不但列出了安全的清单，同时给出了如何做出安全的产品的方向。</p>
+
+<h2 id="1-收集信息">1. 收集信息</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-INFO-001</td>
+      <td style="text-align: center">搜索引擎信息发现和侦察</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-002</td>
+      <td style="text-align: center">Fingerprint Web Server</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-003</td>
+      <td style="text-align: center">Review Webserver Metafiles for Information Leakage</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-004</td>
+      <td style="text-align: center">Enumerate Applications on Webserver</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-005</td>
+      <td style="text-align: center">Review Webpage Comments and Metadata for Information Leakage</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-006</td>
+      <td style="text-align: center">Identify application entry points</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-007</td>
+      <td style="text-align: center">Map execution paths through application</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-008</td>
+      <td style="text-align: center">Fingerprint Web Application Framework</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-009</td>
+      <td style="text-align: center">Fingerprint Web Application</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INFO-010</td>
+      <td style="text-align: center">Map Application Architecture</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>关于信息收集的部分，主要是了解测试目标，了解应用程序的实际功能与运行机制。</p>
+
+<h2 id="2-配置与部署管理测试">2. 配置与部署管理测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-001</td>
+      <td style="text-align: center">Test Network/Infrastructure Configuration</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-002</td>
+      <td style="text-align: center">Test Application Platform Configuration</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-003</td>
+      <td style="text-align: center">Test File Extensions Handling for Sensitive Information</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-004</td>
+      <td style="text-align: center">Backup and Unreferenced Files for Sensitive Information</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-005</td>
+      <td style="text-align: center">Enumerate Infrastructure and Application Admin Interfaces</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-006</td>
+      <td style="text-align: center">Test HTTP Methods</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-007</td>
+      <td style="text-align: center">Test HTTP Strict Transport Security</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CONFIG-008</td>
+      <td style="text-align: center">Test RIA cross domain policy</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>应用程序各式各样，但是一些关键的平台配置错误可能导致用同样的方法攻破不同的应用程序。</p>
+
+<h2 id="3-身份管理测试">3. 身份管理测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-001</td>
+      <td style="text-align: center">Test Role Definitions</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-002</td>
+      <td style="text-align: center">Test User Registration Process</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-003</td>
+      <td style="text-align: center">Test Account Provisioning Process</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-004</td>
+      <td style="text-align: center">Testing for Account Enumeration and Guessable User Account</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-005</td>
+      <td style="text-align: center">Testing for Weak or unenforced username policy</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-006</td>
+      <td style="text-align: center">Test Permissions of Guest/Training Accounts</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-IDENT-007</td>
+      <td style="text-align: center">Test Account Suspension/Resumption Process</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>渗透测试都是围绕用户身份进行的。</p>
+
+<h2 id="4-认证测试">4. 认证测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-001</td>
+      <td style="text-align: center">Testing for Credentials Transported over an Encrypted Channel</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-002</td>
+      <td style="text-align: center">Testing for default credentials</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-003</td>
+      <td style="text-align: center">Testing for Weak lock out mechanism</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-004</td>
+      <td style="text-align: center">Testing for bypassing authentication schema</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-005</td>
+      <td style="text-align: center">Test remember password functionality</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-006</td>
+      <td style="text-align: center">Testing for Browser cache weakness</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-007</td>
+      <td style="text-align: center">Testing for Weak password policy</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-008</td>
+      <td style="text-align: center">Testing for Weak security question/answer</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-009</td>
+      <td style="text-align: center">Testing for weak password change or reset functionalities</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHN-010</td>
+      <td style="text-align: center">Testing for Weaker authentication in alternative channel</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>你是谁的机制测试。</p>
+
+<h2 id="5-授权测试">5. 授权测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-AUTHZ-001</td>
+      <td style="text-align: center">Testing Directory traversal/file include</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHZ-002</td>
+      <td style="text-align: center">Testing for bypassing authorization schema</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHZ-003</td>
+      <td style="text-align: center">Testing for Privilege Escalation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-AUTHZ-004</td>
+      <td style="text-align: center">Testing for Insecure Direct Object References</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>你能干什么的机制测试。</p>
+
+<h2 id="6-session管理测试">6. Session管理测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-SESS-001</td>
+      <td style="text-align: center">Testing for Bypassing Session Management Schema</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-002</td>
+      <td style="text-align: center">Testing for Cookies attributes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-003</td>
+      <td style="text-align: center">Testing for Session Fixation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-004</td>
+      <td style="text-align: center">Testing for Exposed Session Variables</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-005</td>
+      <td style="text-align: center">Testing for Cross Site Request Forgery</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-006</td>
+      <td style="text-align: center">Testing for logout functionality</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-007</td>
+      <td style="text-align: center">Test Session Timeout</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-SESS-008</td>
+      <td style="text-align: center">Testing for Session puzzling</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>在无状态下维持你是谁你能干什么机制的测试。</p>
+
+<h2 id="7-数据验证测试">7. 数据验证测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-001</td>
+      <td style="text-align: center">Testing for Reflected Cross Site Scripting</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-002</td>
+      <td style="text-align: center">Testing for Stored Cross Site Scripting</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-003</td>
+      <td style="text-align: center">Testing for HTTP Verb Tampering</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-004</td>
+      <td style="text-align: center">Testing for HTTP Parameter pollution</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-005</td>
+      <td style="text-align: center">Testing for SQL Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Oracle Testing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">MySQL Testing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">SQL Server Testing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing PostgreSQL</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">MS Access Testing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing for NoSQL injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-006</td>
+      <td style="text-align: center">Testing for LDAP Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-007</td>
+      <td style="text-align: center">Testing for ORM Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-008</td>
+      <td style="text-align: center">Testing for XML Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-009</td>
+      <td style="text-align: center">Testing for SSI Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-010</td>
+      <td style="text-align: center">Testing for XPath Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-011</td>
+      <td style="text-align: center">IMAP/SMTP Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-012</td>
+      <td style="text-align: center">Testing for Code Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing for Local File Inclusion</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing for Remote File Inclusion</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-013</td>
+      <td style="text-align: center">Testing for Command Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-014</td>
+      <td style="text-align: center">Testing for Buffer overflow</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing for Heap overflow</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing for Stack overflow</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">Testing for Format string</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-015</td>
+      <td style="text-align: center">Testing for incubated vulnerabilities</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-016</td>
+      <td style="text-align: center">Testing for HTTP Splitting/Smuggling</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>一切不信任问题的来源。</p>
+
+<h2 id="8-错误处理">8. 错误处理</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-ERR-001</td>
+      <td style="text-align: center">Analysis of Error Codes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-ERR-002</td>
+      <td style="text-align: center">Analysis of Stack Traces</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>出错后常会暴露系统内部信息。</p>
+
+<h2 id="9-密码学">9. 密码学</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-CRYPST-001</td>
+      <td style="text-align: center">Testing for Weak SSL/TSL Ciphers, Insufficient Transport Layer Protection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CRYPST-002</td>
+      <td style="text-align: center">Testing for Padding Oracle</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-CRYPST-003</td>
+      <td style="text-align: center">Testing for Sensitive information sent via unencrypted channels</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>保证机密性的核心机制。</p>
+
+<h2 id="10-业务逻辑测试">10. 业务逻辑测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-001</td>
+      <td style="text-align: center">Test Business Logic Data Validation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-002</td>
+      <td style="text-align: center">Test Ability to Forge Requests</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-003</td>
+      <td style="text-align: center">Test Integrity Checks</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-004</td>
+      <td style="text-align: center">Test for Process Timing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-005</td>
+      <td style="text-align: center">Test Number of Times a Function Can be Used Limits</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-006</td>
+      <td style="text-align: center">Testing for the Circumvention of Work Flows</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-007</td>
+      <td style="text-align: center">Test Defenses Against Application Mis-use</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-008</td>
+      <td style="text-align: center">Test Upload of Unexpected File Types</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-BUSLOGIC-009</td>
+      <td style="text-align: center">Test Upload of Malicious Files</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>跳出固定思维模式对应用进行测试。</p>
+
+<h2 id="11-客户端测试">11. 客户端测试</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">测试类别</th>
+      <th style="text-align: center">测试名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-001</td>
+      <td style="text-align: center">Testing for DOM based Cross Site Scripting</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-002</td>
+      <td style="text-align: center">Testing for JavaScript Execution</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-003</td>
+      <td style="text-align: center">Testing for HTML Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-004</td>
+      <td style="text-align: center">Testing for Client Side URL Redirect</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-005</td>
+      <td style="text-align: center">Testing for CSS Injection</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-006</td>
+      <td style="text-align: center">Testing for Client Side Resource Manipulation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-007</td>
+      <td style="text-align: center">Test Cross Origin Resource Sharing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-008</td>
+      <td style="text-align: center">Testing for Cross Site Flashing</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-009</td>
+      <td style="text-align: center">Testing for Clickjacking</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-010</td>
+      <td style="text-align: center">Testing WebSockets</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-011</td>
+      <td style="text-align: center">Test Web Messaging</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">OTG-INPVAL-012</td>
+      <td style="text-align: center">Test Local Storage</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>测试客户端如何执行代码，一般来说，客户端是浏览器或者浏览器插件。</p>
+
+<h2 id="12-实践">12. 实践</h2>
+<p><a href="/assets/documentation/pen-test/Authentication-Checklist-Demo.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/pen-test/Authentication-Checklist-Demo.png" alt="Authentication-Checklist-Demo" />
+</a></p>
+
+<p>Checklist内容来自<a href="https://www.owasp.org/index.php/Testing_Checklist">OWASP Testing Checklist</a>,详细请参考<a href="https://kennel209.gitbooks.io/owasp-testing-guide-v4/zh/index">OWASP 测试指南</a></p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=安全测试Checklist - /posts/pen-testing-meth-checklist ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/pen-testing-meth-checklist', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/pen-testing-meth-checklist', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

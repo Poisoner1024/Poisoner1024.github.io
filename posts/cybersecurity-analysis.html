@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 网络安全分析</title>
+  <meta name="description" content="从传统的网络安全，到大数据时代网络安全">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="网络安全分析">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/cybersecurity-analysis">
+  <meta property="og:description" content="从传统的网络安全，到大数据时代网络安全">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/cybersecurity-analysis">
+  <meta name="twitter:title" content="网络安全分析">
+  <meta name="twitter:description" content="从传统的网络安全，到大数据时代网络安全">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>网络安全分析</h1>
+            <p>从传统的网络安全，到大数据时代网络安全</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                June 17, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <ul id="markdown-toc">
+  <li><a href="#1-网络安全的主干" id="markdown-toc-1-网络安全的主干">1. 网络安全的主干</a></li>
+  <li><a href="#2-安全防御机制的困境" id="markdown-toc-2-安全防御机制的困境">2. 安全防御机制的困境</a>    <ul>
+      <li><a href="#21-自身防御机制的漏洞百出" id="markdown-toc-21-自身防御机制的漏洞百出">2.1 自身防御机制的漏洞百出</a></li>
+      <li><a href="#22-攻击者日益精进" id="markdown-toc-22-攻击者日益精进">2.2 攻击者日益精进</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-似是而非的安全防御的替代方案" id="markdown-toc-3-似是而非的安全防御的替代方案">3. 似是而非的安全防御的替代方案</a></li>
+  <li><a href="#4-达摩克里斯之剑" id="markdown-toc-4-达摩克里斯之剑">4. 达摩克里斯之剑</a></li>
+  <li><a href="#5-大数据时代网络安全" id="markdown-toc-5-大数据时代网络安全">5. 大数据时代网络安全</a></li>
+</ul>
+
+<h2 id="1-网络安全的主干">1. 网络安全的主干</h2>
+<blockquote>
+  <p>网络安全：网络系统的硬件、软件及其系统中的数据受到保护，不因偶然的或者恶意的原因而遭受到破坏、更改、泄露，系统连续可靠正常地运行，网络服务不中断。</p>
+</blockquote>
+
+<p>一般来说，我们可以通过<strong>CIA</strong>来具体描述网络安全的目标：</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">机密性（Confidentiality）：数据不被非法访问；
+
+完整性（Integrity）：数据不被非法修改；
+
+可用性（Availabitliy）：网络服务始终良好运行</code></pre></figure>
+
+<p>当然，除去通用的CIA安全属性，我们也可以要求可审计性、不可否认性（数字签名）以及可控性（信息传播及内容受控，如次数或特定人群访问权）等。具体可以根据自身的业务需求在CIA基础上充实成为最适合自身企业的安全模型。</p>
+
+<p>网络安全的目标实现依赖于其实现体系，如下图：</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/cybersecurity-system.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/cybersecurity-system.png" alt="cybersecurity-system" />
+</a>
+
+</div>
+<p>上图中涉及到网络安全中四个关键机制，其中<strong>预防</strong>是安全的起点，通过风险评估与控制形成初级安全防御；当预防措施失效时，<strong>检测</strong>机制将发现存在的攻击行为，报警后由<strong>响应</strong>机制进行中断服务、断开连接等。最初的网络安全框架中只有上述三类，随着攻击特征的研究逐渐增多，预测攻击行为的可能性增大，因此预测机制专用于预测高风险用户与高风险节点，响应的攻击分析后可以作为新知识提供给预测模块，实现预测的只能升级。</p>
+
+<h2 id="2-安全防御机制的困境">2. 安全防御机制的困境</h2>
+<p>预防机制的核心是<strong>风险管理</strong>，即识别和控制机制面临的安全风险的过程。风险管理主要包括风险识别与风险控制。风险识别指检查和分析机构信息系统的安全态势与面临的风险，形成风险评估报告；风险控制则是使用控制手段，减少机构面临的安全风险。风险管理可以简单理解为<code class="highlighter-rouge">先评估，后实施</code>。</p>
+
+<p>一般来说风险管理可以分为三个层次：<strong>管理控制</strong>，主要是策略方针，如密码安全策略（复杂性和长度要求），支付卡行业数据安全标准（PCIDSS）等；<strong>技术控制</strong>，主要指逻辑访问控制（基于角色的访问控制策略）、加密协议等；<strong>物理控制</strong>，主要指门禁、设备保护、安全视频监控等。</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/risk-management.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/risk-management.png" alt="risk-management" />
+</a>
+
+</div>
+<p>上图给出了企业风险管理的层次实例，常见的预防措施可以分为<strong>主机</strong>与<strong>网络</strong>两个层次。主机方面涉及安全操作系统的设计；已有漏洞补丁升级；逻辑访问控制：认证与授权；安全实现：代码安全审查、单元测试、最小权限实现等。网络层面包括安全协议：SSL/TLS等加固IP/TCP；安全设备：防火墙、IDS等（基于网络数据包的分析）。</p>
+
+<p>很多时候，看上去从主机到网络，我们已经根据风险评估的结果实施了全面地防御准备，看上去固若金汤。可事实上，网络安全威胁从未消失或减缓，反而变本加厉，而”安全“也成为了互联网的热搜词汇，从国家层面也在17年6月发布的《网络安全法》，可见网络安全形势之严峻。</p>
+
+<h3 id="21-自身防御机制的漏洞百出">2.1 自身防御机制的漏洞百出</h3>
+<p>安全形式严峻的第一个重要因素就是，防御体系自身就漏洞百出。首先从计算机系统与信息网络自身角度来看脆弱性始终存，如竞争条件漏洞（race condition vulnerability）、缓冲区溢出等。</p>
+<ul>
+  <li>竞争漏洞：如root程序的核查文件（access）与修改文件（write）间具有时间间隔，导致攻击者改变了文件符号链接，将符号链接到密码文件上；</li>
+  <li>缓冲区溢出：strcpy()的源字符串长度超过了目标字符串空间长度，导致覆盖掉了RET指针；</li>
+</ul>
+
+<p>即便设计科学的防御系统在实际部署中也会存在诸多问题，如：</p>
+<ul>
+  <li>某些业务应用设计时未考虑安全因素，安全模块事后追加，存在片面性与兼容性问题；</li>
+  <li>相关人员缺乏相应安全培训；</li>
+  <li>系统设置缺陷（防火墙使用默认密码或开放默认端口）</li>
+  <li>实际部署成本制约无法真实实现防御系统功能，如考虑安全性与效能之间的折衷（如卡巴斯基的查杀率与系统占用率）</li>
+  <li>部署预防系统时的非技术考量：机构需求、经济成本、上级政策等；</li>
+</ul>
+
+<p>一般来说，企业的信息系统中一般都会存在以下漏洞：</p>
+<ul>
+  <li>后门：隐秘登录端口，rootkit（隐藏后门等恶意程序，暗中收集数据）</li>
+  <li>拒绝服务：升级版DDOS</li>
+  <li>窃听：窃听网络机密数据传输、监控硬件设备电磁信号（如测信道攻击）</li>
+  <li>应用漏洞：主要用于获取root权限，然后创建/维护后门、木马等；</li>
+  <li>社工：攻击机构中脆弱的“人性”因素（欺诈攻击）</li>
+</ul>
+
+<p>因此，防御系统自身的设计缺陷以及实际部署中的成本制约与管理不规范导致安全漏洞无法完全避免。</p>
+
+<h3 id="22-攻击者日益精进">2.2 攻击者日益精进</h3>
+<p>除去防御者自身因素之外，攻击者日益精进，从而威胁越来越高级、复杂也是一个重要原因。我们先来看看常见的攻击分类：</p>
+<ul>
+  <li>探测攻击（Probe): 端口扫描（nmap-m:n）、抓包解析（tcpdump等）</li>
+  <li>拒绝服务攻击：TCP SYN洪流（发送多个SYN连接不响应）、PingofDeath（Ping协议组包错误）、DDOS（多枚炮弹同时命中）</li>
+  <li>远程入侵攻击（R2L): 登录密码暴力破解/字典攻击、缓冲区溢出、SQL注入、社工；</li>
+  <li>提权攻击（U2R): 缓冲区溢出、rootkit等；</li>
+  <li>感染传播攻击（Infections): 木马、Botnet等；</li>
+</ul>
+
+<p>网络攻击并不容易，必须经过缜密的侦查与策划，其核心阶段有五个：</p>
+<ul>
+  <li>准备阶段：探测目标端口、判断系统软件版本信息等，社工收集补充信息，评估目标防御水平，选择攻击突破口；</li>
+  <li>入侵阶段：利用缓冲区溢出、SQL注入等方法获得系统root权限，是R2L与U2R两类攻击的结合，甚至是社工方式进入（钓鱼网站等）；</li>
+  <li>后入侵阶段：创建后门与安装rootkit以便于长期控制目标；以目标为基础，探测周围网络，贡献其它目标主机（感染），寻找有价值目标（APT）；</li>
+  <li>自我保护阶段：设置rootkit\加密等多种安全保护程序，修改内核进程表避免安全软件查杀、修改安全日志等；</li>
+  <li>总攻阶段：秘密传输目标网络的机密信息或崩溃目标网络系统，取决于攻击者的动机、目标以及技术能力和目标的安全防御水平；</li>
+</ul>
+
+<p>每一个攻击类型都很复杂，而且阶段繁琐，因此自然对攻击者的技术门槛很高；然而现实中的攻击者很多仅仅是“脚步小子”，原因就在于当前存在许多可选、高效、开放的黑客工具。由于数量众多，我们今天仅对代表性的工具作一速览：</p>
+<ul>
+  <li>信息收集工具: 包括网络包捕获工具Wireshark\Tcpdump\Net2pcap等；</li>
+  <li>网络扫描探测工具（主机IP协议版本): Nmap\Amap\Vmap\Xprobe等。</li>
+  <li>攻击工具包括木马类: Danger\AIMSpy\NetSpy等；</li>
+  <li>拒绝服务攻击类: Targa、HOIC\LOIC等；</li>
+  <li>网络包伪造类: Packeth\Packet Excalibur\Libnet等；</li>
+  <li>应用层类: Code Red Worm\Nimda Worm\AppDDoS\Botnet等；</li>
+  <li>用户攻击类: Ntfsdos\Yaga\Metasploit等。</li>
+</ul>
+
+<p>这里我们有必要提及下Kali Linux, 其已经成为了事实上渗透测试的标准平台，其上融合了现有的全套安全工具，从网络扫描、DNS解析，到SQL注入、邮件伪造、POC利用等。</p>
+
+<p>随着这些高级工具的出现，原本复杂攻击要求的高技术门槛越来越低，呈现了反向增长的奇怪曲线:</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/Attack-Sophistication-vs-Intruder-Technical-Knowledge.jpg" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/Attack-Sophistication-vs-Intruder-Technical-Knowledge.jpg" alt="Attack-Sophistication-vs-Intruder-Technical-Knowledge" />
+</a>
+
+</div>
+<p>上图反映了历史攻击复杂度与攻击者技术要求的变化曲线，可以看出攻击演变趋势上，攻击成本日益低廉，技术门槛越来越低；与此同时攻击工具日趋复杂，攻击复杂度越来越高，攻击越来越难以防范。而不断进化的攻击也使得防御系统效果越来越差，单单BYOD的引入，就使得自用设备打破了原始的安全边界防御，更何况大数据时代便捷多元的信息通信设备与方法，传统安全防御技术基本形同虚设。</p>
+
+<h2 id="3-似是而非的安全防御的替代方案">3. 似是而非的安全防御的替代方案</h2>
+<p>原有单纯基于安全边界与单一安全设备的防御体系被现实摧垮，于是人们开始寻找安全的替代方案。当网络中具备了防火墙\IDS等多种安全设备之后，一种自然的想法是将现有所有安全机制融合，形成层次渐进的安全防御机制，即纵深防御，也称作深度防御。</p>
+
+<p>深度防御（Defense-in-depth）指利用一系列防御机制来保护计算机网络的理念，效果是一旦某一机制无法正常运行，会有另外一个可正常运行的机制替代它。一个典型的深度防御模型:</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/depense-in-depth-model.jpg" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/depense-in-depth-model.jpg" alt="depense-in-depth-model" />
+</a>
+
+</div>
+<p>实时防御部分负责对实时消息流进行检测防御：防火墙为第一道关口，负责控制内外网络访问；IDS对通过防火墙的数据流进一步检查，发现其中的攻击行为报警相应；若攻击逃避IDS检测，则直接由应急响应与灾难恢复模块处理。</p>
+
+<p>日常防御模块由脆弱性检测模块进行系统自检，而预警子系统要综合已有所有安全信息，对未知攻击进行初步的预测。基础设施主要有多种数据库组成，分别对两类防御提供平台支持。</p>
+
+<p>深度防御的关键在于检测出攻击，从而将攻击损失降到最小。现有基于IDS的检测系统是深度防御的核心模块，因此我们重点分析下现有的检测系统。</p>
+
+<p>入侵检测系统（IDS）由来已久，至今发展经历了个世代，第一个世代中的IDS基于误用检测（特征、规则检测），重点分析网络包数据，从而发现可能的入侵与DOS攻击，此时的IDS仅能检测已知威胁；第二世代的IDS利用SIEM进行了融合，从而可以关联多个IDS的报警数据，提高了发现攻击的能力。</p>
+
+<p>虽然IDS发展了两个世代，但是其不足也是明显的。一方面攻击态势日趋严峻，攻击方式日趋复杂（工具多元化），攻击门槛日趋降低（技术要求降低，脚本小子），攻击动机日趋强化（脚本小子-好奇，黑产-经济利益，国家队-权力/政治，内部人-不满报复）；另一方面现有检测技术能力有限，应对多态恶意代码、APT攻击、0-day攻击时都束手无策。而且防御与攻击的最大不同在于：攻击只为成功一次，防御则要成功每一天，因此防御方责任更大，形势更为严峻。</p>
+
+<p>最近几年发生的安全事件也验证了当前安全防御脆弱无力的事实，如2010年发生的震惊全球的“极光攻击”与“震网”两个典型APT攻击，其影响损失不言而喻，但是伊朗核电站所受影响已无法简单用经济损失来衡量；2014年韩国银行客户金融数据失窃，童年JP摩根银行客户账户失窃，内部人信息窃取、欺诈已经成为了企业面临的首要威胁。具体可参加下图：</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/security-big-events.jpg" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/security-big-events.jpg" alt="security-big-events" />
+</a>
+
+</div>
+
+<h2 id="4-达摩克里斯之剑">4. 达摩克里斯之剑</h2>
+<p>正当人们为现有安全防御无力痛心的时候，大数据技术却蓬勃发展，一系列核心技术与平台架构均日趋成熟，甚至出现了成熟的市场实例（如Amazon的大数据分析平台）。与此同时，安全日志的重要性逐渐得到大家的重视，2010年一份报告显示86%的安全事件可以回溯到安全日志，而安全日志数据量巨大，导致实际无法有效利用。</p>
+
+<p>如同发现了新的美洲大陆，安全界不约而同将目光转向了大数据技术在安全日志中的应用。学术界普遍认为利用大数据技术是挖掘日志价值，是提升安全检测效果的关键。因此第三个世代的IDS出现了，其融合了大数据分析技术，构建了安全威胁情报平台，从长时间窗口中关联，挖掘攻击信息，不仅提高了检测未知威胁的能力，也缩短了攻击与检测相应的时间周期。</p>
+
+<p>大数据技术的出现使得分析蕴藏着攻击痕迹的海量安全日志成为可能，以此为依托，国内外均开展了大量大数据安全领域研究。内部威胁因其特有的隐蔽、透明特性也成为了大数据安全分析的重要应用领域。基于企业内部特有的内部威胁风险，提取威胁特征，然后在各设备安全日志中挖掘分析，从而检测内部威胁成为未来行之有效的内部威胁检测方案，可以说大数据安全分析技术成为了悬在内部威胁头上的达摩克利斯之剑。按照数据源、分析方法、时间度量、能动性与持时间周期等，我们可以将现有内部威胁中的大数据安全分析归为几类：</p>
+<ul>
+  <li>按照数据来源可以分为主机、网络、应用分析三类。
+    <ul>
+      <li>基于主机数据检测数据来自系统调用日志与系统日志；</li>
+      <li>基于网络数据检测数据来自基于网络数据包头数据与流量数据与基于无线网络数据检测；</li>
+      <li>基于应用日志检测数据来自数据库日志、网站日志、IDS指示器数据等。</li>
+    </ul>
+  </li>
+  <li>按照使用方法可以分为误用检测与异常检测。
+    <ul>
+      <li>误用检测又称特征检测，需要提取已知攻击特征，基于签名匹配检测攻击，其准确率较高，然而无法检测未知威胁；</li>
+      <li>异常检测基于“白名单”思想，建立用户的正常行为模型，从而检测偏离正常模型的行为，其可以检测未知威胁 ，但误报率较高。</li>
+    </ul>
+  </li>
+  <li>按照时间度量可以分为实时内部威胁检测与离线检测。
+    <ul>
+      <li>实时监测将安全日志数据组我欸数据流实时分析报警；</li>
+      <li>离线检测则在后台进行数据挖掘分析。</li>
+    </ul>
+  </li>
+  <li>按照能动性可以分为被动检测与主动检测两类。
+    <ul>
+      <li>被动检测就是传统的IDS，检测到内部威胁即报警，但是不采取安全措施，等待人为命令;</li>
+      <li>主动检测类似于IPS，检测到内部威胁可以自动断开内部攻击者连接，剥夺其访问权等。</li>
+    </ul>
+  </li>
+  <li>按照时间周期可以分为连续监测与周期检测。
+    <ul>
+      <li>连续监测即不间断监测;</li>
+      <li>周期检测则是特定周期执行检测，两次检测间隔可能被攻击者利用。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="5-大数据时代网络安全">5. 大数据时代网络安全</h2>
+<p>大数据时代，个人信息是如何被挖掘的：</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/personal-info-disclosure.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/personal-info-disclosure.png" alt="personal-info-disclosure" />
+</a>
+
+</div>
+
+<p>可以看出个人信息的泄露更加的隐蔽，也更具威胁。同时，大数据也是用来增强网络安全的利器，比如，用大数据来预测未知的攻击模式，应对0day攻击，识别与区分异常和正常流量等。</p>
+<div align="center">
+<a href="/assets/documentation/cybersecurity/bigdata-predict-unknow-risk.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/cybersecurity/bigdata-predict-unknow-risk.png" alt="bigdata-predict-unknow-risk" />
+</a>
+
+</div>
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=网络安全分析 - /posts/cybersecurity-analysis ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/cybersecurity-analysis', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/cybersecurity-analysis', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>

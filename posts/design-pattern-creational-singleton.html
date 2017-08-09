@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>毒师1024的处方 | 设计模式 - 创建型模式 - 单件</title>
+  <meta name="description" content="保证一个类仅有一个实例">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="设计模式 - 创建型模式 - 单件">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/design-pattern-creational-singleton">
+  <meta property="og:description" content="保证一个类仅有一个实例">
+  <meta property="og:site_name" content="毒师1024的处方">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/design-pattern-creational-singleton">
+  <meta name="twitter:title" content="设计模式 - 创建型模式 - 单件">
+  <meta name="twitter:description" content="保证一个类仅有一个实例">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="毒师1024的处方 Last 10 blog posts" />
+  
+    <link type="text/css" rel="stylesheet" href="/assets/light.css">
+  
+</head>
+
+<body>
+  <main role="main">
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav reveal">
+  <a href="/" class="header-logo" title="毒师1024的处方">毒师1024的处方</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" target="_blank" title="RSS">
+          <span class="icon icon-social-rss"></span>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article reveal">
+          <header class="article-header">
+            <h1>设计模式 - 创建型模式 - 单件</h1>
+            <p>保证一个类仅有一个实例</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 28, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/design">design</a>
+                
+                  <a href="/tag/pattern">pattern</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h3 id="对象创建型模式--单件singleton">对象创建型模式 – 单件（SINGLETON）</h3>
+
+<h4 id="1-意图">1. 意图</h4>
+<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+
+<h4 id="2-动机">2. 动机</h4>
+<p>对一些类来说，只有一个实例是很重要的。虽然系统中可以有许多打印机，但却只应该由一个打印机脱机（printer spooler)，只应该有一个文件系统和一个窗口管理器。一个数字滤波器只能有一个A/D转换器。一个会计系统只能专用于一个公司。</p>
+
+<p>我们怎么样才能保证一个类只有一个实例并且这个实例易于被访问呢？一个全局变量使得一个对象可以被访问，但它不能防止你实例化多个对象。</p>
+
+<p>一个更好的办法是，让类自身负责保存它的唯一实例。这个类可以保证没有其他实例可以被创建（通过截取创建新对象的请求），并且它可以提供一个访问该实例的方法。这就是Singleton模式。</p>
+
+<h4 id="3-适用性">3. 适用性</h4>
+<ul>
+  <li>当类只能有一个实例而且客户可以从一个众所周知的访问点访问它时。</li>
+  <li>当这个唯一的实例应该是通过子类化可扩展的，并且客户应该无需更改代码就能使用一个扩展的实例时。</li>
+</ul>
+
+<h4 id="4-结构">4. 结构</h4>
+<p><a href="/assets/documentation/design-pattern/Singleton-Pattern-Structure.png" class="fluidbox-trigger">
+  <img src="/assets/documentation/design-pattern/Singleton-Pattern-Structure.png" alt="Singleton-Pattern-Structure" />
+</a></p>
+
+<h4 id="5-参与者">5. 参与者</h4>
+<ul>
+  <li>Singleton
+    <ul>
+      <li>定义一个Instance操作，允许客户访问它的唯一实例。Instance是一个类操作（即Smalltalk中的一个类方法和C++中的一个静态成员函数）。</li>
+      <li>可能复杂创建它自己的唯一实例。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="6-协作">6. 协作</h4>
+<p>客户只能通过Singleton的Instance操作访问一个Singleton的实例。</p>
+
+<h4 id="7-效果">7. 效果</h4>
+<p>Singleton模式有许多有点：</p>
+<ul>
+  <li>1）<code class="highlighter-rouge">对唯一实例的受控访问</code>  因为Singleton类封装它的唯一实例，所以它可以严格的控制客户怎样以及何时访问它。</li>
+  <li>2）<code class="highlighter-rouge">缩小名空间</code>  Singleton模式是对全局变量的一种改进。它避免了哪些存储唯一实例的全局变量污染名空间。</li>
+  <li>3）<code class="highlighter-rouge">允许对操作和表示的精化</code>  Singleton类可以有子类，而且用这个扩展类的实例配置一个应用是很容易的。你可以用你所需要的类的实例在运行时刻配置应用。</li>
+  <li>4）<code class="highlighter-rouge">允许可变数目的实例</code>  这个模式使得你易于改变你的想法，并允许Singleton类的多个实例。此外，你可以用相同的方法来控制应用所使用的实例的数目。只有允许访问Singleton实例的操作需要改变。</li>
+  <li>5）<code class="highlighter-rouge">比类操作更灵活</code>  另一种封装单件功能的方式是使用类操作（即C++中的静态成员函数或者是Smalltalk中的类方法）。但这两种语言技术都难以改变设计以允许一个类有多个实例。此外，C++中的静态成员函数不是虚函数，因此子类不能多态的重定义它们。</li>
+</ul>
+
+<h4 id="8-实现">8. 实现</h4>
+<ul>
+  <li>1）保证一个唯一的实例  Singleton模式使得这个唯一实例是类的一般实例，但该类被写成只有一个实例能被创建。做到这一点的一个常用方法是将创建这个实例的操作隐藏在一个类操作（即一个静态成员函数或者是一个类方法）后面，由它保证只有一个实例被创建。这个操作可以访问保存唯一实例的变量，而且它可以保证这个变量在返回值之前用这个唯一实例初始化。这种方法保证了单件在它的首次使用前被创建和使用。</li>
+  <li>
+    <p>2）创建Singleton类的子类  主要问题与其说是定义子类不如说是建立它的唯一实例，这样客户就可以使用它。事实上，指向单件实例的变量必须用子类的实例进行初始化。最简单的技术是在Singleton的Instance操作中决定你想使用的是哪一个单件。代码示例一节中的一个例子说明了如何用环境变量实现这一技术。</p>
+
+    <p>另一个选择Singleton的子类的方法是将Instance的实现从父类中分离出来并将它放入子类。这就允许C++程序员在链接时刻决定单件的类（即通过链入一个包含不同实现的对象文件），但对单件的客户则隐藏这一点。</p>
+
+    <p>链接的方法在链接时刻确定了单件类的选择，这使得难以在运行时刻选择单件类。使用条件语句来决定子类更加灵活一些，但这硬性限定（hard-wire）了可能的Singleton类的集合。这两种方法不是在所有的情况都足够灵活。</p>
+
+    <p>一个更灵活的方法是使用一个<strong>单件注册表（registry of singleton）</strong> 。可能的Singleton类的集合不是由Instance定义的，Singleton类可以根据名字在一个众所周知的注册表中注册它们的单件实例。这个注册表在字符串名字和单件之间建立映射。当Instance需要一个单件时，它参考注册表，根据名字请求单件。</p>
+
+    <p>注册表查询相应的单件（如果存在的话）并返回它。这个方法使得Instance不再需要知道所有可能的Singleton类或实例。它所需要的只是所有Singleton类的一个公共的接口，该接口包括了对注册表的操作：</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">class</span> <span class="nc">Singleton</span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">Register</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="n">Singleton</span><span class="o">*</span><span class="p">);</span>
+    <span class="k">static</span> <span class="n">Singleton</span><span class="o">*</span> <span class="n">instance</span><span class="p">();</span>
+<span class="k">protected</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">Singleton</span><span class="o">*</span> <span class="n">Lookup</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">);</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">Singleton</span><span class="o">*</span> <span class="n">_instance</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">NameSingletonPair</span><span class="o">&gt;*</span> <span class="n">_registry</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Register以给定的名字注册Singleton实例。为保证注册表简单，我们将它存储一列NameSingletonPair对象。每个NameSingletonPair将一个名字映射到一个单件。Lookup操作根据给定单件的名字进行查找。我们假定一个环境变量指定了所需要的单件的名字。</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Singleton</span><span class="o">*</span> <span class="n">Singleton</span><span class="o">::</span><span class="n">Instance</span><span class="p">(){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">_instance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">singletonName</span> <span class="o">=</span>  <span class="n">getenv</span><span class="p">(</span><span class="s">"SINGLETON"</span><span class="p">);</span>
+        <span class="c1">// user or environment supplies this at startup
+</span>
+        <span class="n">_instance</span> <span class="o">=</span> <span class="n">Lookup</span><span class="p">(</span><span class="n">singletonName</span><span class="p">);</span>
+        <span class="c1">// Lookup return 0 if there's no such singleton
+</span>    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">_instance</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Singleton类在何处注册它们自己？一种可能是在它们的构造器中。例如，MySingleton子类可以像下面这样做：</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">MySingleton</span><span class="o">::</span><span class="n">MySingleton</span><span class="p">(){</span>
+    <span class="c1">// ...
+</span>    <span class="n">Singleton</span><span class="o">::</span><span class="n">Register</span><span class="p">(</span><span class="s">"MySingleton"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>当然，除非实例化类否则这个构造器不会被调用，这正反映了Singleton模式试图解决的问题！在C++中我们可以定义MySingleton的一个静态实例来避免这个问题。例如我们可以在包含MySingleton实现的文件中定义：</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">static</span> <span class="n">MySingleton</span> <span class="n">thisSingleton</span><span class="p">;</span></code></pre></figure>
+
+<p>Singleton类不再负责创建单件。它的主要职责是使用供选择的单件对象在系统中可以被访问。静态对象方法还是有一个潜在的缺点 – 也就是所有可能的Singleton子类的实例都必须被创建，否则它们不会被注册。</p>
+
+<h4 id="9-代码示例">9. 代码示例</h4>
+
+<h4 id="10-已知应用">10. 已知应用</h4>
+
+<h4 id="11-相关模式">11. 相关模式</h4>
+<p>很多模式可以使用Singleton模式实现。如，Abstract Factory，Builder和Prototype。</p>
+
+
+          </div>
+
+          <div class="article-share">
+            
+            <a href="" title="Share on Twitter" onclick="window.open('https://twitter.com/home?status=设计模式 - 创建型模式 - 单件 - /posts/design-pattern-creational-singleton ', 'newwindow', 'width=500, height=225'); return false;">
+              <span class="icon icon-social-twitter"></span>
+            </a>
+            <a href="" title="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=/posts/design-pattern-creational-singleton', 'newwindow', 'width=500, height=500'); return false;">
+              <span class="icon icon-social-facebook"></span>
+            </a>
+            <a href="" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=/posts/design-pattern-creational-singleton', 'newwindow', 'width=550, height=400'); return false;">
+              <span class="icon icon-social-googleplus"></span>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer reveal">
+  <p>
+    一个软件工程师的自述，希望将来这些文章能够帮助后来的人少走一些弯路，早日能到达理想的彼岸,
+    <a href="https://github.com/poisoner1024" title="About me">我是毒师，编号1024</a>。
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+<script type="text/javascript" src="/assets/application.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Cormorant Garamond:700', 'Lato:300,400,700']
+    }
+  });
+</script>
+
+
+</body>
+</html>
