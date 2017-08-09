@@ -7,6 +7,14 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>网络安全分析</title>
+        <description>从传统的网络安全，到大数据时代网络安全</description>
+        <pubDate>Sat, 17 Jun 2017 00:00:00 +0800</pubDate>
+        <link>/posts/cybersecurity-analysis</link>
+        <guid isPermaLink="true">/posts/cybersecurity-analysis</guid>
+      </item>
+    
+      <item>
         <title>安全测试Checklist</title>
         <description>保证安全测试的系统性，避免漏测与测试结果的随机性</description>
         <pubDate>Wed, 07 Jun 2017 00:00:00 +0800</pubDate>
@@ -78,13 +86,5 @@
         <guid isPermaLink="true">/posts/pen-testing-meth-func-spec-input-vulners</guid>
       </item>
     
-      <item>
-        <title>Web应用程序渗透测试方法论 - 测试基于输入的漏洞</title>
-        <description>应用程序很多重要的漏洞都是由无法预测的用户输入触发</description>
-        <pubDate>Sat, 13 May 2017 00:00:00 +0800</pubDate>
-        <link>/posts/pen-testing-meth-input-based-vulners</link>
-        <guid isPermaLink="true">/posts/pen-testing-meth-input-based-vulners</guid>
-      </item>
-
   </channel>
 </rss>
